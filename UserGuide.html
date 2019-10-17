@@ -15,11 +15,12 @@
 <ul class="sectlevel2">
 <li><a href="#managing-expenses-code-expense-code">3.1. Managing expenses: <code>expense</code></a></li>
 <li><a href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></li>
-<li><a href="#finding-and-sorting-of-expenses-code-find-code">3.3. Finding and sorting of expenses: <code>find</code></a></li>
-<li><a href="#archiving-past-expenses-code-archive-code">3.4. Archiving past expenses: <code>archive</code></a></li>
-<li><a href="#displaying-of-statistics-code-show-stats-code">3.5. Displaying of statistics: <code>show-stats</code></a></li>
-<li><a href="#viewing-help-code-help-code">3.6. Viewing help: <code>help</code></a></li>
-<li><a href="#exporting-data-code-coming-in-v2-0-code">3.7. Exporting data: <code>[Coming in v2.0]</code></a></li>
+<li><a href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></li>
+<li><a href="#sorting-expenses-by-attributes-code-sort-code">3.4. Sorting expenses by attributes: <code>sort</code></a></li>
+<li><a href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></li>
+<li><a href="#displaying-of-statistics-code-show-stats-code">3.6. Displaying of statistics: <code>show-stats</code></a></li>
+<li><a href="#viewing-help-code-help-code">3.7. Viewing help: <code>help</code></a></li>
+<li><a href="#exporting-data-code-coming-in-v2-0-code">3.8. Exporting data: <code>[Coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -272,7 +273,7 @@ Usage:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="finding-and-sorting-of-expenses-code-find-code"><a class="link" href="#finding-and-sorting-of-expenses-code-find-code">3.3. Finding and sorting of expenses: <code>find</code></a></h3>
+<h3 id="finding-expenses-by-attributes-code-find-code"><a class="link" href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -293,19 +294,19 @@ Finds all expenses that contain the keyword ‘lunch’ in any of its attributes
 </div>
 </li>
 <li>
-<p><em>Find by description: find desc</em><br>
-Find expenses that contains the keyword/s in its description.<br>
+<p><em>Find by name: find name</em><br>
+Find expenses that contains the keyword/s in its name.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>find desc [KEYWORD] [KEYWORD…]</pre>
+<pre>find name [KEYWORD] [KEYWORD…]</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>find desc lunch bread</code><br>
-Finds the expenses that contain the keywords ‘lunch’  and ‘bread’ in its description.<br>
+<code>find name lunch bread</code><br>
+Finds the expenses that contain the keywords ‘lunch’  and ‘bread’ in its name.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -328,24 +329,8 @@ Finds the expenses that contain the tags ‘school’ and ‘lunch’.<br>
 </li>
 <li>
 <p><em>Find date: find date</em><br>
-Find expenses that occurred on a certain date, formatted as dd/MM/yy.<br>
+Find expenses that occurred within a range of date, with various date formats.<br>
 &#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find date [DATE]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find date 10/9/19</code><br>
-Finds the expenses that were made on 10 September, 2019.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find period: find period</em><br>
-Find expenses that occurred within a certain period, with dates formatted as dd/MM/yy.<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
@@ -359,25 +344,6 @@ find period [START DATE]</pre>
 Finds the expenses that occurred between 10 September and 20 September, 2019.<br>
 <code>find period 10/9/19</code><br>
 Finds the expenses that occurred between 10 September, 19 and the current date.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find recent: find recent</em><br>
-Finds the most recent <em>n</em> expenses, where the default value for n is 10.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find recent [NUM_ENTRIES, DEFAULT = 10]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find recent 5</code><br>
-Finds the most recent 5 expenses.<br>
-<code>find recent</code><br>
-By default, finds the most recent 10 expenses.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -404,7 +370,50 @@ Finds the expenses that cost between $30 and $50<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">3.4. Archiving past expenses: <code>archive</code></a></h3>
+<h3 id="sorting-expenses-by-attributes-code-sort-code"><a class="link" href="#sorting-expenses-by-attributes-code-sort-code">3.4. Sorting expenses by attributes: <code>sort</code></a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><em>Sort by name:</em><br>
+Sort expenses by name in alphabetical order.<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>sort name</pre>
+</div>
+</div>
+</li>
+<li>
+<p><em>Sort by date:</em><br>
+Sort expenses by date from newest to oldest<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>sort date</pre>
+</div>
+</div>
+</li>
+<li>
+<p><em>Sort by amount</em><br>
+Sort expenses by amount of expense in from largest to smallest.<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>sort amt</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -532,7 +541,7 @@ Deletes the entire “2018 expenses” archive.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="displaying-of-statistics-code-show-stats-code"><a class="link" href="#displaying-of-statistics-code-show-stats-code">3.5. Displaying of statistics: <code>show-stats</code></a></h3>
+<h3 id="displaying-of-statistics-code-show-stats-code"><a class="link" href="#displaying-of-statistics-code-show-stats-code">3.6. Displaying of statistics: <code>show-stats</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -616,7 +625,7 @@ Shows a breakdown of all expenses in text form.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.6. Viewing help: <code>help</code></a></h3>
+<h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.7. Viewing help: <code>help</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -654,7 +663,7 @@ Shows the help message for the archive commands.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exporting-data-code-coming-in-v2-0-code"><a class="link" href="#exporting-data-code-coming-in-v2-0-code">3.7. Exporting data: <code>[Coming in v2.0]</code></a></h3>
+<h3 id="exporting-data-code-coming-in-v2-0-code"><a class="link" href="#exporting-data-code-coming-in-v2-0-code">3.8. Exporting data: <code>[Coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p><em>{explain how the user can enable/disable data encryption}</em></p>
 </div>
@@ -669,4 +678,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-16 13:32:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-17 15:01:30 UTC</div></div></div></body></html>
