@@ -24,8 +24,9 @@
 <ul class="sectlevel2">
 <li><a href="#proposed-undo-redo-feature">3.1. [Proposed] Undo/Redo feature</a></li>
 <li><a href="#archive">3.2. Archive</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#tagging">3.3. Tagging</a></li>
+<li><a href="#logging">3.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -274,6 +275,9 @@ The lifeline for <code>DeleteCommandParser</code> should end at the destroy mark
 </li>
 <li>
 <p>stores the Billboard and ArchiveWrapper data, i.e current expenses and archived past expenses.</p>
+</li>
+<li>
+<p>stores <code>UniqueTagList</code> and <code>TagCountManager</code> to track tags.</p>
 </li>
 <li>
 <p>exposes an unmodifiable <code>ObservableList&lt;Expense&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
@@ -828,14 +832,244 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="tagging"><a class="link" href="#tagging">3.3. Tagging</a></h3>
+<div class="sect3">
+<h4 id="proposed-implementation-2"><a class="link" href="#proposed-implementation-2">3.3.1. Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The tag feature supports the following operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Adding tags to an expense</p>
+</li>
+<li>
+<p>Removing tags from an expense</p>
+</li>
+<li>
+<p>Filtering expenses by tag</p>
+</li>
+<li>
+<p>Listing all existing tags</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These actions are facilitated by the <code>UniqueTagList</code> and <code>TagCountManager</code> classes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>UniqueTagList</code> maps <code>String</code> to <code>Tag</code> where <code>String</code> is the name of the <code>Tag</code>. It ensures that the same <code>Tag</code> is referenced instead of creating many <code>Tag</code> objects of the same name when adding tags.</p>
+</li>
+<li>
+<p><code>TagCountManager</code> maps <code>Tag</code> to <code>Integer</code>, where <code>Integer</code> is the number of <code>Expense</code> under each <code>Tag</code>. It allows <code>Tag</code> objects that are not tagged with any <code>Expense</code> to be tracked and removed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Operations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>UniqueTagList#retrieveTags(List&lt;String&gt;)</code>&#8201;&#8212;&#8201;Retrieves corresponding tags from <code>UniqueTagList</code> based on the list of tag names.</p>
+</li>
+<li>
+<p><code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Removes tags given in the list from the <code>UniqueTagList</code>.</p>
+</li>
+<li>
+<p><code>UniqueTagList#getTagNames()</code>&#8201;&#8212;&#8201;Returns a list of tag names.</p>
+</li>
+<li>
+<p><code>TagCountManager#incrementAllCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Increment the number of expenses mapped to tags given in the set by 1.</p>
+</li>
+<li>
+<p><code>TagCountManager#decreaseAllCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Decrease number of expenses mapped to tags given in the set by 1.</p>
+</li>
+<li>
+<p><code>TagCountManager#removeZeroCount()</code>&#8201;&#8212;&#8201;Removes all mappings where number of expense is equal to 0.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations are exposed in the <code>Model</code> interface as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Model#retrieveTags(List&lt;String&gt;)</code></p>
+</li>
+<li>
+<p><code>Model#incrementCount(Set&lt;Tag&gt;)</code></p>
+</li>
+<li>
+<p><code>Model#decreaseCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;<code>TagCountManager#removeZeroCount()</code> and <code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code> is called in this method as well to remove tags that does not have any expense tagged to it from <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
+</li>
+<li>
+<p><code>Model#getTagNames()</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the adding tag mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1.
+The user launches the application. The <code>Model</code> is initialized with saved data. All tags are loaded into <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 2.
+User enters the command <code>tag add 1 t/test t/test2</code> to add tags to the 1st <code>Expense</code> in Billboard. <code>BillboardParser</code> parses the command, creating a <code>TagCommandParser</code>.
+The <code>TagCommandParser</code> then parses <code>add 1 t/test t/test2</code> and creates an <code>AddTagCommandParser</code>. Subsequently, the <code>AddTagCommandParser</code> parses <code>1 t/test1 t/test2</code> into <code>Index</code> 1 and
+a list of <code>String</code> consisting of <code>test1</code> and <code>test2</code>. They are then used to create <code>AddTagCommand</code> which is returned to <code>LogicManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 3.
+<code>LogicManager</code> executes the <code>AddTagCommand</code>. During execution, <code>AddTagCommand</code> calls <code>Model#retrieveTags(Set&lt;String&gt;)</code> on the list consisting of <code>test1</code> and <code>test2</code> which returns a set of <code>Tag</code>.
+<code>Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The 1st <code>Expense</code> is edited and updated in the <code>Model</code> using <code>Model#setExpense(Expense, Expense)</code> and is then shown on the UI.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Duplicate tags in an <code>Expense</code> is not allowed.
+If the user tries to add existing <code>Tag</code> to an <code>Expense</code>, it will not be added, and <code>Model#incrementCount</code> will not be called.
+If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <code>Tag</code>, it will only be added once and number of expense under that <code>Tag</code> will only increment by 1.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the adding tag operation works.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddTagSequenceDiagram.png" alt="AddTagSequenceDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when a user enters a command to add tags to an expense.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddTagActivityDiagram.png" alt="AddTagActivityDiagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-support-tag-commands"><a class="link" href="#aspect-data-structure-to-support-tag-commands">Aspect: Data structure to support tag commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use a <code>UniqueTagList</code> to map tag names to <code>Tag</code> and <code>TagCountManager</code> to map <code>Tag</code> to number of <code>Expense</code> under it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Each structure has only one responsibility.</p>
+</li>
+<li>
+<p>Fast retrieval and update of data</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires maintenance of both structures as they need to sync with each other.</p>
+</li>
+<li>
+<p>Retrieval of <code>Expense</code> under a <code>Tag</code> requires filtering through the whole list of <code>Expense</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 :</strong> Have each <code>Tag</code> store a list of <code>Expense</code> tagged to it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fast retrieval of <code>Expenses</code> under each <code>Tag</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Circular dependency</p>
+</li>
+<li>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code>Expense</code> by replacing it with the updated <code>Expense</code> even after executing non-tag related commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 3 :</strong> Use one map to map <code>Tag</code> to <code>Expense</code> tagged to it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fast retrieval of <code>Expenses</code> under each <code>Tag</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code>Expense</code> by replacing it with the updated <code>Expense</code> even after executing non-tag related commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -866,7 +1100,7 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1665,4 +1899,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-22 15:23:00 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-22 17:14:33 UTC</div></div></div></body></html>
