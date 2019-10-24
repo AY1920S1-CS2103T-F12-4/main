@@ -22,12 +22,14 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#proposed-undo-redo-feature">3.1. [Proposed] Undo/Redo feature</a></li>
+<li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
 <li><a href="#archive">3.2. Archive</a></li>
 <li><a href="#tagging">3.3. Tagging</a></li>
 <li><a href="#enhanced-find">3.4. [Enhanced] Find</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
+<li><a href="#history-feature">3.5. History feature</a></li>
+<li><a href="#Up-Down-Feature">3.6. Up/Down key feature</a></li>
+<li><a href="#logging">3.7. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.8. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -343,56 +345,59 @@ As a more OOP model, we can store a <code>Tag</code> list in <code>Billboard</co
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="proposed-undo-redo-feature"><a class="link" href="#proposed-undo-redo-feature">3.1. [Proposed] Undo/Redo feature</a></h3>
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.1. Undo/Redo feature</a></h3>
 <div class="sect3">
-<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">3.1.1. Proposed Implementation</a></h4>
+<h4 id="implementation-2"><a class="link" href="#implementation-2">3.1.1. Implementation</a></h4>
 <div class="paragraph">
-<p>The undo/redo mechanism is facilitated by <code>VersionedAddressBook</code>.
-It extends <code>AddressBook</code> with an undo/redo history, stored internally as an <code>addressBookStateList</code> and <code>currentStatePointer</code>.
+<p>The undo/redo mechanism is facilitated by <code>VersionedBillboard</code>.
+It store the state history into a <code>stateList</code> and maintain a state pointer <code>currentStatePointer</code>.
 Additionally, it implements the following operations:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>VersionedAddressBook#commit()</code>&#8201;&#8212;&#8201;Saves the current address book state in its history.</p>
+<p><code>VersionedBillboard#commit()</code>&#8201;&#8212;&#8201;Saves the current billboard state in its history.</p>
 </li>
 <li>
-<p><code>VersionedAddressBook#undo()</code>&#8201;&#8212;&#8201;Restores the previous address book state from its history.</p>
+<p><code>VersionedBillboard#undo()</code>&#8201;&#8212;&#8201;Restores the previous billboard state from its history.</p>
 </li>
 <li>
-<p><code>VersionedAddressBook#redo()</code>&#8201;&#8212;&#8201;Restores a previously undone address book state from its history.</p>
+<p><code>VersionedBillboard#redo()</code>&#8201;&#8212;&#8201;Restores a previously undone billboard state from its history.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface as <code>Model#commitAddressBook()</code>, <code>Model#undoAddressBook()</code> and <code>Model#redoAddressBook()</code> respectively.</p>
+<p>These operations is exposed in the <code>VersionedBillboard</code> class as <code>VersionedBillboard#commit()</code>., <code>VersionedBillboard#undo()</code> and <code>VersionedBillboard#redo()</code> respectively.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.</p>
 </div>
 <div class="paragraph">
-<p>Step 1. The user launches the application for the first time. The <code>VersionedAddressBook</code> will be initialized with the initial address book state, and the <code>currentStatePointer</code> pointing to that single address book state.</p>
+<p>Step 1. The user launches the application for the first time. The <code>VersionedBillboard</code> will be initialized with the initial billboard state, and the <code>currentStatePointer</code> pointing to that single billboard state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState0.png" alt="UndoRedoState0">
 </div>
+<div class="title">Figure 9. Initial state of VersionedBillboard</div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>delete 5</code> command to delete the 5th person in the address book. The <code>delete</code> command calls <code>Model#commitAddressBook()</code>, causing the modified state of the address book after the <code>delete 5</code> command executes to be saved in the <code>addressBookStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted address book state.</p>
+<p>Step 2. The user executes <code>delete 5</code> command to delete the 5th expense in the billboard. The <code>delete</code> command calls <code>VersionedBillboard#commit()</code>, causing the modified state of the billboard after the <code>delete 5</code> command executes to be saved in the <code>stateList</code>, and the <code>statePointer</code> is shifted to the newly inserted billboard state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState1.png" alt="UndoRedoState1">
 </div>
+<div class="title">Figure 10. State of VersionedBillboard after "delete 5" command</div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>add n/David &#8230;&#8203;</code> to add a new person. The <code>add</code> command also calls <code>Model#commitAddressBook()</code>, causing another modified address book state to be saved into the <code>addressBookStateList</code>.</p>
+<p>Step 3. The user executes <code>add n/buy &#8230;&#8203;</code> to add a new person. The <code>add</code> command also calls <code>Model#commit()</code>, causing another modified billboard state to be saved into the <code>stateList</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState2.png" alt="UndoRedoState2">
 </div>
+<div class="title">Figure 11. State of VersionedBillboard after "add n/buy&#8230;&#8203;" command</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -401,18 +406,19 @@ Additionally, it implements the following operations:</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If a command fails its execution, it will not call <code>Model#commitAddressBook()</code>, so the address book state will not be saved into the <code>addressBookStateList</code>.
+If a command fails its execution, it will not call <code>VersionedBillboard#commit()</code>, so the billboard state will not be saved into the <code>stateList</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoAddressBook()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous address book state, and restores the address book to that state.</p>
+<p>Step 4. The user now decides that adding the expense was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>VersionedBillboard#undo()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous billboard state, and restores the billboard to that state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState3.png" alt="UndoRedoState3">
 </div>
+<div class="title">Figure 12. State of VersionedBillboard after "undo" command</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -421,7 +427,7 @@ If a command fails its execution, it will not call <code>Model#commitAddressBook
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If the <code>currentStatePointer</code> is at index 0, pointing to the initial address book state, then there are no previous address book states to restore. The <code>undo</code> command uses <code>Model#canUndoAddressBook()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the <code>currentStatePointer</code> is at index 0, pointing to the initial billboard state, then there are no previous billboard states to restore. The <code>undo</code> command uses <code>VersionedBillboard#isRedoable()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 </td>
 </tr>
 </table>
@@ -433,6 +439,7 @@ If the <code>currentStatePointer</code> is at index 0, pointing to the initial a
 <div class="content">
 <img src="images/UndoSequenceDiagram.png" alt="UndoSequenceDiagram">
 </div>
+<div class="title">Figure 13. Interactions Inside the Logic Component for the <code>undo</code> Command</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -447,7 +454,7 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 </table>
 </div>
 <div class="paragraph">
-<p>The <code>redo</code> command does the opposite&#8201;&#8212;&#8201;it calls <code>Model#redoAddressBook()</code>, which shifts the <code>currentStatePointer</code> once to the right, pointing to the previously undone state, and restores the address book to that state.</p>
+<p>The <code>redo</code> command does the opposite&#8201;&#8212;&#8201;it calls <code>VersionedBillboard#redo()</code>, which shifts the <code>currentStatePointer</code> once to the right, pointing to the previously undone state, and restores the billboard to that state.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -456,26 +463,28 @@ The lifeline for <code>UndoCommand</code> should end at the destroy marker (X) b
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-If the <code>currentStatePointer</code> is at index <code>addressBookStateList.size() - 1</code>, pointing to the latest address book state, then there are no undone address book states to restore. The <code>redo</code> command uses <code>Model#canRedoAddressBook()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the <code>currentStatePointer</code> is at index <code>stateList.size() - 1</code>, pointing to the latest billboard state, then there are no undone billboard states to restore. The <code>redo</code> command uses <code>VersionedBillboard#isRedoable()</code> to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Step 5. The user then decides to execute the command <code>list</code>. Commands that do not modify the address book, such as <code>list</code>, will usually not call <code>Model#commitAddressBook()</code>, <code>Model#undoAddressBook()</code> or <code>Model#redoAddressBook()</code>. Thus, the <code>addressBookStateList</code> remains unchanged.</p>
+<p>Step 5. The user then decides to execute the command <code>list</code>. Commands that do not modify the billboard, such as <code>list</code>, will usually not call <code>VersionedBillboard#commit()</code>, <code>VersionedBillboard#undo()</code> or <code>VersionedBillboard#redo()</code>. Thus, the <code>stateList</code> remains unchanged.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState4.png" alt="UndoRedoState4">
 </div>
+<div class="title">Figure 14. State of VersionedBillboard after "list" command</div>
 </div>
 <div class="paragraph">
-<p>Step 6. The user executes <code>clear</code>, which calls <code>Model#commitAddressBook()</code>. Since the <code>currentStatePointer</code> is not pointing at the end of the <code>addressBookStateList</code>, all address book states after the <code>currentStatePointer</code> will be purged. We designed it this way because it no longer makes sense to redo the <code>add n/David &#8230;&#8203;</code> command. This is the behavior that most modern desktop applications follow.</p>
+<p>Step 6. The user executes <code>clear</code>, which calls <code>VersionedBillboard#commit()</code>. Since the <code>currentStatePointer</code> is not pointing at the end of the <code>stateList</code>, all billboard states after the <code>statePointer</code> will be purged. We designed it this way because it no longer makes sense to redo the <code>add n/buy &#8230;&#8203;</code> command. This is the behavior that most modern desktop applications follow.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoState5.png" alt="UndoRedoState5">
 </div>
+<div class="title">Figure 15. State of VersionedBillboard after "clear" command</div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarizes what happens when a user executes a new command:</p>
@@ -484,6 +493,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="content">
 <img src="images/CommitActivityDiagram.png" alt="CommitActivityDiagram">
 </div>
+<div class="title">Figure 16. Activity Diagram of state commit</div>
 </div>
 </div>
 <div class="sect3">
@@ -493,7 +503,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire address book.</p>
+<p><strong>Alternative 1 (current choice):</strong> Saves the entire billboard.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -510,7 +520,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the person being deleted).</p>
+<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the expense being deleted).</p>
 </li>
 <li>
 <p>Cons: We must ensure that the implementation of each individual command are correct.</p>
@@ -526,14 +536,14 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use a list to store the history of address book states.</p>
+<p><strong>Alternative 1 (current choice):</strong> Use a list to store the history of billboard states.</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.</p>
 </li>
 <li>
-<p>Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both <code>HistoryManager</code> and <code>VersionedAddressBook</code>.</p>
+<p>Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both <code>Model</code> and <code>VersionedBillboard</code>.</p>
 </li>
 </ul>
 </div>
@@ -559,7 +569,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="sect2">
 <h3 id="archive"><a class="link" href="#archive">3.2. Archive</a></h3>
 <div class="sect3">
-<h4 id="implementation-2"><a class="link" href="#implementation-2">3.2.1. Implementation</a></h4>
+<h4 id="implementation-3"><a class="link" href="#implementation-3">3.2.1. Implementation</a></h4>
 <div class="sect4">
 <h5 id="modelling-archive"><a class="link" href="#modelling-archive">Modelling Archive</a></h5>
 <div class="paragraph">
@@ -835,7 +845,7 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 <div class="sect2">
 <h3 id="tagging"><a class="link" href="#tagging">3.3. Tagging</a></h3>
 <div class="sect3">
-<h4 id="proposed-implementation-2"><a class="link" href="#proposed-implementation-2">3.3.1. Proposed Implementation</a></h4>
+<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">3.3.1. Proposed Implementation</a></h4>
 <div class="paragraph">
 <p>The tag feature supports the following operations:</p>
 </div>
@@ -1065,7 +1075,7 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 <div class="sect2">
 <h3 id="enhanced-find"><a class="link" href="#enhanced-find">3.4. [Enhanced] Find</a></h3>
 <div class="sect3">
-<h4 id="proposed-implementation-3"><a class="link" href="#proposed-implementation-3">3.4.1. Proposed Implementation</a></h4>
+<h4 id="proposed-implementation-2"><a class="link" href="#proposed-implementation-2">3.4.1. Proposed Implementation</a></h4>
 <div class="paragraph">
 <p>The find feature supports the finding expenses by any combination of the following conditions:</p>
 </div>
@@ -1223,14 +1233,126 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="history-feature"><a class="link" href="#history-feature">3.5. History feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
+<div class="paragraph">
+<p>The history function will enable user to view previous actions.</p>
+</div>
+<div class="paragraph">
+<p>Billboard will store all the command entered even the command is never executed.</p>
+</div>
+<div class="paragraph">
+<p>This function is facilitated by the <code>CommandHistory</code> class.</p>
+</div>
+<div class="paragraph">
+<p>All the histories will be store in a static list <code>cmdList</code> in <code>CommandHistory</code>.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, a state pointer that initially point to the end of cmdList will be maintain for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.6, &#8220;Up/Down key feature&#8221;</a>)</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the storing operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
+</div>
+<div class="title">Figure 17. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+</div>
+<div class="paragraph">
+<p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-how-command-histories-are-stored"><a class="link" href="#aspect-how-command-histories-are-stored">Aspect: How command histories are stored</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Initial a CommandHistory class to store them.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: None.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Maintain a list in Model and store them.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: None.</p>
+</li>
+<li>
+<p>Cons: Duplicate list will be saved while saving billboards to VersionedBillboard. Also, restoring billboard will need to update the history list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Up-Down-Feature"><a class="link" href="#Up-Down-Feature">3.6. Up/Down key feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-5"><a class="link" href="#implementation-5">3.6.1. Implementation</a></h4>
+<div class="paragraph">
+<p>Pressing Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key in <code>TextFiled</code> can navigate through the command history.</p>
+</div>
+<div class="paragraph">
+<p>This feature makes use of the command history and state pointer stored while executing the previous command.</p>
+</div>
+<div class="paragraph">
+<p>When initializing the fxml object <code>TextFiled</code> in <code>CommandBox</code> class,
+an action listener will be set to monitor the keyboard activity.
+Whenever a Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key is pressed, it will retrieve the previous/next command from the <code>CommandHistory</code> .</p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user launches the application for the first time.
+The CommandHistory will be initialized with no command state,
+and the statePointer is not pointing to any command state.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UpDownKeyState0.png" alt="UpDownKeyState0">
+</div>
+<div class="title">Figure 18. Initial state of CommandHistory</div>
+</div>
+<div class="paragraph">
+<p>Step 2. The user then execute the</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
+</div>
+<div class="title">Figure 19. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+</div>
+<div class="paragraph">
+<p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.8, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1261,7 +1383,7 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.8. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2060,4 +2182,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 15:57:16 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 16:28:26 UTC</div></div></div></body></html>
