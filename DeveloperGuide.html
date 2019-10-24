@@ -25,8 +25,9 @@
 <li><a href="#proposed-undo-redo-feature">3.1. [Proposed] Undo/Redo feature</a></li>
 <li><a href="#archive">3.2. Archive</a></li>
 <li><a href="#tagging">3.3. Tagging</a></li>
-<li><a href="#logging">3.4. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.5. Configuration</a></li>
+<li><a href="#enhanced-find">3.4. [Enhanced] Find</a></li>
+<li><a href="#logging">3.5. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.6. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -1062,14 +1063,174 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.4. Logging</a></h3>
+<h3 id="enhanced-find"><a class="link" href="#enhanced-find">3.4. [Enhanced] Find</a></h3>
+<div class="sect3">
+<h4 id="proposed-implementation-3"><a class="link" href="#proposed-implementation-3">3.4.1. Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The find feature supports the finding expenses by any combination of the following conditions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Keywords</p>
+</li>
+<li>
+<p>Lower/upper amount limit</p>
+</li>
+<li>
+<p>Lower/upper creation date limit</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These actions are facilitated by the <code>MultiArgPredicate</code> class:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MultiArgPredicate</code> implements the <code>Predicate</code> interface. It enables filtering of expenses by multiple attributes
+through keeping track of a set of predicates that can be applied when prompted by user input.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Operations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MultiArgPredicate#setKeywords(List&lt;String&gt;)</code>&#8201;&#8212;&#8201;Set list of keywords to search by.</p>
+</li>
+<li>
+<p><code>MultiArgPredicate#setDateRange(CreatedDate, CreatedDate)</code>&#8201;&#8212;&#8201;Set start date and end date limit to search by.</p>
+</li>
+<li>
+<p><code>MultiArgPredicate#setAmtRange(Amount, Amount)</code>&#8201;&#8212;&#8201;Set upperLimit and lowerLimit of amount of expenses to search by.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the find mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1.
+The user launches the application. The <code>Model</code> is initialized with saved data. All expenses are loaded into <code>FilteredList</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 2.
+User enters the command <code>find d/keywords a/lowerAmtLimit al/upperAmtLimit sd/startDate ed/endDate</code> to find expenses that matches conditions set by user input. <code>BillboardParser</code> parses the command, creating a <code>FindCommandParser</code>.
+The <code>FindCommandParser</code> then parses <code>find d/keywords a/lowerAmtLimit al/upperAmtLimit sd/startDate ed/endDate</code> to create a <code>MultiArgPredicate</code> inputted with the different filter parameters.
+The <code>MultiArgPredicate</code> is then used to create the <code>FindCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>Step 3.
+<code>LogicManager</code> executes the <code>FindCommand</code>. During execution, <code>FindCommand</code> calls <code>Model#updateFilteredExpenses(Predicate&lt;Expense&gt;)</code> on the list consisting of <code>test1</code> and <code>test2</code> which returns a set of <code>Tag</code>.
+<code>Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The 1st <code>Expense</code> is edited and updated in the <code>Model</code> using <code>Model#setExpense(Expense, Expense)</code> and is then shown on the UI.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the user tries to input 2 conditions of the same prefix, only the last condition will be used.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-support-enhanced-find-command"><a class="link" href="#aspect-data-structure-to-support-enhanced-find-command">Aspect: Data structure to support enhanced find command</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use a <code>MultiArgPredicate</code> to filter selected expense from the <code>FilteredList</code>.
+<code>MultiArgPredicate</code> holds and combines a set of predicates of various types into a single predicate.
+Set of predicates can but do not need to include <code>AllContainsKeywordsPredicate</code>, <code>AmountWithinRangePredicate</code> and <code>DateWithinRangePredicate</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Only one variation of input command required.</p>
+</li>
+<li>
+<p>No need for different kinds of find commands to handle filtering by different attribute.</p>
+</li>
+<li>
+<p>No need for different kinds of find command parsers to handle parsing of different variations of input command.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Higher complexity of code in FindCommandParser.</p>
+</li>
+<li>
+<p>User need to use prefix to indicate type of conditions inputted.</p>
+</li>
+<li>
+<p>Additional predicate <code>MultiArgPredicate</code> required to handle filtering by more than one condition.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 :</strong> <code>FindCommandParser</code> maps input command to individual type of predicate that is used to create find command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Commands are simpler and shorter.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Limited functionality - can only find by one condition.</p>
+</li>
+<li>
+<p>Use of different types of find commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.5, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.6, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1100,7 +1261,7 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.5. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.6. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1899,4 +2060,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 13:20:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 15:57:16 UTC</div></div></div></body></html>

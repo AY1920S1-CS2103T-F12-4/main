@@ -280,93 +280,20 @@ Usage:</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>Find in everything: find all</em><br>
-Find expenses that contain the keyword/s in any of its attributes.<br>
+<p><em>Find : find</em><br>
+Find expenses that satisfies conditions specified in the arguments.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>find all [KEYWORD] [KEYWORD…]</pre>
+<pre>find [d/KEYWORD[ KEYWORD…]] [a/LOWER AMOUNT LIMIT] [al/UPPER AMOUNT LIMIT] [sd/START DATE] [ed/END DATE]</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>find all lunch</code><br>
-Finds all expenses that contain the keyword ‘lunch’ in any of its attributes.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find by name: find name</em><br>
-Find expenses that contains the keyword/s in its name.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find name [KEYWORD] [KEYWORD…]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find name lunch bread</code><br>
-Finds the expenses that contain the keyword ‘lunch’ or ‘bread’ in its name.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find tag: find tag</em><br>
-Find expenses that are tagged with the specified tags<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find tag [TAG] [TAG…]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find tag school lunch</code><br>
-Finds the expenses that contain the tags ‘school’ or ‘lunch’.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find date: find date</em><br>
-Find expenses that occurred within a range of date, with various date formats.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find date [START DATE] [END DATE]
-find date [START DATE]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find date 10/9/19 20/9/19</code><br>
-Finds the expenses that occurred between 10 September and 20 September, 2019.<br>
-<code>find date 10/9/19</code><br>
-Finds the expenses that occurred between 10 September, 19 and the current date.<br>
-&#160;<br></p>
-</div>
-</li>
-<li>
-<p><em>Find by amount: find amt</em><br>
-Find expenses that cost between a specified amount.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>find amt [LOWER] [UPPER]
-find amt [LOWER]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>find amt 50</code><br>
-Finds the expenses that cost more than $50.<br>
-<code>find amt 30 50</code><br>
-Finds the expenses that cost between $30 and $50<br>
+<code>find d/lunch book a/2 al/20 sd/1/1/2019 ed/1/10/2019</code><br>
+Finds all expenses that contain the keyword ‘lunch’ or 'book' and amount between 2 and 20 dollars
+and date between 1 Jan 2019 to 1 Oct 2019 in any of its attributes.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -752,4 +679,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 13:20:49 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 15:57:16 UTC</div></div></div></body></html>
