@@ -26,10 +26,11 @@
 <li><a href="#archive">3.2. Archive</a></li>
 <li><a href="#tagging">3.3. Tagging</a></li>
 <li><a href="#enhanced-find">3.4. [Enhanced] Find</a></li>
-<li><a href="#history-feature">3.5. History feature</a></li>
-<li><a href="#Up-Down-Feature">3.6. Up/Down key feature</a></li>
-<li><a href="#logging">3.7. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.8. Configuration</a></li>
+<li><a href="#statistics">3.5. Statistics</a></li>
+<li><a href="#history-feature">3.6. History feature</a></li>
+<li><a href="#Up-Down-Feature">3.7. Up/Down key feature</a></li>
+<li><a href="#logging">3.8. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -185,7 +186,7 @@ The following class plays an important role at the architecture level:</p>
 <p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>ExpenseListPanel</code>, <code>StatusBarFooter</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g. CommandBox`, <code>ResultDisplay</code>, <code>ExpenseListPanel</code>, <code>StatusBarFooter</code>, <code>ChartBox</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -200,6 +201,9 @@ The following class plays an important role at the architecture level:</p>
 </li>
 <li>
 <p>Listens for changes to <code>Model</code> data so that the UI can be updated with the modified data.</p>
+</li>
+<li>
+<p>Has a specialized <code>Chart</code> component that deals specifically with the generation and rendering of charts onto the <code>MainWindow</code>.</p>
 </li>
 </ul>
 </div>
@@ -493,7 +497,6 @@ If the <code>currentStatePointer</code> is at index <code>stateList.size() - 1</
 <div class="content">
 <img src="images/CommitActivityDiagram.png" alt="CommitActivityDiagram">
 </div>
-<div class="title">Figure 16. Activity Diagram of state commit</div>
 </div>
 </div>
 <div class="sect3">
@@ -1233,9 +1236,75 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 </div>
 </div>
 <div class="sect2">
-<h3 id="history-feature"><a class="link" href="#history-feature">3.5. History feature</a></h3>
+<h3 id="statistics"><a class="link" href="#statistics">3.5. Statistics</a></h3>
+<div class="paragraph">
+<p>The statistics module is in charge of generating statistics from the currently displayed expenses and rendering it onto the main window.
+There are 2 components that help to do this - the chart component and the statistics generator component.</p>
+</div>
 <div class="sect3">
-<h4 id="implementation-4"><a class="link" href="#implementation-4">3.5.1. Implementation</a></h4>
+<h4 id="Design-Ui-Chart"><a class="link" href="#Design-Ui-Chart">3.5.1. Chart component</a></h4>
+<div id="fig-ChartClassDiagram" class="imageblock">
+<div class="content">
+<img src="images/ChartClassDiagram.png" alt="ChartClassDiagram">
+</div>
+<div class="title">Figure 16. Structure of the Chart Component</div>
+</div>
+<div class="paragraph">
+<p>There is a special <code>Chart</code> component that deals with the generation and rendering of specific charts based on user input and the expenses being displayed.
+Every concrete chart type, eg. <code>ExpenseTimelineChart</code>, <code>ExpenseBreakdownChart</code>, extends from <code>ExpenseChart</code>.
+The <code>ChartBox</code> is the main orchestrating class. It is updated on the selected <code>StatisticsFormat</code> and <code>StatisticsFormatOptions</code> by the <code>MainWindow</code>
+These are classes that represent user decisions on what to be displayed. Upon being updated, it creates the appropriate
+<code>ExpenseChart</code> with the selection options, to display the selected statistic with the currently displayed expenses. The concrete <code>ExpenseCharts</code> get the formatted statistics from the
+<code>StatisticsGenerator</code> component.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="statistics-generation-component"><a class="link" href="#statistics-generation-component">3.5.2. Statistics Generation Component</a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/StatisticsGeneratorClassDiagram.png" alt="StatisticsGeneratorClassDiagram">
+</div>
+<div class="title">Figure 17. Structure of the Statistics Generation Component</div>
+</div>
+<div class="paragraph">
+<p>The <code>Chart</code> component gets the data to be displayed from the StatisticsGenerator component. A number of classes,
+such as <code>BreakdownGenerator</code> and <code>TimelineGenerator</code> extend <code>StatisticsGenerator</code>, and each is in charge of creating a specific
+statistic type with data processed to fit the chart that displays them.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proposed-implementation-3"><a class="link" href="#proposed-implementation-3">3.5.3. Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The chart feature can be roughly described as two separate parts: the displaying of the chart itself and the functionality to
+switch between arbitrary charts. They will be discussed separately.</p>
+</div>
+<div class="sect4">
+<h5 id="displaying-of-charts"><a class="link" href="#displaying-of-charts">Displaying of charts</a></h5>
+<div class="paragraph">
+<p>The charts display statistics pertaining to whatever expenses are currently being listed in the <code>MainWindow</code>, and are updated live
+as the expenses being displayed change. This functionality is largely done by making use of the Observer pattern. An observable view of
+a list is provided by the <code>Logic</code>. The <code>MainWindow</code> has a reference to <code>Logic</code>, and passes a reference to the <code>ObservableList</code>
+of <code>Expense</code> to the <code>ChartBox</code> when instantiating it. Changes made to the list of expenses are thus propagated to <code>ChartBox</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>ChartBox</code> itself instantiates and displays an <code>ExpenseChart</code>, and passes the list of expenses to it. The <code>ExpenseChart</code>
+takes that list of expenses and generates the statistics to be displayed using its own <code>StatisticsGenerator</code>. In this manner,
+changes to the list of expenses are propagated to the display. An example of how this works can be seen in the sequence diagram
+below, in the example where the user changes the displayed expenses by using the <code>ListCommand</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DisplayStatisticsSequenceDiagram.png" alt="DisplayStatisticsSequenceDiagram">
+</div>
+<div class="title">Figure 18. Structure of the Statistics Generation Component</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="history-feature"><a class="link" href="#history-feature">3.6. History feature</a></h3>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.6.1. Implementation</a></h4>
 <div class="paragraph">
 <p>The history function will enable user to view previous actions.</p>
 </div>
@@ -1249,7 +1318,7 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 <p>All the histories will be store in a static list <code>cmdList</code> in <code>CommandHistory</code>.</p>
 </div>
 <div class="paragraph">
-<p>Additionally, a state pointer that initially point to the end of cmdList will be maintain for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.6, &#8220;Up/Down key feature&#8221;</a>)</p>
+<p>Additionally, a state pointer that initially point to the end of cmdList will be maintain for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.7, &#8220;Up/Down key feature&#8221;</a>)</p>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the storing operation works:</p>
@@ -1258,14 +1327,14 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 17. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 19. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
 </div>
 <div class="paragraph">
 <p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-command-histories-are-stored"><a class="link" href="#aspect-how-command-histories-are-stored">Aspect: How command histories are stored</a></h5>
 <div class="ulist">
@@ -1302,9 +1371,9 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 </div>
 </div>
 <div class="sect2">
-<h3 id="Up-Down-Feature"><a class="link" href="#Up-Down-Feature">3.6. Up/Down key feature</a></h3>
+<h3 id="Up-Down-Feature"><a class="link" href="#Up-Down-Feature">3.7. Up/Down key feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-5"><a class="link" href="#implementation-5">3.6.1. Implementation</a></h4>
+<h4 id="implementation-5"><a class="link" href="#implementation-5">3.7.1. Implementation</a></h4>
 <div class="paragraph">
 <p>Pressing Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key in <code>TextFiled</code> can navigate through the command history.</p>
 </div>
@@ -1328,7 +1397,7 @@ and the statePointer is not pointing to any command state.</p>
 <div class="content">
 <img src="images/UpDownKeyState0.png" alt="UpDownKeyState0">
 </div>
-<div class="title">Figure 18. Initial state of CommandHistory</div>
+<div class="title">Figure 20. Initial state of CommandHistory</div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user then execute the</p>
@@ -1337,7 +1406,7 @@ and the statePointer is not pointing to any command state.</p>
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 19. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 21. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
 </div>
 <div class="paragraph">
 <p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
@@ -1345,14 +1414,14 @@ and the statePointer is not pointing to any command state.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.8, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1383,7 +1452,7 @@ and the statePointer is not pointing to any command state.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.8. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2182,4 +2251,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 16:28:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 17:07:25 UTC</div></div></div></body></html>

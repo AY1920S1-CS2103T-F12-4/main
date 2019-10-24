@@ -18,7 +18,7 @@
 <li><a href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></li>
 <li><a href="#sorting-expenses-by-attributes-code-coming-in-v1-3-code">3.4. Sorting expenses by attributes: <code>[Coming in v1.3]</code></a></li>
 <li><a href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></li>
-<li><a href="#displaying-of-statistics-code-show-stats-code">3.6. Displaying of statistics: <code>show-stats</code></a></li>
+<li><a href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></li>
 <li><a href="#undo-and-redo-code-undo-redo-code">3.7. Undo and Redo: <code>undo/redo</code></a></li>
 <li><a href="#viewing-history-code-history-code">3.8. Viewing History: <code>history</code></a></li>
 <li><a href="#up-and-down-key-code-code">3.9. Up and down key: <code>&uarr;/&darr;</code></a></li>
@@ -469,17 +469,18 @@ Unarchives the record at the 5th index in the “2018 expenses” archive<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="displaying-of-statistics-code-show-stats-code"><a class="link" href="#displaying-of-statistics-code-show-stats-code">3.6. Displaying of statistics: <code>show-stats</code></a></h3>
+<h3 id="displaying-of-statistics-code-display-stats-code"><a class="link" href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>Display graph overview of expenses: show-stats graph</em><br>
-Displays a graph overview of specified expenses across a specified range of dates.<br>
+<p><em>Display timeline overview of expenses: display-stats timeline</em><br>
+Displays a timeline overview of the currently displayed expenses. The expenses over a
+specified time period are aggregated and added as a data point on the timeline.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>show-stats graph [OPTIONS]</pre>
+<pre>show-stats timeline [OPTIONS]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -488,64 +489,37 @@ Usage:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>--tags</code>, <code>-t</code>: Shows statistics only for expenses with specified tag. Multiple tags can be added separated by commas. Default: none</p>
-</li>
-<li>
-<p><code>--start-date</code>: Shows statistics only for expenses after the specified date. Default: earliest date an expense was added.</p>
-</li>
-<li>
-<p><code>--end-date</code>: Shows statistics only for expenses before the specified date. Default: current date</p>
-</li>
-<li>
-<p><code>--filters</code>: Shows statistics for statistics that match the specified filters. Default: none<br>
+<p><code>interval/</code>: Specifies the date interval to be used to split the expenses into groups by.
+Supported date intervals include 'day', 'week', 'month' and 'year'.
 &#160;<br></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>show-stats graph --start-date 01/01/2019 --end-date 01/02/2019 --tags bills,groceries</code><br>
-Displays a graph overview of expenses from 01/01/2019 to 01/02/2019 that contain the tags “bills” and “groceries”.<br>
+<code>show-stats timeline interval/week</code><br>
+Displays a timeline overview of the displayed expenses with the expenses being grouped into weeks.<br>
 &#160;<br></p>
 </div>
 </li>
 <li>
 <p><em>Display breakdown of expenses: show-stats breakdown</em><br>
-Displays a breakdown of specified expenses for specified expenses over a specified range of dates.<br>
+Displays a breakdown of expenses by tag for the currently displayed expenses. The total
+expenses per tag are totalled and displayed in a pie chart.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>show-stats breakdown [OPTIONS]</pre>
+<pre>show-stats breakdown</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Options:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>--type</code>: Specify display type, which includes <code>text</code> and <code>pie-chart</code>. Default: pie-chart</p>
-</li>
-<li>
-<p><code>--tags</code>: Shows statistics only for expenses with specified tag. Multiple tags can be added separated by commas. Default: none</p>
-</li>
-<li>
-<p><code>--start-date</code>: Shows statistics only for expenses after the specified date. Default: earliest date an expense was added.</p>
-</li>
-<li>
-<p><code>--end-date</code>: Shows statistics only for expenses before the specified date. Default: current date</p>
-</li>
-<li>
-<p><code>--filters</code>: Shows statistics for statistics that match the specified filters. Default: none<br>
-&#160;<br></p>
-</li>
-</ul>
+<p>&#160;<br></p>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>show-stats breakdown --type text</code><br>
-Shows a breakdown of all expenses in text form.<br>
+<code>show-stats breakdown</code><br>
+Shows a pie chart breakdown by tag of all currently displayed expenses.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -679,4 +653,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 16:28:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 17:07:25 UTC</div></div></div></body></html>
