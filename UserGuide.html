@@ -16,7 +16,7 @@
 <li><a href="#managing-expenses-code-expense-code">3.1. Managing expenses: <code>expense</code></a></li>
 <li><a href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></li>
 <li><a href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></li>
-<li><a href="#sorting-expenses-by-attributes-code-sort-code">3.4. Sorting expenses by attributes: <code>sort</code></a></li>
+<li><a href="#sorting-expenses-by-attributes-code-coming-in-v1-3-code">3.4. Sorting expenses by attributes: <code>[Coming in v1.3]</code></a></li>
 <li><a href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></li>
 <li><a href="#displaying-of-statistics-code-show-stats-code">3.6. Displaying of statistics: <code>show-stats</code></a></li>
 <li><a href="#undo-and-redo-code-undo-redo-code">3.7. Undo and Redo: <code>undo/redo</code></a></li>
@@ -309,7 +309,7 @@ Usage:</p>
 <div class="paragraph">
 <p>Example:<br>
 <code>find name lunch bread</code><br>
-Finds the expenses that contain the keywords ‘lunch’  and ‘bread’ in its name.<br>
+Finds the expenses that contain the keyword ‘lunch’ or ‘bread’ in its name.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -326,7 +326,7 @@ Usage:</p>
 <div class="paragraph">
 <p>Example:<br>
 <code>find tag school lunch</code><br>
-Finds the expenses that contain the tags ‘school’ and ‘lunch’.<br>
+Finds the expenses that contain the tags ‘school’ or ‘lunch’.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -337,15 +337,15 @@ Find expenses that occurred within a range of date, with various date formats.<b
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>find period [START DATE] [END DATE]
-find period [START DATE]</pre>
+<pre>find date [START DATE] [END DATE]
+find date [START DATE]</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>find period 10/9/19 20/9/19</code><br>
+<code>find date 10/9/19 20/9/19</code><br>
 Finds the expenses that occurred between 10 September and 20 September, 2019.<br>
-<code>find period 10/9/19</code><br>
+<code>find date 10/9/19</code><br>
 Finds the expenses that occurred between 10 September, 19 and the current date.<br>
 &#160;<br></p>
 </div>
@@ -357,7 +357,8 @@ Find expenses that cost between a specified amount.<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>find amt [LOWER] [UPPER]</pre>
+<pre>find amt [LOWER] [UPPER]
+find amt [LOWER]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -373,7 +374,7 @@ Finds the expenses that cost between $30 and $50<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-expenses-by-attributes-code-sort-code"><a class="link" href="#sorting-expenses-by-attributes-code-sort-code">3.4. Sorting expenses by attributes: <code>sort</code></a></h3>
+<h3 id="sorting-expenses-by-attributes-code-coming-in-v1-3-code"><a class="link" href="#sorting-expenses-by-attributes-code-coming-in-v1-3-code">3.4. Sorting expenses by attributes: <code>[Coming in v1.3]</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -751,4 +752,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 02:58:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 13:12:45 UTC</div></div></div></body></html>
