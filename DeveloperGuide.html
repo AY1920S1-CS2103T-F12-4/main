@@ -1300,6 +1300,122 @@ below, in the example where the user changes the displayed expenses by using the
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.4. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-approach-to-generating-of-statistics"><a class="link" href="#aspect-approach-to-generating-of-statistics">Aspect: Approach to generating of statistics</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative one (current choice):</strong> Each time there is a change in the backing list of expenses, the statistics are re-generated
+by the specific <code>StatisticsGenerator</code> for the appropriate statistics format.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Simplest implementation, each statistic generator can simply provide a pure function with no side effects that maps from
+a list of expenses to the desired format of statistics.</p>
+</li>
+<li>
+<p>Runtime is acceptable as most operations can run in O(n) time at worst, with a reasonable input size of expenses.</p>
+</li>
+<li>
+<p>Statelessness means it is thread safe.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Even in cases where the backing list of expenses only change by one element (eg. when a single expense is deleted), the entire
+set of statistics will still be re-generated from the list, thus potentially incurring an expensive operation each time
+the list is changed.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative two:</strong> Each <code>StatisticsGenerator</code> can be structured as a data structure that keeps track of the current statistics data.
+Upon a change in the backing list, only the specific change will be propagated, ie. addition of one new expense will internally call
+<code>StatisticsGenerator#AddExpense</code> which modifies the statistics data appropriately.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For simple list changes like adding/removing a single expense, this approach is much faster as it does not have to regenerate
+the statistics from the entire list, the statistics only needs to be updated with the specific change.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Complicated, need to include methods to handle cases where expenses are added, removed and updated, for every statistic type. If the entire
+list is changed frequently, there is no performance benefit.</p>
+</li>
+<li>
+<p>Worse in terms of testability. The <code>StatisticsGenerator</code> will depend on an internal state which can be complicated for certain statistics.</p>
+</li>
+<li>
+<p>Not thread safe, in the case of future upgrades to a multi-threaded application, will require adjustments.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative three:</strong> The data for certain aggregate statistics formats can be serialized. These formats include things like lifetime average spending
+per day/week/month, total number of expenses etc. Upon addition/removal/update of expenses, an in-mem copy of the serialized data can be updated
+and saved.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The data for certain statistics formats will always be quickly available by simply querying the storage.</p>
+</li>
+<li>
+<p>The data can be stored in a human readable format, so users can view those statistics without opening the application.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires extra complexity to serialize the data upon each change to the overall list of expenses.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="history-feature"><a class="link" href="#history-feature">3.6. History feature</a></h3>
@@ -1354,7 +1470,7 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-command-histories-are-stored"><a class="link" href="#aspect-how-command-histories-are-stored">Aspect: How command histories are stored</a></h5>
 <div class="ulist">
@@ -2309,4 +2425,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:31:39 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 06:18:25 UTC</div></div></div></body></html>
