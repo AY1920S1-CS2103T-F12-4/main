@@ -1318,7 +1318,27 @@ below, in the example where the user changes the displayed expenses by using the
 <p>All the histories will be store in a static list <code>cmdList</code> in <code>CommandHistory</code>.</p>
 </div>
 <div class="paragraph">
-<p>Additionally, a state pointer that initially point to the end of cmdList will be maintain for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.7, &#8220;Up/Down key feature&#8221;</a>)</p>
+<p>Also, a state pointer that initially point to the start of cmdList will be maintain
+for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.7, &#8220;Up/Down key feature&#8221;</a>)</p>
+</div>
+<div class="paragraph">
+<p>Additionally, it implements the following operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>CommandHistory#addCmdHistory(String)</code>&#8201;&#8212;&#8201;Store the command into cmdList.</p>
+</li>
+<li>
+<p><code>CommandHistory#peekNextCmd()</code>&#8201;&#8212;&#8201;Get the next command in command history.</p>
+</li>
+<li>
+<p><code>CommandHistory#peekPreviousCmd()</code>&#8201;&#8212;&#8201;Get the previous command in command history.</p>
+</li>
+<li>
+<p><code>CommandHistory#hasCommand()</code>&#8201;&#8212;&#8201;Check whether any command is executed.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the storing operation works:</p>
@@ -1383,7 +1403,7 @@ below, in the example where the user changes the displayed expenses by using the
 <div class="paragraph">
 <p>When initializing the fxml object <code>TextFiled</code> in <code>CommandBox</code> class,
 an action listener will be set to monitor the keyboard activity.
-Whenever a Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key is pressed, it will retrieve the previous/next command from the <code>CommandHistory</code> .</p>
+Whenever a Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key is pressed, it will retrieve the previous/next command from the <code>CommandHistory</code>.</p>
 </div>
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) mechanism behaves at each step.</p>
@@ -1400,16 +1420,54 @@ and the statePointer is not pointing to any command state.</p>
 <div class="title">Figure 20. Initial state of CommandHistory</div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user then execute the</p>
+<p>Step 2. The user then execute the delete 5 command to delete the 5th expense in the billboard.
+The LogicManager calls CommandHistory#addCmdHistory() and a new command is append to the end of cmdList.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
+<img src="images/UpDownKeyState1.png" alt="UpDownKeyState1">
 </div>
-<div class="title">Figure 21. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 21. State of CommandHistory after "delete 5" command</div>
 </div>
 <div class="paragraph">
-<p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
+<p>Step 3. The user now decides to execute the next command in the command history and press the Up(<code>&uarr;</code>)key.
+The actionListener of the TextField will call CommandHistory#peekNextCmd(),
+which will shift the statePointer once to the right,
+pointing it to the next command, and return it.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UpDownKeyState2.png" alt="UpDownKeyState2">
+</div>
+<div class="title">Figure 22. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the <code>statePointer</code> is at the end of cmdList, pointing to the final command state,
+then there are no next command states to get,
+it will return the last command to the user rather than attempting to get the next command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the Up(<code>&uarr;</code>)key works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/StoreSequenceDiagram.png" alt="StoreSequenceDiagram">
+</div>
+<div class="title">Figure 23. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
+</div>
+<div class="paragraph">
+<p>The Down(<code>&darr;</code>) key does the opposite — it calls CommandHistory#peekPreviousCmd(),
+which shifts the statePointer once to the left,
+pointing to the previous command state, and return the command.</p>
 </div>
 </div>
 </div>
@@ -2251,4 +2309,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-24 17:07:25 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-25 03:31:39 UTC</div></div></div></body></html>
