@@ -1456,6 +1456,12 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CommandHistoryClassDiagram.png" alt="CommandHistoryClassDiagram">
+</div>
+<div class="title">Figure 19. Sequence diagram of CommandHistory class</div>
+</div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the storing operation works:</p>
 </div>
@@ -1463,7 +1469,7 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 19. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 20. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
 </div>
 <div class="paragraph">
 <p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
@@ -1533,7 +1539,7 @@ and the statePointer is not pointing to any command state.</p>
 <div class="content">
 <img src="images/UpDownKeyState0.png" alt="UpDownKeyState0">
 </div>
-<div class="title">Figure 20. Initial state of CommandHistory</div>
+<div class="title">Figure 21. Initial state of CommandHistory</div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user then execute the delete 5 command to delete the 5th expense in the billboard.
@@ -1543,7 +1549,7 @@ The LogicManager calls CommandHistory#addCmdHistory() and a new command is appen
 <div class="content">
 <img src="images/UpDownKeyState1.png" alt="UpDownKeyState1">
 </div>
-<div class="title">Figure 21. State of CommandHistory after "delete 5" command</div>
+<div class="title">Figure 22. State of CommandHistory after "delete 5" command</div>
 </div>
 <div class="paragraph">
 <p>Step 3. The user now decides to execute the next command in the command history and press the Up(<code>&uarr;</code>)key.
@@ -1555,7 +1561,7 @@ pointing it to the next command, and return it.</p>
 <div class="content">
 <img src="images/UpDownKeyState2.png" alt="UpDownKeyState2">
 </div>
-<div class="title">Figure 22. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 23. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1576,9 +1582,9 @@ it will return the last command to the user rather than attempting to get the ne
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/StoreSequenceDiagram.png" alt="StoreSequenceDiagram">
+<img src="images/UpkeySequenceDiagram.png" alt="UpkeySequenceDiagram">
 </div>
-<div class="title">Figure 23. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 24. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="paragraph">
 <p>The Down(<code>&darr;</code>) key does the opposite — it calls CommandHistory#peekPreviousCmd(),
@@ -2442,4 +2448,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-26 11:12:45 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-26 14:17:21 UTC</div></div></div></body></html>
