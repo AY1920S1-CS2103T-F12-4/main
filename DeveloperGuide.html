@@ -584,7 +584,7 @@ If the <code>currentStatePointer</code> is at index <code>stateList.size() - 1</
 <p>Creating an archive</p>
 </li>
 <li>
-<p>Added an expense to an archive</p>
+<p>Adding an expense to an archive</p>
 </li>
 <li>
 <p>Reverting/"unarchiving" an archived expense</p>
@@ -602,6 +602,12 @@ If the <code>currentStatePointer</code> is at index <code>stateList.size() - 1</
 </div>
 <div class="paragraph">
 <p>These actions are facilitated by the <code>ArchiveWrapper</code> and <code>Archive</code> classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/ArchiveClassDiagram.png" alt="ArchiveClassDiagram">
+</div>
+<div class="title">Figure 16. Structure and associations of <code>ArchiveWrapper</code> and <code>Archive</code> classes</div>
 </div>
 <div class="ulist">
 <ul>
@@ -675,25 +681,26 @@ Such operations include:</p>
 <p>Given below is an example usage scenario of the add expense to archive function, showing how the command is parsed in <code>Logic</code> and how it interacts with <code>Model</code>:<br></p>
 </div>
 <div class="paragraph">
-<p>Firstly, the user has the application running and has a non empty list of current expenses. The user can enter the <code>list</code> command to bring up
+<p>Step 1. The user has the application running and has a non empty list of current expenses. The user can enter the <code>list</code> command to bring up
 this list.<br></p>
 </div>
 <div class="paragraph">
-<p>Next, the user executes the command <code>archive add 3 arc/archiveName</code> to archive an expense.<br>
+<p>Step 2. The user executes the command <code>archive add 3 arc/archiveName</code> to archive an expense.<br>
 The command is first parsed by <code>BillboardParser</code> to determine what kind of general command it is. <code>archive</code> indicates it is an archive command so the remaining input is parsed through <code>ArchiveCommandParser</code>.<br>
 <code>ArchiveCommandParser</code> determines which archive command should be called. <code>add</code> indicates it is an add command, so the input is parsed for the final time through <code>AddArchiveCommandParser</code> to extract out the arguments entered for the operation.
 In this case, the arguments are <code>3</code> and <code>archiveName</code><br></p>
 </div>
 <div class="paragraph">
-<p>This parsing process is shown in the cropped portion of the full sequence diagram below:</p>
+<p>This layered parsing process can be visualised below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddArchiveCommandSequenceDiagram_Parsing.png" alt="AddArchiveCommandSequenceDiagram Parsing">
 </div>
+<div class="title">Figure 17. Process of parsing <code>AddArchiveCommand</code> in a cropped sequence diagram</div>
 </div>
 <div class="paragraph">
-<p><code>AddArchiveCommandParser</code> then returns an <code>AddArchiveCommand</code> object to be executed. The <code>AddArchiveCommand</code> performs two checks before executing any changes:</p>
+<p>Step 3. <code>AddArchiveCommandParser</code> then returns an <code>AddArchiveCommand</code> object to be executed. The <code>AddArchiveCommand</code> performs two checks before executing any changes:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -733,17 +740,19 @@ then a new archive is created with the given archive name using <code>Model#addA
 <div class="content">
 <img src="images/AddArchiveCommandSequenceDiagram_executeCommand.png" alt="AddArchiveCommandSequenceDiagram executeCommand">
 </div>
+<div class="title">Figure 18. Interactions between <code>Model</code> and <code>AddArchiveCommand</code> during the execution of the command</div>
 </div>
 <div class="paragraph">
-<p>Finally, a <code>CommandResult</code> object initialised with the add expense to archive success message is returned to indicate to the user that the operation was successful.<br></p>
+<p>Step 4. Finally, a <code>CommandResult</code> object initialised with the add expense to archive success message is returned to indicate to the user that the operation was successful.<br></p>
 </div>
 <div class="paragraph">
-<p>Below is the full sequence diagram of the operation:</p>
+<p>Full Sequence diagram of the operation:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddArchiveCommandSequenceDiagram.png" alt="AddArchiveCommandSequenceDiagram">
 </div>
+<div class="title">Figure 19. Full sequence diagram of the operation</div>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarizes what happens when a user executes a new <code>AddArchiveCommand</code>:</p>
@@ -752,6 +761,7 @@ then a new archive is created with the given archive name using <code>Model#addA
 <div class="content">
 <img src="images/AddArchiveCommandActivityDiagram.png" alt="AddArchiveCommandActivityDiagram">
 </div>
+<div class="title">Figure 20. <code>AddArchiveCommand</code> activity diagram</div>
 </div>
 </div>
 <div class="sect4">
@@ -1247,7 +1257,7 @@ There are 2 components that help to do this - the chart component and the statis
 <div class="content">
 <img src="images/ChartClassDiagram.png" alt="ChartClassDiagram">
 </div>
-<div class="title">Figure 16. Structure of the Chart Component</div>
+<div class="title">Figure 21. Structure of the Chart Component</div>
 </div>
 <div class="paragraph">
 <p>There is a special <code>Chart</code> component that deals with the generation and rendering of specific charts based on user input and the expenses being displayed.
@@ -1264,7 +1274,7 @@ These are classes that represent user decisions on what to be displayed. Upon be
 <div class="content">
 <img src="images/StatisticsGeneratorClassDiagram.png" alt="StatisticsGeneratorClassDiagram">
 </div>
-<div class="title">Figure 17. Structure of the Statistics Generation Component</div>
+<div class="title">Figure 22. Structure of the Statistics Generation Component</div>
 </div>
 <div class="paragraph">
 <p>The <code>Chart</code> component gets the data to be displayed from the StatisticsGenerator component. A number of classes,
@@ -1296,7 +1306,7 @@ below, in the example where the user changes the displayed expenses by using the
 <div class="content">
 <img src="images/DisplayStatisticsSequenceDiagram.png" alt="DisplayStatisticsSequenceDiagram">
 </div>
-<div class="title">Figure 18. Structure of the Statistics Generation Component</div>
+<div class="title">Figure 23. Structure of the Statistics Generation Component</div>
 </div>
 </div>
 </div>
@@ -1460,7 +1470,7 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 <div class="content">
 <img src="images/CommandHistoryClassDiagram.png" alt="CommandHistoryClassDiagram">
 </div>
-<div class="title">Figure 19. Sequence diagram of CommandHistory class</div>
+<div class="title">Figure 24. Sequence diagram of CommandHistory class</div>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the storing operation works:</p>
@@ -1469,7 +1479,7 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 20. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 25. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
 </div>
 <div class="paragraph">
 <p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
@@ -1539,7 +1549,7 @@ and the statePointer is not pointing to any command state.</p>
 <div class="content">
 <img src="images/UpDownKeyState0.png" alt="UpDownKeyState0">
 </div>
-<div class="title">Figure 21. Initial state of CommandHistory</div>
+<div class="title">Figure 26. Initial state of CommandHistory</div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user then execute the delete 5 command to delete the 5th expense in the billboard.
@@ -1549,7 +1559,7 @@ The LogicManager calls CommandHistory#addCmdHistory() and a new command is appen
 <div class="content">
 <img src="images/UpDownKeyState1.png" alt="UpDownKeyState1">
 </div>
-<div class="title">Figure 22. State of CommandHistory after "delete 5" command</div>
+<div class="title">Figure 27. State of CommandHistory after "delete 5" command</div>
 </div>
 <div class="paragraph">
 <p>Step 3. The user now decides to execute the next command in the command history and press the Up(<code>&uarr;</code>)key.
@@ -1561,7 +1571,7 @@ pointing it to the next command, and return it.</p>
 <div class="content">
 <img src="images/UpDownKeyState2.png" alt="UpDownKeyState2">
 </div>
-<div class="title">Figure 23. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 28. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1584,7 +1594,7 @@ it will return the last command to the user rather than attempting to get the ne
 <div class="content">
 <img src="images/UpkeySequenceDiagram.png" alt="UpkeySequenceDiagram">
 </div>
-<div class="title">Figure 24. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 29. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="paragraph">
 <p>The Down(<code>&darr;</code>) key does the opposite — it calls CommandHistory#peekPreviousCmd(),
@@ -2448,4 +2458,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-26 14:17:21 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-26 19:42:38 UTC</div></div></div></body></html>
