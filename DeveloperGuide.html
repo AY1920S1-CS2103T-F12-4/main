@@ -871,7 +871,7 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 <p>Removing tags from an expense</p>
 </li>
 <li>
-<p>Filtering expenses by tag</p>
+<p>Filtering expenses by tags</p>
 </li>
 <li>
 <p>Listing all existing tags</p>
@@ -928,7 +928,7 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 <p><code>Model#incrementCount(Set&lt;Tag&gt;)</code></p>
 </li>
 <li>
-<p><code>Model#decreaseCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;<code>TagCountManager#removeZeroCount()</code> and <code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code> is called in this method as well to remove tags that does not have any expense tagged to it from <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
+<p><code>Model#decreaseCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;<code>TagCountManager#removeZeroCount()</code> and <code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code> is called in this method as well to remove tags not tagged to any expense from <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
 </li>
 <li>
 <p><code>Model#getTagNames()</code></p>
@@ -938,20 +938,24 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 <div class="paragraph">
 <p>Given below is an example usage scenario and how the adding tag mechanism behaves at each step.</p>
 </div>
-<div class="paragraph">
-<p>Step 1.
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Step 1:</strong>
 The user launches the application. The <code>Model</code> is initialized with saved data. All tags are loaded into <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 2.
+</li>
+<li>
+<p><strong>Step 2:</strong>
 User enters the command <code>tag add 1 t/test t/test2</code> to add tags to the 1st <code>Expense</code> in Billboard. <code>BillboardParser</code> parses the command, creating a <code>TagCommandParser</code>.
 The <code>TagCommandParser</code> then parses <code>add 1 t/test t/test2</code> and creates an <code>AddTagCommandParser</code>. Subsequently, the <code>AddTagCommandParser</code> parses <code>1 t/test1 t/test2</code> into <code>Index</code> 1 and
 a list of <code>String</code> consisting of <code>test1</code> and <code>test2</code>. They are then used to create <code>AddTagCommand</code> which is returned to <code>LogicManager</code>.</p>
-</div>
-<div class="paragraph">
-<p>Step 3.
+</li>
+<li>
+<p><strong>Step 3:</strong>
 <code>LogicManager</code> executes the <code>AddTagCommand</code>. During execution, <code>AddTagCommand</code> calls <code>Model#retrieveTags(Set&lt;String&gt;)</code> on the list consisting of <code>test1</code> and <code>test2</code> which returns a set of <code>Tag</code>.
-<code>Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The 1st <code>Expense</code> is edited and updated in the <code>Model</code> using <code>Model#setExpense(Expense, Expense)</code> and is then shown on the UI.</p>
+<code>Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The 1st <code>Expense</code> is edited and updated in the <code>Model</code> using <code>Model#setExpense(Expense, Expense)</code> and is then shown on the GUI.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -961,7 +965,7 @@ a list of <code>String</code> consisting of <code>test1</code> and <code>test2</
 </td>
 <td class="content">
 Duplicate tags in an <code>Expense</code> is not allowed.
-If the user tries to add existing <code>Tag</code> to an <code>Expense</code>, it will not be added, and <code>Model#incrementCount</code> will not be called.
+If the user tries to add an existing <code>Tag</code> to an <code>Expense</code>, it will not be added, and <code>Model#incrementCount</code> will not be called.
 If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <code>Tag</code>, it will only be added once and number of expense under that <code>Tag</code> will only increment by 1.
 </td>
 </tr>
@@ -976,12 +980,30 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 </div>
 </div>
 <div class="paragraph">
+<p>Figure 21. Sequence diagram of executing AddTagCommand.</p>
+</div>
+<div class="paragraph">
 <p>The following activity diagram summarizes what happens when a user enters a command to add tags to an expense.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</td>
+</tr>
+</table>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddTagActivityDiagram.png" alt="AddTagActivityDiagram">
 </div>
+</div>
+<div class="paragraph">
+<p>Figure 22. Activity diagram of executing AddTagCommand.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2458,4 +2480,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-26 19:42:38 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-27 09:39:30 UTC</div></div></div></body></html>
