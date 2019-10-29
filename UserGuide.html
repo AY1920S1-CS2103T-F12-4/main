@@ -143,13 +143,11 @@ Usage:</p>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>expense edit 2 -d “buy a math book”</code><br></p>
+<code>expense edit 2 -d “buy a math book”</code><br>
+Edit the expense at index 2  with new description of: “buy a math book”<br></p>
 </div>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p>Edit the expense at index 2  with new description of: “buy a math book”<br></p>
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
@@ -209,41 +207,60 @@ Displays below expenses (for example) in the GUI:<br></p>
 <ol class="arabic">
 <li>
 <p><em>Adding a tag: tag add</em><br>
-Adds a tag to the expense at the specified index.<br>
+Adds your input tag/s to the expense at the index you have specified.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>tag add [INDEX] [TAG]</pre>
+<pre>tag add [INDEX] [TAG] [TAG…]</pre>
 </div>
 </div>
 <div class="paragraph">
+<p>Options:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>t/ : Specifies the name of the tag/s you want to add to the expense.(REQUIRED)<br>
+&#160;<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
 <p>Example:<br>
-<code>tag add 2 “monthly bills”</code><br>
-Adds the tag “monthly bills” to the expense at index 2.<br>
+<code>tag add 2 t/monthlybills t/electricity</code><br>
+Adds the tags “monthly bills” and "electricity" to the expense at index 2.<br>
 &#160;<br></p>
 </div>
 </li>
 <li>
-<p><em>Deleting a tag: tag rm</em><br>
-Deletes a tag from the expense of the specified index.<br>
+<p><em>Removing a tag: tag rm</em><br>
+Deletes your input tag/s from the expense at the index you have specified.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>tag rm [INDEX] [TAG]</pre>
+<pre>tag rm [INDEX] [TAG] [TAG…]</pre>
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>t/ : Specifies the name of the tag/s you want to remove from the expense.(REQUIRED)<br>
+&#160;<br></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>tag rm 2 “monthly bills”</code><br>
-Deletes the tag “monthly bills” from the expense at index 2.<br>
+<code>tag rm 2 t/monthly bills t/electricity</code><br>
+Removes the tags “monthly bills” and "electricity" from the expense at index 2.<br>
 &#160;<br></p>
 </div>
 </li>
 <li>
 <p><em>Filtering by tag: tag filter</em><br>
-Filters expenses by the specified tag/s.<br>
+Filters expenses by your input tag/s.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
@@ -251,10 +268,18 @@ Usage:</p>
 <pre>tag filter [TAG] [TAG…]</pre>
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>t/ : Specifies name of the tag/s you want to filter expenses with.(REQUIRED)<br>
+&#160;<br></p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>Example:<br>
-tag filter “home” “monthly bills”<br>
-Lists out all the expenses that contains the  tags “home” and “monthly bills”<br>
+<code>tag filter t/home t/monthly bills</code><br>
+Lists out all the expenses that contains the tags “home” or “monthly bills”<br>
 &#160;<br></p>
 </div>
 </li>
@@ -653,4 +678,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-28 17:25:06 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-29 09:57:17 UTC</div></div></div></body></html>
