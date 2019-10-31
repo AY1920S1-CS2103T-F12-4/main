@@ -503,13 +503,13 @@ Unarchives the record at the 5th index in the “2018 expenses” archive<br>
 <ol class="arabic">
 <li>
 <p><em>Display timeline overview of expenses: display-stats timeline</em><br>
-Displays a timeline overview of the currently displayed expenses. The expenses over a
-specified time period are aggregated and added as a data point on the timeline.<br>
+You can view a timeline overview of your currently displayed expenses. The expenses over a
+specified time period are aggregated and added as data points on the timeline.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>show-stats timeline [OPTIONS]</pre>
+<pre>display-stats timeline [OPTIONS]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -526,20 +526,20 @@ Supported date intervals include 'day', 'week', 'month' and 'year'.
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>show-stats timeline interval/week</code><br>
+<code>display-stats timeline interval/week</code><br>
 Displays a timeline overview of the displayed expenses with the expenses being grouped into weeks.<br>
 &#160;<br></p>
 </div>
 </li>
 <li>
-<p><em>Display breakdown of expenses: show-stats breakdown</em><br>
-Displays a breakdown of expenses by tag for the currently displayed expenses. The total
+<p><em>Display breakdown of expenses: display-stats breakdown</em><br>
+You can view a breakdown of expenses by tag for the currently displayed expenses. The total
 expenses per tag are totalled and displayed in a pie chart.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>show-stats breakdown</pre>
+<pre>display-stats breakdown</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -547,8 +547,29 @@ Usage:</p>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>show-stats breakdown</code><br>
+<code>display-stats breakdown</code><br>
 Shows a pie chart breakdown by tag of all currently displayed expenses.<br>
+&#160;<br></p>
+</div>
+</li>
+<li>
+<p><em>Display heatmap of expenses: display-stats heatmap</em><br>
+You can view a heatmap of expenses per day for the currently displayed expenses, limited to the past year. The larger
+the bubble for the particular day, the higher the expense.<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>display-stats heatmap</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>display-stats heatmap</code><br>
+Shows a bubble chart heatmap of all currently displayed expenses, limited to a year.<br>
 &#160;<br></p>
 </div>
 </li>
@@ -682,4 +703,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 08:04:02 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-10-31 15:52:02 UTC</div></div></div></body></html>
