@@ -1,0 +1,634 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Chia Wei Hao, David - Project Portfolio for Billboard</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><!-- #seedu-header--><!--   nav.navbar.navbar-lg.navbar-light.bg-lighter--><!--     .container--><!--       a.navbar-brand href='https://se-edu.github.io/'--><!--        img src=(site_url 'images/SeEduLogo.png') alt='SE-EDU'--><!--       ul.navbar-nav--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level1' AB-1--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level2' AB-2--><!--         li.nav-item--><!--           a.nav-link.active href=(site_url 'index.html') AB-3--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level4' AB-4--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/collate' Collate--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/se-book' Book--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/learningresources' Resources--><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">Billboard</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://https://github.com/AY1920S1-CS2103T-F12-4/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Chia Wei Hao, David - Project Portfolio for Billboard</h1></div><div id="content"><div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="purpose-of-portfolio"><a class="link" href="#purpose-of-portfolio">Purpose of portfolio</a></h3>
+<div class="paragraph">
+<p>The purpose of this portfolio is to document my overall contributions to the Software Engineering project, <em>Billboard</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="about-the-project"><a class="link" href="#about-the-project">About the project</a></h3>
+<div class="paragraph">
+<p>In the Software Engineering Module <em>CS2103T</em>, My team of 5 students were tasked with enhancing an existing addressbook desktop application for our project.
+We decided to transform the base code of the aforementioned addressbook application into a personal financial management system called <em>Billboard</em>, targeted at students.</p>
+</div>
+<div class="paragraph">
+<p>This enhanced application enables students to record their daily expenses and has advanced expense tracking and management features.
+The advanced features for <strong>tracking</strong> expenses are generating graphs from expense data, and filtering capabilities; while
+the advanced features for <strong>managing</strong> expenses are tagging and archiving expenses.</p>
+</div>
+<div class="paragraph">
+<p>Since <em>Billboard</em> is a Command Line Interface (CLI) application, meaning that all interactions between user and the application are done through typing only, it is meant for students who
+type fast. Furthermore, <em>Billboard</em> also has a fully functioning Graphical User Interface (GUI), making it user friendly.</p>
+</div>
+<div class="paragraph">
+<p>The role I played in this project was to design and implement the code for the <code>archive</code> feature. Additionally, I was
+tasked with improving the application&#8217;s aesthetic design by adding major cosmetic tweaks to the application&#8217;s GUI.
+The following sections illustrate these enhancements in greater detail, including the relevant documentation I have added to the user and
+developer guides concerning these enhancements.</p>
+</div>
+<div class="paragraph">
+<p>Note the following formatting used in this document:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This symbol indicates important information.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>archive</code> - Text in Consolas font colored red indicates that this is a command that can be inputted into the command line and executed by <em>Billboard</em>.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>ArchiveWrapper</strong></code> - <strong>Bold</strong> text in Consolas font colored red indicates a component, class, object or variable in the architecture of <em>Billboard</em>.</p>
+</div>
+<div class="paragraph">
+<p>"<em>movie tickets</em>" - Italicised text with quotation marks indicates the name of an expense or archive used for demonstration purposes.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section summarises what I have contributed to <em>Billboard</em>. This comprises of technical, documentation or any other meaningful contributions.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: I added all archive related functions.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does</strong>: My enhancement allows the user to create archives, add an expense to an archive, revert/"unarchive" an archived expense and permanently delete expenses in an archive.</p>
+</li>
+<li>
+<p><strong>Justification</strong>: Suppose users have old or outdated expenses but they do not want to permanently delete them as they may refer to these expenses again in the future for accounting purposes.
+Users can simply archive these expenses, which <strong>de-clutters their list of current expenses.</strong>
+Furthermore, as users are able to group expenses into different archives, they are offered <strong>greater flexibility in expense organisation.</strong>
+Therefore, this feature contributes great value to the application, as it provides users with a method of organising and tracking their expenses in the long run.</p>
+</li>
+<li>
+<p><strong>Highlights</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>This enhancement works well with most existing features and features to be added in future. This is because expenses that are archived cannot be edited (e.g. adding a tag) as they
+are considered as "non active" expenses and are being kept as records only. Therefore the archive enhancement, in a sense, is isolated from the other expense modifying enhancements which
+reduces the possibility of archive bugs due to integration with other features.</p>
+</li>
+<li>
+<p>A thorough analysis of other design alternatives was required as the archive feature involved storing and maintaining multiple distinct lists of expenses, and so different designs to implement
+this would yield varying results regarding the application&#8217;s overall speed performance.<br>
+Ultimately, the design of the current implementation was chosen as it is relatively easy to implement and
+maintained the application&#8217;s performance above the acceptable benchmark. This benchmark is the non functional requirement of being able to hold up to 1000 expenses without a noticeable
+sluggishness in performance for typical usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#=undefined&amp;search=davidcwh">Functional code tracked with RepoSense</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>There are 5 releases of <em>Billboard</em> in total, consisting of versions 1.1, 1.2, 1.2.1, 1.3 and 1.4. I managed and released versions 1.1 and 1.2 on Github.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>I designed and implemented the default Billboard color scheme, called the "Inertia theme", to give the application its unique aesthetic identity and make it more user-friendly.
+Additionally, I added an extra Pastel color theme for users who prefer a brighter interface (Pull request <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/104">#104</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>I wrote the team&#8217;s About Us document, which consisted of information about our team members: <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/7">#7</a></p>
+</li>
+<li>
+<p>I added our project&#8217;s user stories, use cases and non functional requirements to the Developer Guide: <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/19">#19</a></p>
+</li>
+<li>
+<p>I renamed all instances of placeholder name "<em>Financial Tracker</em>" to "<em>Billboard</em>" in User Guide, Developer Guide and Readme documents: <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/26">26</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pull Requests of team members reviewed and approved by me:
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/12">#12</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/25">#25</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/39">#39</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/50">#50</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/52">#52</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/57">#57</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/58">#58</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/63">#63</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/70">#70</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/73">#73</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/76">#76</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/90">#90</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/97">#97</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/105">#105</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/107">#107</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/109">#109</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/112">#112</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/113">#113</a>,
+<a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/185">#185</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given below is an excerpt from the <em><strong>Billboard User Guide</strong></em> detailing instructions on how to use the new <code>archive</code> feature I added.
+This excerpt reflects my ability to write documentation meant for students, the targeted user group of the application, in a clear and concise manner so that they will be able to easily
+understand what each <code>archive</code> operation does and how to use them.</p>
+</div>
+<div class="paragraph">
+<p>Do note that due to the page limit, only the feature preface and the <strong> <em>Adding an expense to an archive:</strong> <code>archive add</code></em>  sections are included in full as a sample representative of my documentation skills.
+The documentation of the other commands will be an abbreviated version (Step-by-step example usage for these commands are left out).
+You may refer to the <a href="https://ay1920s1-cs2103t-f12-4.github.io/main/UserGuide.html#archiving-past-expenses-code-archive-code"><em><strong>Billboard User Guide</strong></em></a>
+for the full version.</p>
+</div>
+<div class="sect2">
+<h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">Archiving past expenses: <code>archive</code></a></h3>
+<div class="paragraph">
+<p>This feature allows you to archive expenses. An expense is archived when you want remove it from
+the current list of expenses, but still want to keep a record of it and retrieve it again in the future
+for accounting purposes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<strong>Archived expenses cannot be edited.</strong><br>
+Archived expenses are not considered current and "active" expenses so you are unable to edit them.<br>
+You would need to unarchive an expense first before you would be able to perform expense editing commands on it such as
+<code>edit</code>, <code>tag add</code> and <code>tag remove</code> commands.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Although this section of the user guide provides comprehensive information on the usage of <code>archive</code> commands,
+you could also view the list of all supported archive commands within the application by typing the command word <code>archive</code>
+into the command box and press <code>Enter</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following are all the archive commands, descriptions of how they work and their usage.</p>
+</div>
+<div class="paragraph">
+<p>Note the formatting of command parameters used in this section:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[INDEX]: The list index of the expense involved in the command.</p>
+</li>
+<li>
+<p><code>arc/</code>: Prefix to indicate that the text appended to it is the specified archive name.</p>
+</li>
+<li>
+<p>[ARCHIVE NAME]: Specified name of archive involved in the command. Archive name is case-sensitive and must be non-empty. Names with symbols and multiple words are accepted as well.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="em-adding-an-expense-to-an-archive-code-archive-add-code-em-br"><a class="link" href="#em-adding-an-expense-to-an-archive-code-archive-add-code-em-br"><em>Adding an expense to an archive: <code>archive add</code></em><br></a></h4>
+<div class="paragraph">
+<p>This command allows you to transfer the expense at the specified index to your specified archive.<br>
+If the archive you entered does not exist, then a new archive is created before the expense is added.<br>
+<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive add [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p>Suppose you want to archive the expense called "<em>joker movie tickets</em>" to an archive called "<em>movies</em>".<br>
+To archive the expense:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Type <code>archive add 7 arc/movies</code> into the command box, and press <code>Enter</code> to execute the command:</p>
+<div class="paragraph">
+<div class="title">The expense "<em>joker movie tickets</em>" is at index 7 in the list.</div>
+<p><span class="image"><img src="../images/archiveAddEnterCommand.png" alt="archiveAddEnterCommand"></span></p>
+</div>
+</li>
+<li>
+<p>The next step can be split into 2 scenarios:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>2a. <strong>There is no existing archive called "<em>movies</em>"</strong><br>
+A new archive called "<em>movies</em>" is created before "<em>joker movie tickets</em>" is added to it.<br>
+The result box will display the message to indicate the archive creation and transfer of the expense:</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/archiveAddArchiveCreatedMessage.png" alt="archiveAddArchiveCreatedMessage">
+</div>
+</div>
+</li>
+<li>
+<p>2b. <strong>There is an existing archive called "<em>movies</em>"</strong><br>
+"<em>joker movie tickets</em>" is simply added to the existing "<em>movies</em>" archive.<br>
+The result box will display the message to indicate the transfer of the expense:</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/archiveAddExistentArchiveMessage.png" alt="archiveAddExistentArchiveMessage">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-listing-out-all-archives-code-archive-listall-code-em-abbreviated-br"><a class="link" href="#em-listing-out-all-archives-code-archive-listall-code-em-abbreviated-br"><em>Listing out all archives: <code>archive listall</code></em> [Abbreviated]<br></a></h4>
+<div class="paragraph">
+<p>This command informs you of all the existing archives by displaying a list of all existing archive names.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive listall</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-abbreviated-br"><a class="link" href="#em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-abbreviated-br"><em>Listing expenses in a particular archive: <code>archive list</code></em> [Abbreviated]<br></a></h4>
+<div class="paragraph">
+<p>This command allows you to view the list of expenses of your specified archive.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive list [ARCHIVE NAME]</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-deleting-an-archived-expense-code-archive-delete-code-em-abbreviated-br"><a class="link" href="#em-deleting-an-archived-expense-code-archive-delete-code-em-abbreviated-br"><em>Deleting an archived expense: <code>archive delete</code></em> [Abbreviated]<br></a></h4>
+<div class="paragraph">
+<p>This command allows you to delete the expense at the specified index from your specified archive.<br>
+If the archived expense you deleted was the last expense in the archive, the empty archive will be deleted.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive delete [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-reverting-an-archived-expense-code-archive-revert-code-em-abbreviated-br"><a class="link" href="#em-reverting-an-archived-expense-code-archive-revert-code-em-abbreviated-br"><em>Reverting an archived expense: <code>archive revert</code></em> [Abbreviated]<br></a></h4>
+<div class="paragraph">
+<p>This command allows you to revert/unarchive the expense at the specified index from your specified archive, transferring it back to your current list of expenses.<br>
+If the archive expense you reverted was the last expense in the archive, the empty archive will be deleted.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive revert [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given below are my documentation in the Developer Guide. They reflect my ability to write technical documentation and showcase the technical depth of my contributions to the project.</p>
+</div>
+<div class="paragraph">
+<p>Do note that due to the page limit, the Full Sequence Diagram and Activity Diagram of <code><strong>AddArchiveCommand</strong></code> are omitted.
+You may refer to the full <a href="https://ay1920s1-cs2103t-f12-4.github.io/main/DeveloperGuide.html#archive"><strong><em>Billboard Developer Guide</em></strong></a> to view these diagrams.</p>
+</div>
+<div class="sect2">
+<h3 id="archive"><a class="link" href="#archive">Archive</a></h3>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<div class="sect4">
+<h5 id="modelling-archive"><a class="link" href="#modelling-archive">Modelling Archive</a></h5>
+<div class="paragraph">
+<p>The archive feature supports the following actions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Creating an archive</p>
+</li>
+<li>
+<p>Adding an expense to an archive</p>
+</li>
+<li>
+<p>Reverting/"unarchiving" an archived expense</p>
+</li>
+<li>
+<p>Deleting an archived expense</p>
+</li>
+<li>
+<p>Displaying the list of expense of a particular archive</p>
+</li>
+<li>
+<p>Listing all existing archive names</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These actions are facilitated by the <code><strong>ArchiveWrapper</strong></code> and <code><strong>Archive</strong></code> classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ArchiveClassDiagram.png" alt="ArchiveClassDiagram">
+</div>
+<div class="title">Figure 1. Structure and associations of <code><strong>ArchiveWrapper</strong></code> and <code><strong>Archive</strong></code> classes</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>Archive</strong></code> extends from <code><strong>ExpenseList</strong></code> in order to encapsulate an archive name and a list of expenses together as an archive.</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper</strong></code> manages all existing archives and hashes each <code><strong>Archive</strong></code> object to its archive name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The implementation of the archive feature is located in the <code><strong>Model</strong></code> component in terms of the overall architecture of <em>Billboard</em>.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>ArchiveWrapper</strong></code> is used in <code><strong>ModelManager</strong></code> to manage all archives. Its respective operations are called to access and manipulate archive expenses when an archive command is entered.<br>
+Such operations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>ArchiveWrapper#AddArchive(Archive)</strong></code> - Adds the given archive to the current map of archive objects.</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#HasArchive(String)</strong></code> - Checks if the specified archive by the given archive name exists.</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#removeArchive(Archive)</strong></code> - Deletes the given archive from the current map of archive objects. (Assumes given archive already exists)</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#hasArchiveExpense(String, Expense)</strong></code> - Checks if the specified archive by the given archive name has the given expense.</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#addArchiveExpense(String, Expense)</strong></code> - Adds the given expense into the specified archive by the given archive name. (Assumes given archive already exists)</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#removeArchiveExpense(String, Expense)</strong></code> - Deletes the given expense into the specified archive by the given archive name. (Assumes given archive and expense already exists)</p>
+</li>
+<li>
+<p><code><strong>ArchiveWrapper#getArchiveNames()</strong></code> - Returns a set of all existing archive names</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations are exposed in the <code><strong>Model</strong></code> interface with respective methods of the same name.<br>
+E.g <code><strong>Model#addArchive(Archive)</strong></code> calls <code><strong>ArchiveWrapper#AddArchive(Archive)</strong></code></p>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario of the add expense to archive function, showing how the command is parsed in <code><strong>Logic</strong></code> and how it interacts with <code><strong>Model</strong></code>:<br></p>
+</div>
+<div class="paragraph">
+<p>Step 1. The user has the application running and has a non empty list of current expenses. The user can enter the <code>list</code> command to bring up
+this list.<br></p>
+</div>
+<div class="paragraph">
+<p>Step 2. The user executes the command <code>archive add 3 arc/archiveName</code> to archive an expense.<br>
+The command is first parsed by <code><strong>BillboardParser</strong></code> to determine what kind of general command it is. <code>archive</code> indicates it is an archive command so the remaining input is parsed through <code><strong>ArchiveCommandParser</strong></code>.<br>
+<code><strong>ArchiveCommandParser</strong></code> determines which archive command should be called. <code>add</code> indicates it is an add command, so the input is parsed for the final time through <code><strong>AddArchiveCommandParser</strong></code> to extract out the arguments entered for the operation.
+In this case, the arguments are <code>3</code> and <code>archiveName</code><br></p>
+</div>
+<div class="paragraph">
+<p>This layered parsing process can be visualised below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AddArchiveCommandSequenceDiagram_Parsing.png" alt="AddArchiveCommandSequenceDiagram Parsing">
+</div>
+<div class="title">Figure 2. Process of parsing <code><strong>AddArchiveCommand</strong></code> in a cropped sequence diagram</div>
+</div>
+<div class="paragraph">
+<p>Step 3. <code><strong>AddArchiveCommandParser</strong></code> then returns an <code><strong>AddArchiveCommand</strong></code> object to be executed. The <code><strong>AddArchiveCommand</strong></code> performs two checks before executing any changes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First, it is changed if entered index, <code>3</code>, is a valid index from the current expense list. An exception is thrown and the command is aborted if the index is invalid,
+so <code><strong>Model</strong></code> is left unmodified in this case.</p>
+</li>
+<li>
+<p>Next, it is checked if the entered archive name, <code>archiveName</code>, is an existing archive by calling <code><strong>Model#HasArchive(String)</strong></code>. If the archive does not already exist,
+then a new archive is created with the given archive name using <code><strong>Model#addArchive(Archive)</strong></code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After the checks are completed and if no exception is thrown, the command executes the archiving of the expense through these steps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The expense to be archived is first retrieved by <code><strong>Model#getFilteredList()#get(int)</strong></code></p>
+</li>
+<li>
+<p>The expense is then deleted from the list of current expenses by calling <code><strong>model#deleteExpense(Expense)</strong></code></p>
+</li>
+<li>
+<p>Next, the expense&#8217;s <code><strong>archiveName</strong></code> field is updated using <code><strong>Expense#archiveTo(String)</strong></code></p>
+</li>
+<li>
+<p>Lastly, the expense is added to the specified archive using <code><strong>Model#addArchiveExpense(String, Expense)</strong></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These interactions with <code><strong>Model</strong></code> by <code><strong>AddArchiveCommand</strong></code> can be shown in the cropped portion of the full sequence diagram below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AddArchiveCommandSequenceDiagram_executeCommand.png" alt="AddArchiveCommandSequenceDiagram executeCommand">
+</div>
+<div class="title">Figure 3. Interactions between <code><strong>Model</strong></code> and <code><strong>AddArchiveCommand</strong></code> during the execution of the command</div>
+</div>
+<div class="paragraph">
+<p>Step 4. Finally, a <code><strong>CommandResult</strong></code> object initialised with the add expense to archive success message is returned to indicate to the user that the operation was successful.<br></p>
+</div>
+<div class="paragraph">
+<p>Full Sequence diagram of the operation:</p>
+</div>
+<div class="paragraph">
+<p><strong>(Diagram omitted due to page limit)</strong></p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when a user executes a new <code><strong>AddArchiveCommand</strong></code>:</p>
+</div>
+<div class="paragraph">
+<p><strong>(Diagram omitted due to page limit)</strong></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="storing-archive"><a class="link" href="#storing-archive">Storing Archive</a></h5>
+<div class="paragraph">
+<p>All expenses, archived and non-archived, are stored in a single JSON file.<br></p>
+</div>
+<div class="paragraph">
+<p>Upon start up of the application, all expenses are retrieved from JSON format and passed into
+<code><strong>ModelManager</strong></code> as a combined <code><strong>Billboard</strong></code> object. During the initialization of <code><strong>ModelManager</strong></code>, the expenses in this <code><strong>Billboard</strong></code> object are filtered out into non-archived and
+archived expenses by each <code><strong>Expense</strong></code> object&#8217;s <code><strong>archiveName</strong></code> field. The separate lists of non-archive and archive expenses are then used to initialize new <code><strong>Billboard</strong></code> and
+<code><strong>ArchiveWrapper</strong></code> objects of <code><strong>ModelManager</strong></code> respectively. The <code><strong>Billboard</strong></code> object of <code><strong>ModelManager</strong></code> is used to maintain non-archive expenses.<br></p>
+</div>
+<div class="paragraph">
+<p>After each command is executed, the expenses in <code><strong>Model</strong></code> are saved into the JSON file. The method <code><strong>Model#getCombinedBillboard</strong></code> is called which collates all <code><strong>Expense</strong></code> objects
+from its <code><strong>Billboard</strong></code> and <code><strong>ArchiveWrapper</strong></code> objects together into a single list and creates a new combined <code><strong>Billboard</strong></code> object. This combined <code><strong>Billboard</strong></code> is returned and used by
+<code><strong>Storage</strong></code> to serialize into JSON format and writes it into the JSON file.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p>Implementing the archive feature is a non-trivial task, thus there are many possible ways of designing it. This section offers an evaluation of the alternative designs.</p>
+</div>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-hold-archives-in-code-strong-archivewrapper-strong-code"><a class="link" href="#aspect-data-structure-to-hold-archives-in-code-strong-archivewrapper-strong-code">Aspect: Data Structure to hold archives in <code><strong>ArchiveWrapper</strong></code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1 (Current implementation): </strong> Use of HashMap, mapping each archive name to its <code><strong>Archive</strong></code> object</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Accessing data in a HashMap is instant. Therefore, retrieving an archive when performing add/delete archive expense operations or checking if an archive exists is fast.</p>
+</li>
+<li>
+<p>Cons: As <code><strong>ArchiveWrapper</strong></code> is initialized with a single list of archive <code><strong>Expense</strong></code> objects, the initialization process is slower as this given list needs to be iterated
+through to filter each <code><strong>Expense</strong></code> object into their respective <code><strong>Archive</strong></code> objects in the HashMap.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2: </strong> Use a single list to store all archive expenses</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Initialization of <code><strong>ArchiveWrapper</strong></code> is fast, as the given list of archive expenses need not be processed.</p>
+</li>
+<li>
+<p>Cons: Some operations, like delete archive expense or get all archive names, are slower as the entire list must be iterated through each time in the worst case scenario.
+For example, to check if an expense exists in a particular archive, the entire list must be iterated if the expense to be found is at the end of the list.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-storing-archives"><a class="link" href="#aspect-storing-archives">Aspect: Storing archives</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> Alternative 1 (Current implementation): </strong> Storing non-archive and archive expenses together</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: No new storage classes need to be implemented, as this implementation uses the existing classes only.</p>
+</li>
+<li>
+<p>Cons: Initialization process of <code><strong>ModelManager</strong></code> is slower as the expenses need to be filtered into archive and non-archive expenses first.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong> Alternative 2: </strong> Storing archive expenses as <code><strong>Archive</strong></code> objects in a separate file</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Initialization process of <code><strong>ModelManager</strong></code> is faster, as its <code><strong>ArchiveWrapper</strong></code> object can be initialized directly with the list of <code><strong>Archive</strong></code> objects retrieved from the JSON file.
+No filtering of archive and non-archive expense from the same list is needed.</p>
+</li>
+<li>
+<p>Cons: More difficult to implement, as more JSON storage classes must be added and knowledge on serialising and deserialising new objects is needed.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 09:53:33 UTC</div></div></div></body></html>

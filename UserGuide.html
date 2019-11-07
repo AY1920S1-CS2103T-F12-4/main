@@ -374,127 +374,344 @@ Usage:</p>
 </div>
 <div class="sect2">
 <h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></h3>
+<div class="paragraph">
+<p>This feature allows you to archive expenses. An expense is archived when you want remove it from
+the current list of expenses, but still want to keep a record of it and retrieve it again in the future
+for accounting purposes.</p>
+</div>
+<div class="paragraph">
+<p>Archiving expenses allows you to de-clutter your current list of expenses after a long period of time.
+This feature offers greater flexibility in terms of expense organisation as it allows you to create <strong>multiple archives</strong> with
+the archive name of your choice so that you would be able to appropriately group your archived expenses.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<strong>Archived expenses cannot be edited.</strong><br>
+Archived expenses are not considered current and "active" expenses so you are unable to edit them.<br>
+You would need to unarchive an expense first before you would be able to perform expense editing commands on it such as
+<code>edit</code>, <code>tag add</code> and <code>tag remove</code> commands.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Although this section of the user guide provides comprehensive information on the usage of <code>archive</code> commands,
+you could also view the list of all supported archive commands within the application by typing the command word <code>archive</code>
+into the command box and pressing <code>Enter</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveCommandMessage.png" alt="archiveCommandMessage">
+</div>
+<div class="title">Figure 1. The result box will display the list of supported <code>archive</code> commands. You can scroll down to view the full list.</div>
+</div>
+<div class="paragraph">
+<p>The following are all the archive commands, descriptions of how they work and their usage.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note the formatting of command parameters used in this section:<br>
+[INDEX]: The list index of the expense involved in the command.<br>
+<code>arc/</code>: Prefix to indicate that the text appended to it is the specified archive name.<br>
+[ARCHIVE NAME]: Specified name of archive involved in the command. Archive name is case-sensitive and must be non-empty.
+Names with symbols and multiple words are accepted as well.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="em-adding-an-expense-to-an-archive-code-archive-add-code-em-br"><a class="link" href="#em-adding-an-expense-to-an-archive-code-archive-add-code-em-br">3.5.1. <em>Adding an expense to an archive: <code>archive add</code></em><br></a></h4>
+<div class="paragraph">
+<p>This command allows you to transfer the expense at the specified index to your specified archive.<br>
+If the archive you entered does not exist, then a new archive is created before the expense is added.<br>
+<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive add [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p>Suppose you want to archive the expense called "<em>joker movie tickets</em>" to an archive called "<em>movies</em>".<br>
+To archive the expense:</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>Adding a record to an archive: archive add</em><br>
-Transfers the expense at the specified index to your specified archive.<br>
-If archive you entered does not exist, then the new archive is created before the expense is added.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>archive add [INDEX] [OPTIONS]</pre>
-</div>
-</div>
+<p>Type <code>archive add 7 arc/movies</code> into the command box, and press <code>Enter</code> to execute the command:</p>
 <div class="paragraph">
-<p>Options:</p>
+<div class="title">The expense "<em>joker movie tickets</em>" is at index 7 in the list.</div>
+<p><span class="image"><img src="images/archiveAddEnterCommand.png" alt="archiveAddEnterCommand"></span></p>
 </div>
+</li>
+<li>
+<p>The next step can be split into 2 scenarios:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>/arc</code>: Specifies the name of the archive to add the expense to. (REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
+<p>2a. <strong>There is no existing archive called "<em>movies</em>"</strong><br>
+A new archive called "<em>movies</em>" is created before "<em>joker movie tickets</em>" is added to it.<br>
+The result box will display the message to indicate the archive creation and transfer of the expense:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveAddArchiveCreatedMessage.png" alt="archiveAddArchiveCreatedMessage">
 </div>
-<div class="paragraph">
-<p>Example:<br>
-<code>archive add 3 arc/MBS casino winnings</code><br>
-Archives the record at the 3rd index into an archive named “MBS casino winnings”<br>
-&#160;<br></p>
 </div>
 </li>
 <li>
-<p><em>Listing out all archives: archive listall</em><br>
-Displays the list of all archive names.<br>
+<p>2b. <strong>There is an existing archive called "<em>movies</em>"</strong><br>
+"<em>joker movie tickets</em>" is simply added to the existing "<em>movies</em>" archive.<br>
+The result box will display the message to indicate the transfer of the expense:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveAddExistentArchiveMessage.png" alt="archiveAddExistentArchiveMessage">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-listing-out-all-archives-code-archive-listall-code-em-br"><a class="link" href="#em-listing-out-all-archives-code-archive-listall-code-em-br">3.5.2. <em>Listing out all archives: <code>archive listall</code></em><br></a></h4>
+<div class="paragraph">
+<p>This command informs you of all the existing archives by displaying a list of all existing archive names.<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>archive listall</pre>
 </div>
 </div>
 <div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p>In the event that you cannot remember what archives you have, you could use this command to view all existing archives.<br>
+Type <code>archive listall</code> into the command box and press <code>Enter</code>, and the archive name list will be displayed in the result box as shown:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveListallMessage.png" alt="archiveListallMessage">
+</div>
+<div class="title">Figure 2. List of existing archive names.</div>
+</div>
+<div class="paragraph">
 <p>&#160;<br></p>
 </div>
-</li>
-<li>
-<p><em>Listing records in a particular archive: archive list</em><br>
-Displays the list of records in your specified archive<br>
+</div>
+<div class="sect3">
+<h4 id="em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br"><a class="link" href="#em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br">3.5.3. <em>Listing expenses in a particular archive: <code>archive list</code></em><br></a></h4>
+<div class="paragraph">
+<p>This command allows you to view the list of expenses of your specified archive.<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
-<pre>archive list [NAME]</pre>
+<pre>archive list [ARCHIVE NAME]</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You do not need to prepend the archive prefix <code>arc/</code> to the archive name as there are no other
+arguments (like [INDEX]) to be entered for this command.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Example:<br>
-<code>archive list 2018 expenses</code><br>
-Lists out all the records in the “2018 expenses” archive<br>
-&#160;<br></p>
+<p>Example:</p>
 </div>
-</li>
+<div class="paragraph">
+<p>Suppose you want to view all the expenses you have spend on movies this year. As you have kept all movie expenses in an archive called
+"<em>movies</em>", you can execute this command to bring up the expense list in "<em>movies</em>":</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><em>Deleting an archived record: archive delete</em><br>
-Deletes the record at the specified index from your specified archive.<br>
-If the archive record deleted was the last record in the archive, the empty archive will be deleted.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
+<p>Type <code>archive list movies</code> into the command box, and press <code>Enter</code> to execute it:</p>
+<div class="imageblock">
 <div class="content">
-<pre>archive delete [INDEX] [OPTIONS]</pre>
+<img src="images/archiveListEnterCommand.png" alt="archiveListEnterCommand">
 </div>
-</div>
-<div class="paragraph">
-<p>Options:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>arc/</code>: Specifies the name of the archive to delete the expense from. (REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>archive delete 5 arc/2018 expenses</code><br>
-Deletes the record at the 5th index in the “2018 expenses” archive<br>
-&#160;<br></p>
 </div>
 </li>
 <li>
-<p><em>Revert/unarchive an archived record: archive revert</em><br>
-Unarchives the record at the specified index from your specified archive, transferring it back to your current list of expenses.<br>
-If the archive record reverted was the last record in the archive, the empty archive will be deleted.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
+<p>The displayed list will change to show the expenses in the "<em>movies</em>" archive and the result box will display the message
+"Listed all expenses from the [movies] archive":</p>
+<div class="imageblock">
 <div class="content">
-<pre>archive revert [INDEX] [OPTIONS]</pre>
+<img src="images/archiveListDisplayed.png" alt="archiveListDisplayed">
 </div>
-</div>
-<div class="paragraph">
-<p>Options:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>arc/</code>: Specifies the name of the archive to revert the expense from. (REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>archive revert 5 arc/2018 expenses</code><br>
-Unarchives the record at the 5th index in the “2018 expenses” archive<br>
-&#160;<br></p>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-deleting-an-archived-expense-code-archive-delete-code-em-br"><a class="link" href="#em-deleting-an-archived-expense-code-archive-delete-code-em-br">3.5.4. <em>Deleting an archived expense: <code>archive delete</code></em><br></a></h4>
+<div class="paragraph">
+<p>This command allows you to delete the expense at the specified index from your specified archive.<br>
+If the archived expense you delete was the last expense in the archive, the empty archive will be deleted.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive delete [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="paragraph">
+<p>Suppose you want to delete the expense "<em>Avengers Endgame</em>" from the "<em>movies</em>" archive as you know you will never need to retrieve again for future reference.<br>
+To delete "<em>Avengers Endgame</em>" from its archive:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enter the <code>archive list movies</code> command to display the expense list of the "<em>movies</em>" archive. Refer to the <code>archive list</code> section above for the diagram to execute this step.</p>
+</li>
+<li>
+<p>With the expense list of "<em>movies</em>" displayed, type <code>archive delete 1 arc/movies</code> and press <code>Enter</code>:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveDeleteEnterCommand.png" alt="archiveDeleteEnterCommand">
+</div>
+<div class="title">Figure 3. "Avengers Endgame" expense has an index of 1 in its archive list.</div>
+</div>
+</li>
+<li>
+<p>The next step can be split into two scenarios:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. <strong>"<em>Avengers Endgame</em>" is the only expense in the "<em>movies</em>" archive.</strong><br>
+After the command is executed, "<em>Avengers Endgame</em>" is deleted so the "<em>movies</em>" archive is now empty, and will thus be deleted.<br>
+The result box will display the message that indicates the deletion of "<em>Avengers Endgame</em>" and "<em>movies</em>", and the list displayed will switch back to the main expense list:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveDeleteEmptyArchive.png" alt="archiveDeleteEmptyArchive">
+</div>
+<div class="title">Figure 4. Since the archive is deleted, the list displayed switches back to the main expense list.</div>
+</div>
+</li>
+<li>
+<p>3b. <strong>"<em>Avengers Endgame</em>" is not the only expense in the "<em>movies</em>" archive.</strong><br>
+After the command is executed, "<em>Avengers Endgame</em>" is deleted. As there are other expenses still in the "<em>movies</em>" archive, the archive is not deleted.<br>
+The result box will display the message that indicates the deletion of "<em>Avengers Endgame</em>", and the archive list displayed updates with the removal of "<em>Avengers Endgame</em>":</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveDeleteNonEmptyArchive.png" alt="archiveDeleteNonEmptyArchive">
+</div>
+<div class="title">Figure 5. "<em>Avengers Endgame</em>" is deleted and this change is immediately reflected in the archive list displayed.</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-reverting-an-archived-expense-archive-revert-em-br"><a class="link" href="#em-reverting-an-archived-expense-archive-revert-em-br">3.5.5. <em>Reverting an archived expense: archive revert</em><br></a></h4>
+<div class="paragraph">
+<p>This command allows you to revert/unarchive the expense at the specified index from your specified archive, transferring it back to your current list of expenses.<br>
+If the archive expense you reverted was the last expense in the archive, the empty archive will be deleted.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>archive revert [INDEX] arc/[ARCHIVE NAME]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+Suppose you have an expense "<em>Airpod Pro</em>" archived into "<em>gadgets</em>", but you changed your mind and decided that it should not be archived yet.<br>
+To unarchive/revert the "<em>Airpod Pro</em>" expense:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enter the <code>archive list gadgets</code> command to display the expense list of the "<em>gadgets</em>" archive. Refer to the <code>archive list</code> section above for the diagram to execute this step.</p>
+</li>
+<li>
+<p>With the expense list of "<em>gadgets</em>" displayed, type <code>archive revert 2 arc/gadgets</code> and press <code>Enter</code>:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveRevertEnterCommand.png" alt="archiveRevertEnterCommand">
+</div>
+<div class="title">Figure 6. "Airpod Pro" expense has an index of 2 in its archive list.</div>
+</div>
+</li>
+<li>
+<p>The next step can be split into two scenarios:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>3a. <strong>"<em>Airpod Pro</em>" is the only expense in the "<em>gadgets</em>" archive.</strong><br>
+After the command is executed, "<em>Airpod Pro</em>" is removed from the "<em>gadgets</em>" archive, so the archive is now empty, and will thus be deleted.<br>
+The result box will display the message that indicates the transfer of "<em>Airpod Pro</em>" and the deletion of "<em>gadgets</em>", and the list displayed will switch back to the main expense list:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveRevertEmptyArchive.png" alt="archiveRevertEmptyArchive">
+</div>
+<div class="title">Figure 7. Since the archive is deleted, the list displayed switches back to the main expense list and "<em>Airpod Pro</em>" can be observed to be back in the main expense list.</div>
+</div>
+</li>
+<li>
+<p>3b. <strong>"<em>Airpod Pro</em>" is not the only expense in the "<em>gadgets</em>" archive.</strong><br>
+After the command is executed, "<em>Airpod Pro</em>" is removed from the "<em>gadgets</em>" archive. As there are other expenses still in the "<em>gadgets</em>" archive, the archive is not deleted.<br>
+The result box will display the message that indicates the transfer of "<em>Airpod Pro</em>", and the archive list displayed updates with the removal of "<em>Airpod Pro</em>":</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/archiveRevertNonEmptyArchive.png" alt="archiveRevertNonEmptyArchive">
+</div>
+<div class="title">Figure 8. "<em>Airpod Pro</em>" is unarchived and this change is immediately reflected in the archive list displayed.</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -667,23 +884,6 @@ Usage:</p>
 <p>&#160;<br></p>
 </div>
 </li>
-<li>
-<p><em>Help list of a specific command: help</em><br>
-Shows the description and instructions on how to use the specified command.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>help [COMMAND]</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Example:<br>
-<code>help archive</code><br>
-Shows the help message for the archive commands.<br>
-&#160;<br></p>
-</div>
-</li>
 </ol>
 </div>
 </div>
@@ -703,4 +903,4 @@ Shows the help message for the archive commands.<br>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 03:17:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 09:53:33 UTC</div></div></div></body></html>

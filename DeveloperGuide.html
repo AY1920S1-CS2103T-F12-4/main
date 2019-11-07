@@ -612,73 +612,75 @@ If the <code>currentStatePointer</code> is at index <code>stateList.size() - 1</
 <div class="ulist">
 <ul>
 <li>
-<p><code>Archive</code> extends from <code>ExpenseList</code> in order to encapsulate an archive name and a list of expenses together as an archive.</p>
+<p><code><strong>Archive</strong></code> extends from <code><strong>ExpenseList</strong></code> in order to encapsulate an archive name and a list of expenses together as an archive.</p>
 </li>
 <li>
-<p><code>ArchiveWrapper</code> manages all existing archives and hashes each <code>Archive</code> object to its archive name.</p>
+<p><code><strong>ArchiveWrapper</strong></code> manages all existing archives and hashes each <code><strong>Archive</strong></code> object to its archive name.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Similar to <code>Billboard</code>, which manages the list of current non-archived expenses,
-<code>ArchiveWrapper</code> is used in <code>ModelManager</code> and its respective operations are called to access and manipulate archive expenses when an archive command is entered.<br>
+<p>The implementation of the archive feature is located in the <code><strong>Model</strong></code> component in terms of the overall architecture of <em>Billboard</em>.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>ArchiveWrapper</strong></code> is used in <code><strong>ModelManager</strong></code> to manage all archives. Its respective operations are called to access and manipulate archive expenses when an archive command is entered.<br>
 Such operations include:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>ArchiveWrapper#AddArchive(Archive)</code> - Adds the given archive to the current map of archive objects.</p>
+<p><code><strong>ArchiveWrapper#AddArchive(Archive)</strong></code> - Adds the given archive to the current map of archive objects.</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#HasArchive(String)</code> - Checks if the specified archive by the given archive name exists.</p>
+<p><code><strong>ArchiveWrapper#HasArchive(String)</strong></code> - Checks if the specified archive by the given archive name exists.</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#removeArchive(Archive)</code> - Deletes the given archive from the current map of archive objects. (Assumes given archive already exists)</p>
+<p><code><strong>ArchiveWrapper#removeArchive(Archive)</strong></code> - Deletes the given archive from the current map of archive objects. (Assumes given archive already exists)</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#hasArchiveExpense(String, Expense)</code> - Checks if the specified archive by the given archive name has the given expense.</p>
+<p><code><strong>ArchiveWrapper#hasArchiveExpense(String, Expense)</strong></code> - Checks if the specified archive by the given archive name has the given expense.</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#addArchiveExpense(String, Expense)</code> - Adds the given expense into the specified archive by the given archive name. (Assumes given archive already exists)</p>
+<p><code><strong>ArchiveWrapper#addArchiveExpense(String, Expense)</strong></code> - Adds the given expense into the specified archive by the given archive name. (Assumes given archive already exists)</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#removeArchiveExpense(String, Expense)</code> - Deletes the given expense into the specified archive by the given archive name. (Assumes given archive and expense already exists)</p>
+<p><code><strong>ArchiveWrapper#removeArchiveExpense(String, Expense)</strong></code> - Deletes the given expense into the specified archive by the given archive name. (Assumes given archive and expense already exists)</p>
 </li>
 <li>
-<p><code>ArchiveWrapper#getArchiveNames()</code> - Returns a set of all existing archive names</p>
+<p><code><strong>ArchiveWrapper#getArchiveNames()</strong></code> - Returns a set of all existing archive names</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface respectively as:</p>
+<p>These operations are exposed in the <code><strong>Model</strong></code> interface respectively as:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#addArchive(Archive)</code></p>
+<p><code><strong>Model#addArchive(Archive)</strong></code></p>
 </li>
 <li>
-<p><code>Model#HasArchive(String)</code></p>
+<p><code><strong>Model#HasArchive(String)</strong></code></p>
 </li>
 <li>
-<p><code>Model#deleteArchive(Archive)</code></p>
+<p><code><strong>Model#deleteArchive(Archive)</strong></code></p>
 </li>
 <li>
-<p><code>Model#hasArchiveExpense(String, Expense)</code></p>
+<p><code><strong>Model#hasArchiveExpense(String, Expense)</strong></code></p>
 </li>
 <li>
-<p><code>Model#addArchiveExpense(String, Expense)</code></p>
+<p><code><strong>Model#addArchiveExpense(String, Expense)</strong></code></p>
 </li>
 <li>
-<p><code>Model#deleteArchiveExpense(String, Expense)</code></p>
+<p><code><strong>Model#deleteArchiveExpense(String, Expense)</strong></code></p>
 </li>
 <li>
-<p><code>Model#getArchiveNames()</code></p>
+<p><code><strong>Model#getArchiveNames()</strong></code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario of the add expense to archive function, showing how the command is parsed in <code>Logic</code> and how it interacts with <code>Model</code>:<br></p>
+<p>Given below is an example usage scenario of the add expense to archive function, showing how the command is parsed in <code><strong>Logic</strong></code> and how it interacts with <code><strong>Model</strong></code>:<br></p>
 </div>
 <div class="paragraph">
 <p>Step 1. The user has the application running and has a non empty list of current expenses. The user can enter the <code>list</code> command to bring up
@@ -686,8 +688,8 @@ this list.<br></p>
 </div>
 <div class="paragraph">
 <p>Step 2. The user executes the command <code>archive add 3 arc/archiveName</code> to archive an expense.<br>
-The command is first parsed by <code>BillboardParser</code> to determine what kind of general command it is. <code>archive</code> indicates it is an archive command so the remaining input is parsed through <code>ArchiveCommandParser</code>.<br>
-<code>ArchiveCommandParser</code> determines which archive command should be called. <code>add</code> indicates it is an add command, so the input is parsed for the final time through <code>AddArchiveCommandParser</code> to extract out the arguments entered for the operation.
+The command is first parsed by <code><strong>BillboardParser</strong></code> to determine what kind of general command it is. <code>archive</code> indicates it is an archive command so the remaining input is parsed through <code><strong>ArchiveCommandParser</strong></code>.<br>
+<code><strong>ArchiveCommandParser</strong></code> determines which archive command should be called. <code>add</code> indicates it is an add command, so the input is parsed for the final time through <code><strong>AddArchiveCommandParser</strong></code> to extract out the arguments entered for the operation.
 In this case, the arguments are <code>3</code> and <code>archiveName</code><br></p>
 </div>
 <div class="paragraph">
@@ -700,17 +702,17 @@ In this case, the arguments are <code>3</code> and <code>archiveName</code><br><
 <div class="title">Figure 17. Process of parsing <code>AddArchiveCommand</code> in a cropped sequence diagram</div>
 </div>
 <div class="paragraph">
-<p>Step 3. <code>AddArchiveCommandParser</code> then returns an <code>AddArchiveCommand</code> object to be executed. The <code>AddArchiveCommand</code> performs two checks before executing any changes:</p>
+<p>Step 3. <code><strong>AddArchiveCommandParser</strong></code> then returns an <code><strong>AddArchiveCommand</strong></code> object to be executed. The <code><strong>AddArchiveCommand</strong></code> performs two checks before executing any changes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>First, it is changed if entered index, <code>3</code>, is a valid index from the current expense list. An exception is thrown and the command is aborted if the index is invalid,
-so <code>Model</code> is left unmodified in this case.</p>
+so <code><strong>Model</strong></code> is left unmodified in this case.</p>
 </li>
 <li>
-<p>Next, it is checked if the entered archive name, <code>archiveName</code>, is an existing archive by calling <code>Model#HasArchive(String)</code>. If the archive does not already exist,
-then a new archive is created with the given archive name using <code>Model#addArchive(Archive)</code>.<br></p>
+<p>Next, it is checked if the entered archive name, <code>archiveName</code>, is an existing archive by calling <code><strong>Model#HasArchive(String)</strong></code>. If the archive does not already exist,
+then a new archive is created with the given archive name using <code><strong>Model#addArchive(Archive)</strong></code>.<br></p>
 </li>
 </ul>
 </div>
@@ -720,30 +722,30 @@ then a new archive is created with the given archive name using <code>Model#addA
 <div class="ulist">
 <ul>
 <li>
-<p>The expense to be archived is first retrieved by <code>Model#getFilteredList()#get(int)</code></p>
+<p>The expense to be archived is first retrieved by <code><strong>Model#getFilteredList()#get(int)</strong></code></p>
 </li>
 <li>
-<p>The expense is then deleted from the list of current expenses by calling <code>model#deleteExpense(Expense)</code></p>
+<p>The expense is then deleted from the list of current expenses by calling <code><strong>model#deleteExpense(Expense)</strong></code></p>
 </li>
 <li>
-<p>Next, the expense&#8217;s <code>archiveName</code> field is updated using <code>Expense#archiveTo(String)</code></p>
+<p>Next, the expense&#8217;s <code>archiveName</code> field is updated using <code><strong>Expense#archiveTo(String)</strong></code></p>
 </li>
 <li>
-<p>Lastly, the expense is added to the specified archive using <code>Model#addArchiveExpense(String, Expense)</code></p>
+<p>Lastly, the expense is added to the specified archive using <code><strong>Model#addArchiveExpense(String, Expense)</strong></code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These interactions with <code>Model</code> by <code>AddArchiveCommand</code> can be shown in the cropped portion of the full sequence diagram below:</p>
+<p>These interactions with <code><strong>Model</strong></code> by <code><strong>AddArchiveCommand</strong></code> can be shown in the cropped portion of the full sequence diagram below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddArchiveCommandSequenceDiagram_executeCommand.png" alt="AddArchiveCommandSequenceDiagram executeCommand">
 </div>
-<div class="title">Figure 18. Interactions between <code>Model</code> and <code>AddArchiveCommand</code> during the execution of the command</div>
+<div class="title">Figure 18. Interactions between <code><strong>Model</strong></code> and <code><strong>AddArchiveCommand</strong></code> during the execution of the command</div>
 </div>
 <div class="paragraph">
-<p>Step 4. Finally, a <code>CommandResult</code> object initialised with the add expense to archive success message is returned to indicate to the user that the operation was successful.<br></p>
+<p>Step 4. Finally, a <code><strong>CommandResult</strong></code> object initialised with the add expense to archive success message is returned to indicate to the user that the operation was successful.<br></p>
 </div>
 <div class="paragraph">
 <p>Full Sequence diagram of the operation:</p>
@@ -755,13 +757,13 @@ then a new archive is created with the given archive name using <code>Model#addA
 <div class="title">Figure 19. Full sequence diagram of the operation</div>
 </div>
 <div class="paragraph">
-<p>The following activity diagram summarizes what happens when a user executes a new <code>AddArchiveCommand</code>:</p>
+<p>The following activity diagram summarizes what happens when a user executes a new <code><strong>AddArchiveCommand</strong></code>:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/AddArchiveCommandActivityDiagram.png" alt="AddArchiveCommandActivityDiagram">
 </div>
-<div class="title">Figure 20. <code>AddArchiveCommand</code> activity diagram</div>
+<div class="title">Figure 20. <code><strong>AddArchiveCommand</strong></code> activity diagram</div>
 </div>
 </div>
 <div class="sect4">
@@ -771,14 +773,14 @@ then a new archive is created with the given archive name using <code>Model#addA
 </div>
 <div class="paragraph">
 <p>Upon start up of the application, all expenses are retrieved from JSON format and passed into
-<code>ModelManager</code> as a combined <code>Billboard</code> object. During the initialization of <code>ModelManager</code>, the expenses in this <code>Billboard</code> object are filtered out into non-archived and
-archived expenses by each <code>Expense</code> object&#8217;s <code>archiveName</code> field. The separate lists of non-archive and archive expenses are then used to initialize new <code>Billboard</code> and
-<code>ArchiveWrapper</code> objects of <code>ModelManager</code> respectively.<br></p>
+<code><strong>ModelManager</strong></code> as a combined <code><strong>Billboard</strong></code> object. During the initialization of <code><strong>ModelManager</strong></code>, the expenses in this <code><strong>Billboard</strong></code> object are filtered out into non-archived and
+archived expenses by each <code><strong>Expense</strong></code> object&#8217;s <code><strong>archiveName</strong></code> field. The separate lists of non-archive and archive expenses are then used to initialize new <code><strong>Billboard</strong></code> and
+<code><strong>ArchiveWrapper</strong></code> objects of <code><strong>ModelManager</strong></code> respectively. The <code><strong>Billboard</strong></code> object of <code><strong>ModelManager</strong></code> is used to maintain non-archive expenses.+</p>
 </div>
 <div class="paragraph">
-<p>After each command is executed, the expenses in <code>Model</code> are saved into the JSON file. The method <code>Model#getCombinedBillboard</code> is called which collates all <code>Expense</code> objects
-from its <code>Billboard</code> and <code>ArchiveWrapper</code> objects together into a single list and creates a new combined <code>Billboard</code> object. This combined <code>Billboard</code> is returned and used by
-<code>Storage</code> to serialize into JSON format and writes it into the JSON file.</p>
+<p>After each command is executed, the expenses in <code><strong>Model</strong></code> are saved into the JSON file. The method <code><strong>Model#getCombinedBillboard</strong></code> is called which collates all <code><strong>Expense</strong></code> objects
+from its <code><strong>Billboard</strong></code> and <code><strong>ArchiveWrapper</strong></code> objects together into a single list and creates a new combined <code><strong>Billboard</strong></code> object. This combined <code><strong>Billboard</strong></code> is returned and used by
+<code><strong>Storage</strong></code> to serialize into JSON format and writes it into the JSON file.</p>
 </div>
 </div>
 </div>
@@ -789,15 +791,15 @@ from its <code>Billboard</code> and <code>ArchiveWrapper</code> objects together
 <div class="ulist">
 <ul>
 <li>
-<p><strong> Alternative 1 (Current implementation): </strong> Use of HashMap, mapping each archive name to its <code>Archive</code> object</p>
+<p><strong> Alternative 1 (Current implementation): </strong> Use of HashMap, mapping each archive name to its <code><strong>Archive</strong></code> object</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Instant access to any archive with the archive name given. Therefore, performing add/delete archive expense operations or checking if an archive exists is fast.</p>
+<p>Pros: Accessing data in a HashMap is instant. Therefore, retrieving an archive when performing add/delete archive expense operations or checking if an archive exists is fast.</p>
 </li>
 <li>
-<p>Cons: As <code>ArchiveWrapper</code> is initialized with a single list of archive <code>Expense</code> objects, the initialization process is slower as this given list needs to be iterated
-through to filter each <code>Expense</code> object into their respective <code>Archive</code> objects in the HashMap.</p>
+<p>Cons: As <code><strong>ArchiveWrapper</strong></code> is initialized with a single list of archive <code><strong>Expense</strong></code> objects, the initialization process is slower as this given list needs to be iterated
+through to filter each <code><strong>Expense</strong></code> object into their respective <code><strong>Archive</strong></code> objects in the HashMap.</p>
 </li>
 </ul>
 </div>
@@ -807,7 +809,7 @@ through to filter each <code>Expense</code> object into their respective <code>A
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Initialization of <code>ArchiveWrapper</code> is fast, as the given list of archive expenses need not be processed.</p>
+<p>Pros: Initialization of <code><strong>ArchiveWrapper</strong></code> is fast, as the given list of archive expenses need not be processed.</p>
 </li>
 <li>
 <p>Cons: Some operations, like delete archive expense or get all archive names, are slower as the entire list must be iterated through each time in the worst case scenario.
@@ -831,17 +833,17 @@ For example, to check if an expense exists in a particular archive, the entire l
 <p>Pros: No new storage classes need to be implemented, as this implementation uses the existing classes only.</p>
 </li>
 <li>
-<p>Cons: Initialization process of <code>ModelManager</code> is slower as the expenses need to be filtered into archive and non-archive expenses first.</p>
+<p>Cons: Initialization process of <code><strong>ModelManager</strong></code> is slower as the expenses need to be filtered into archive and non-archive expenses first.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong> Alternative 2: </strong> Storing archive expenses as <code>Archive</code> objects in a separate file</p>
+<p><strong> Alternative 2: </strong> Storing archive expenses as <code><strong>Archive</strong></code> objects in a separate file</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Initialization process of <code>ModelManager</code> is faster, as its <code>ArchiveWrapper</code> object can be initialized directly with the list of <code>Archive</code> objects retrieved from the JSON file.
+<p>Pros: Initialization process of <code><strong>ModelManager</strong></code> is faster, as its <code>ArchiveWrapper</code> object can be initialized directly with the list of <code>Archive</code> objects retrieved from the JSON file.
 No filtering of archive and non-archive expense from the same list is needed.</p>
 </li>
 <li>
@@ -2480,4 +2482,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 03:17:15 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 09:53:33 UTC</div></div></div></body></html>
