@@ -1,0 +1,542 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Lee Wai Fong - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><!-- #seedu-header--><!--   nav.navbar.navbar-lg.navbar-light.bg-lighter--><!--     .container--><!--       a.navbar-brand href='https://se-edu.github.io/'--><!--        img src=(site_url 'images/SeEduLogo.png') alt='SE-EDU'--><!--       ul.navbar-nav--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level1' AB-1--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level2' AB-2--><!--         li.nav-item--><!--           a.nav-link.active href=(site_url 'index.html') AB-3--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/addressbook-level4' AB-4--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/collate' Collate--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/se-book' Book--><!--         li.nav-item--><!--           a.nav-link href='https://se-edu.github.io/learningresources' Resources--><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">Billboard</a><ul class="navbar-nav"><li class="nav-item"><a class="nav-link" href="../UserGuide.html">User Guide</a></li><li class="nav-item"><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></li><li class="nav-item"><a class="nav-link" href="../LearningOutcomes.html">LOs</a></li><li class="nav-item"><a class="nav-link active" href="../AboutUs.html">About Us</a></li><li class="nav-item"><a class="nav-link" href="../ContactUs.html">Contact Us</a></li><li class="navitem"><a class="nav-link" href="https://https://github.com/AY1920S1-CS2103T-F12-4/main"><span class="fa fa-github fa-lg" aria-hidden="true"></span>&nbsp;View on GitHub</a></li></ul></div></nav></div><div id="header"><h1>Lee Wai Fong - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="project-billboard"><a class="link" href="#project-billboard">PROJECT: Billboard</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This page will document my overall contributions to the Software Engineering Project, <em>Billboard</em>.</p>
+</div>
+<div class="sect2">
+<h3 id="about-billboard"><a class="link" href="#about-billboard">About Billboard</a></h3>
+<div class="paragraph">
+<p>For our Software Engineering Project, my team of 5 were tasked with enhancing a desktop addressbook application. With students as our target users, we decided to morph it into a personal financial management system called <em>Billboard</em>.
+<em>Billboard</em> enables students to track and manage their expenses in an intuitive and convenient way. With features like tagging and archiving, students are able to manage and organise their expenses. Similarly,
+features like viewing statistical graphs of their recent expenditure and advanced search functions allows them to track their expenses.<br></p>
+</div>
+<div class="paragraph">
+<p><em>Billboard</em> is a Command Line Interface(CLI) desktop application, meaning that it is catered for students who prefer typing as all interactions between users and the application is through typing.
+For more user friendliness, <em>Billboard</em> has a Graphical User Interface(GUI).<br></p>
+</div>
+<div class="paragraph">
+<p>This is what <em>Billboard</em> looks like:<br>
+<span class="image"><img src="../images/tagging/billboardppp.png" alt="billboardppp"></span><br></p>
+</div>
+<div class="paragraph">
+<p>My role was to design and implement features related to tagging. The following sections illustrate these enhancements in more detail, as well as the relevant documentation i have added to the user and developer guides in relation to them.<br></p>
+</div>
+<div class="paragraph">
+<p>Note the following symbols and formatting used in this document:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This symbol indicates important information<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>tag</code> - Red text indicates that this is a command that can be inputted into the command line and executed by the application.</p>
+</div>
+<div class="paragraph">
+<p><code><strong>UniqueTagList</strong></code> - Bold red text indicates a component, class or object in the architecture of the application.</p>
+</div>
+<div class="paragraph">
+<p>"<em>tech</em>" - Italicised text with quotation marks indicates the name of an expense or tag.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section shows a summary of my coding, documentation, and other helpful contributions to <em>Billboard</em>.<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: i added features related to tagging.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>What it does</strong>: This enhancement allows users to add and remove tags from an expense. Users can also list out existing tags and filter their expenses by tags.</p>
+</li>
+<li>
+<p><strong>Justifications</strong>: Tagging allows for easier management of expenses. Expenses with the same tags are grouped together which allows users to search for related expenses quickly.</p>
+</li>
+<li>
+<p><strong>Highlights</strong>: This enhancement works with existing as well as future commands. An in-depth analysis of design alternatives was necessary since there are many ways to implement this enhancement, each with its own pros and cons in terms of efficiency or space allocation in the application.
+The current design is used to ensure there is a balance between space allocation and efficiency of the application.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code Contributed</strong>: <a href="https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=f12-4&amp;sort=groupTitle&amp;sortWithin=title&amp;since=2019-09-06&amp;timeframe=commit&amp;mergegroup=false&amp;groupSelect=groupByRepos&amp;breakdown=false&amp;tabOpen=true&amp;tabType=authorship&amp;tabAuthor=waifonglee&amp;tabRepo=AY1920S1-CS2103T-F12-4%2Fmain%5Bmaster%5D">RepoSense</a></p>
+</li>
+<li>
+<p><strong>Other Contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Enhancements to existing features</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the GUI color scheme and effects to make it more user-friendly. (PR <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/105">#105</a>)</p>
+</li>
+<li>
+<p>Wrote additional tests for existing features (PR <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/39">#39</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Documentation</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Contributed to user stories, use cases and non functional requirements in the Developer Guide.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Community</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed and approved: <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/6">#6</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/18">#18</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/51">#51</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/72">#72</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/94">#94</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/103">#103</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/104">#104</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/108">#108</a> <a href="https://github.com/AY1920S1-CS2103T-F12-4/main/pull/115">#115</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We had to update the original addressbook User Guide with instructions for the enhancements that we had added.
+The following is an excerpt from <strong><em>Billboard User Guide</em></strong>, showing additions that I have made for the tag features.<br>
+Note that examples and diagrams for <code>tag list</code> and <code>tag filter</code> are omitted due to space constraints.</p>
+</div>
+<div class="sect2">
+<h3 id="tagging-expenses-code-tag-code"><a class="link" href="#tagging-expenses-code-tag-code">Tagging expenses: <code>tag</code></a></h3>
+<div class="paragraph">
+<p>This feature allows you to assign tags to your expenses. Expenses with the same tag will be grouped together, allowing you to search for related expenses easily.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Tag names should be <strong>alphanumeric</strong>. This means that they should not contain spaces or special characters.<br>
+Tag names are <strong>case sensitive.</strong><br>
+You are <strong>not</strong> able to use this feature on <strong>archived expenses</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To view a list of supported tag commands, you could type <code>tag</code> in the command box and press <code>enter</code>.<br>
+Similarly, to view parameters for supported tag commands, you could type <code>tag</code> followed by the supported tag command and press <code>enter</code>.<br>
+Example: <code>tag rm</code></p>
+</div>
+<div class="sect3">
+<h4 id="adding-a-tag-code-tag-add-code-br"><a class="link" href="#adding-a-tag-code-tag-add-code-br">Adding a tag: <code>tag add</code><br></a></h4>
+<div class="paragraph">
+<p>This command adds your input tag(s) to the expense at the index you have specified.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>tag add [INDEX] t/[TAG] t/[TAG…]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+Lets say that you want to add the tags "<em>holiday</em>" and "<em>hangout</em>" to the expense "<em>USS</em>" at index 2.<br>
+&#160;<br>
+To add the tags:<br>
+1. Type <code>tag add 2 t/holiday t/hangout</code> in the command box and press <code>enter</code> to execute it.<br>
+<span class="image"><img src="../images/tagging/AddTagOne.png" alt="AddTagOne"></span><br>
+2. The result box will display the message "Added tag(s) to Expense:<br>
+Name: USS Description:  Amount: 70.00 Created: 13 Apr 2019, 11:23 PM Archive Name:  Tags: [[hangout], [holiday]]"<br>
+&#160;<br>
+<span class="image"><img src="../images/tagging/AddTagTwo.png" alt="AddTagTwo"></span><br>
+&#160;<br>
+3. You could see the tags "<em>holiday</em>" and "<em>hangout</em>" in the expense at index 2.<br>
+&#160;<br>
+<span class="image"><img src="../images/tagging/AddTagThreeCropped.png" alt="AddTagThreeCropped"></span><br>
+&#160;<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You are not able to add <strong>existing</strong> tags.<br>
+If you input <strong>existing</strong> and <strong>non-existing</strong> tags, Billboard adds the <strong>non-existing</strong> tags only.<br>
+If you input <strong>duplicate</strong> tags, Billboard adds them <strong>once</strong>. i.e Billboard does <strong>not</strong> allow duplicate tags in an expense.<br>
+Example: <code>tag add t/holiday t/holiday</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing-a-tag-code-tag-rm-code-br"><a class="link" href="#removing-a-tag-code-tag-rm-code-br">Removing a tag: <code>tag rm</code><br></a></h4>
+<div class="paragraph">
+<p>This command removes your input tag(s) from the expense at the index you have specified.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>tag rm [INDEX] t/[TAG] t/[TAG…]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+Lets say that you want to remove the tags "<em>holiday</em>" and "<em>hangout</em>" from the expense "<em>USS</em>" at index 2.<br>
+To remove the tags:<br>
+1. Type <code>tag rm 2 t/holiday t/hangout</code> in the command box and press <code>enter</code> to execute it.<br>
+&#160;<br>
+<span class="image"><img src="../images/tagging/rmTagOne.png" alt="rmTagOne"></span><br>
+&#160;<br>
+2. The result box will display the message "Removed tag(s) from Expense:<br>
+ Name: USS Description:  Amount: 70.00 Created: 13 Apr 2019, 11:23 PM Archive Name:  Tags: []"<br>
+&#160;<br>
+<span class="image"><img src="../images/tagging/rmTagTwo.png" alt="rmTagTwo"></span><br>
+&#160;<br>
+3. You could see that the expense at index 2 no longer has the tags "<em>hangout</em>" and "<em>holiday</em>".<br>
+&#160;<br>
+<span class="image"><img src="../images/tagging/rmTagThree.png" alt="rmTagThree"></span><br>
+&#160;<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You are not able to remove <strong>non-existing</strong> tags.<br>
+If you input <strong>duplicate</strong> tags, Billboard removes them <strong>once</strong>.<br>
+Example: <code>tag rm t/holiday t/holiday</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="filtering-by-tag-code-tag-filter-code-br"><a class="link" href="#filtering-by-tag-code-tag-filter-code-br">Filtering by tag: <code>tag filter</code><br></a></h4>
+<div class="paragraph">
+<p>This command filters expenses by your input tag(s).<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>tag filter t/[TAG] t/[TAG…]</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-out-all-the-tags-code-tag-list-code-br"><a class="link" href="#listing-out-all-the-tags-code-tag-list-code-br">Listing out all the tags: <code>tag list</code><br></a></h4>
+<div class="paragraph">
+<p>This command lists out all existing tags.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>tag list</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-developer-guide"><a class="link" href="#contributions-to-developer-guide">Contributions to Developer Guide</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We had to update the original addressbook Developer Guide with instructions for the enhancements that we had added.
+The following is an excerpt from <strong><em>Billboard Developer Guide</em></strong>, showing additions that I have made for the tag features.<br></p>
+</div>
+<div class="sect2">
+<h3 id="tagging"><a class="link" href="#tagging">Tagging</a></h3>
+<div class="sect3">
+<h4 id="proposed-implementation"><a class="link" href="#proposed-implementation">Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The tag feature supports the following operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Adding tags to an expense</p>
+</li>
+<li>
+<p>Removing tags from an expense</p>
+</li>
+<li>
+<p>Filtering expenses by tags</p>
+</li>
+<li>
+<p>Listing all existing tags</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These actions are facilitated by the <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code> classes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>UniqueTagList</strong></code> maps <code><strong>String</strong></code> to <code><strong>Tag</strong></code> where <code><strong>String</strong></code> is the name of the <code><strong>Tag</strong></code>. It ensures that the same <code><strong>Tag</strong></code> object is referenced instead of creating many <code><strong>Tag</strong></code> objects of the same name during operations.</p>
+</li>
+<li>
+<p><code><strong>TagCountManager</strong></code> maps <code><strong>Tag</strong></code> to <code><strong>Integer</strong></code>, where <code><strong>Integer</strong></code> is the number of <code><strong>Expense</strong></code> tagged with each <code><strong>Tag</strong></code>. It allows <code><strong>Tag</strong></code> objects that are not tagged with any <code><strong>Expense</strong></code> to be tracked and removed.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Operations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>UniqueTagList#retrieveTags(List&lt;String&gt;)</strong></code>&#8201;&#8212;&#8201;Retrieves corresponding tags from <code><strong>UniqueTagList</strong></code> based on the list of tag names.</p>
+</li>
+<li>
+<p><code><strong>UniqueTagList#removeAll(List&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Removes tags given in the list from the <code><strong>UniqueTagList</strong></code>.</p>
+</li>
+<li>
+<p><code><strong>UniqueTagList#getTagNames()</strong></code>&#8201;&#8212;&#8201;Returns a list of existing tag names.</p>
+</li>
+<li>
+<p><code><strong>TagCountManager#incrementAllCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Increments the <code><strong>Integer</strong></code> mapped to the tags in the set by 1.</p>
+</li>
+<li>
+<p><code><strong>TagCountManager#decreaseAllCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Decreases the <code><strong>Integer</strong></code> mapped to the tags in the set by 1.</p>
+</li>
+<li>
+<p><code><strong>TagCountManager#removeZeroCount()</strong></code>&#8201;&#8212;&#8201;Removes all mappings where the <code><strong>Integer</strong></code> is equal to 0.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations are exposed in the <code><strong>Model</strong></code> interface as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>Model#retrieveTags(List&lt;String&gt;)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#incrementCount(Set&lt;Tag&gt;)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#decreaseCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;<code><strong>TagCountManager#removeZeroCount()</strong></code> and <code><strong>UniqueTagList#removeAll(List&lt;Tag&gt;)</strong></code> are called in this method to remove any tag not tagged to any expense from the <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code>.</p>
+</li>
+<li>
+<p><code><strong>Model#getTagNames()</strong></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how adding tag executes at every step.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Step 1:</strong>
+The user launches the application. The <code><strong>Model</strong></code> is initialized with saved data. All tags are loaded into <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code>.</p>
+</li>
+<li>
+<p><strong>Step 2:</strong>
+User enters the command <code>tag add 1 t/test t/test2</code> to add tags to the <code><strong>Expense</strong></code> at index 1 in Billboard.<br>
+<strong>2a</strong>. <code><strong>BillboardParser</strong></code> parses this command, creating a <code><strong>TagCommandParser</strong></code> after determining that it is a tag command.<br>
+<strong>2b</strong>. The <code><strong>TagCommandParser</strong></code> then parses <code>add 1 t/test t/test2</code> and creates an <code><strong>AddTagCommandParser</strong></code> after determining that it is a command to add tags.<br>
+<strong>2c</strong>. Subsequently, the <code><strong>AddTagCommandParser</strong></code> parses <code>1 t/test1 t/test2</code> into <code><strong>Index</strong></code> 1 and
+a list of <code><strong>String</strong></code> consisting of <code>test1</code> and <code>test2</code>. <code><strong>AddTagCommandParser</strong></code> creates <code><strong>AddTagCommand</strong></code> with the <code><strong>Index</strong></code> and list of <code><strong>String</strong></code> as parameters.</p>
+</li>
+<li>
+<p><strong>Step 3:</strong>
+<code><strong>LogicManager</strong></code> executes the <code><strong>AddTagCommand</strong></code>.<br>
+During execution,<br>
+<strong>3a</strong>. <code><strong>AddTagCommand</strong></code> calls <code><strong>Model#retrieveTags(List&lt;String&gt;)</strong></code> on the list of <code><strong>String</strong></code> consisting of <code>test1</code> and <code>test2</code> which returns a set of <code><strong>Tag</strong></code> with tag names <code>test1</code> and <code>test2</code>.<br>
+<strong>3b</strong>. <code><strong>AddTagCommand</strong></code> then calls <code><strong>Model#incrementCount(Set&lt;Tag&gt;)</strong></code> on the set of <code><strong>Tag</strong></code>.<br>
+<strong>3c</strong>. Lastly, <code><strong>AddTagCommand</strong></code> calls <code><strong>Model#setExpense(Expense, Expense)</strong></code> which edits and updates the <code><strong>Expense</strong></code> at index 1 in the <code><strong>Model</strong></code>. The updated <code><strong>Expense</strong></code> is then reflected on the GUI.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Duplicate tags in an <code><strong>Expense</strong></code> is not allowed.<br>
+If the user tries to add an existing <code><strong>Tag</strong></code> to an <code><strong>Expense</strong></code>, <code><strong>AddTagCommand</strong></code> throws an exception, leading to an error message.<br>
+If the user tries to add duplicate <code><strong>Tag</strong></code>, i.e enter 2 of the same <code><strong>Tag</strong></code>, <code><strong>AddTagCommand</strong></code> adds the tag once and increments the number of expenses tagged to it by 1.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the adding tag operation works.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AddTagSequenceDiagram.png" alt="AddTagSequenceDiagram">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The lifeline for <code><strong>TagCommandParser</strong></code> and <code><strong>AddTagCommandParser</strong></code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when a user enters a command to add tags to an expense.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AddTagActivityDiagram.png" alt="AddTagActivityDiagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-data-structure-to-support-tag-commands"><a class="link" href="#aspect-data-structure-to-support-tag-commands">Aspect: Data structure to support tag commands</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use a <code><strong>UniqueTagList</strong></code> to map tag names to <code><strong>Tag</strong></code> and <code><strong>TagCountManager</strong></code> to map <code><strong>Tag</strong></code> to number of <code><strong>Expense</strong></code> tagged to it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Each structure has only one responsibility.</p>
+</li>
+<li>
+<p>Fast retrieval and update of data</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires maintenance of both structures as they need to sync with each other.</p>
+</li>
+<li>
+<p>Retrieval of all <code><strong>Expense</strong></code> under a <code><strong>Tag</strong></code> requires filtering through the whole list of <code><strong>Expense</strong></code>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 :</strong> Have each <code><strong>Tag</strong></code> store a list of <code><strong>Expense</strong></code> tagged to it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fast retrieval of all <code><strong>Expenses</strong></code> under each <code><strong>Tag</strong></code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Circular dependency</p>
+</li>
+<li>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code><strong>Expense</strong></code> in the list even after executing non-tag related commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 3 :</strong> Use one map to map <code><strong>Tag</strong></code> to <code><strong>Expense</strong></code> tagged to it.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fast retrieval of all <code><strong>Expenses</strong></code> under each <code><strong>Tag</strong></code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Cons:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code><strong>Expense</strong></code> in the list even after executing non-tag related commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 10:16:29 UTC</div></div></div></body></html>

@@ -881,15 +881,15 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 </ul>
 </div>
 <div class="paragraph">
-<p>These actions are facilitated by the <code>UniqueTagList</code> and <code>TagCountManager</code> classes:</p>
+<p>These actions are facilitated by the <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code> classes:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>UniqueTagList</code> maps <code>String</code> to <code>Tag</code> where <code>String</code> is the name of the <code>Tag</code>. It ensures that the same <code>Tag</code> is referenced instead of creating many <code>Tag</code> objects of the same name when adding tags.</p>
+<p><code><strong>UniqueTagList</strong></code> maps <code><strong>String</strong></code> to <code><strong>Tag</strong></code> where <code><strong>String</strong></code> is the name of the <code><strong>Tag</strong></code>. It ensures that the same <code><strong>Tag</strong></code> object is referenced instead of creating many <code><strong>Tag</strong></code> objects of the same name during operations.</p>
 </li>
 <li>
-<p><code>TagCountManager</code> maps <code>Tag</code> to <code>Integer</code>, where <code>Integer</code> is the number of <code>Expense</code> under each <code>Tag</code>. It allows <code>Tag</code> objects that are not tagged with any <code>Expense</code> to be tracked and removed.</p>
+<p><code><strong>TagCountManager</strong></code> maps <code><strong>Tag</strong></code> to <code><strong>Integer</strong></code>, where <code><strong>Integer</strong></code> is the number of <code><strong>Expense</strong></code> tagged with each <code><strong>Tag</strong></code>. It allows <code><strong>Tag</strong></code> objects that are not tagged with any <code><strong>Expense</strong></code> to be tracked and removed.</p>
 </li>
 </ul>
 </div>
@@ -899,63 +899,68 @@ No filtering of archive and non-archive expense from the same list is needed.</p
 <div class="ulist">
 <ul>
 <li>
-<p><code>UniqueTagList#retrieveTags(List&lt;String&gt;)</code>&#8201;&#8212;&#8201;Retrieves corresponding tags from <code>UniqueTagList</code> based on the list of tag names.</p>
+<p><code><strong>UniqueTagList#retrieveTags(List&lt;String&gt;)</strong></code>&#8201;&#8212;&#8201;Retrieves corresponding tags from <code><strong>UniqueTagList</strong></code> based on the list of tag names.</p>
 </li>
 <li>
-<p><code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Removes tags given in the list from the <code>UniqueTagList</code>.</p>
+<p><code><strong>UniqueTagList#removeAll(List&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Removes tags given in the list from the <code><strong>UniqueTagList</strong></code>.</p>
 </li>
 <li>
-<p><code>UniqueTagList#getTagNames()</code>&#8201;&#8212;&#8201;Returns a list of tag names.</p>
+<p><code><strong>UniqueTagList#getTagNames()</strong></code>&#8201;&#8212;&#8201;Returns a list of existing tag names.</p>
 </li>
 <li>
-<p><code>TagCountManager#incrementAllCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Increment the number of expenses mapped to tags given in the set by 1.</p>
+<p><code><strong>TagCountManager#incrementAllCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Increments the <code><strong>Integer</strong></code> mapped to the tags in the set by 1.</p>
 </li>
 <li>
-<p><code>TagCountManager#decreaseAllCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;Decrease number of expenses mapped to tags given in the set by 1.</p>
+<p><code><strong>TagCountManager#decreaseAllCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;Decreases the <code><strong>Integer</strong></code> mapped to the tags in the set by 1.</p>
 </li>
 <li>
-<p><code>TagCountManager#removeZeroCount()</code>&#8201;&#8212;&#8201;Removes all mappings where number of expense is equal to 0.</p>
+<p><code><strong>TagCountManager#removeZeroCount()</strong></code>&#8201;&#8212;&#8201;Removes all mappings where the <code><strong>Integer</strong></code> is equal to 0.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These operations are exposed in the <code>Model</code> interface as:</p>
+<p>These operations are exposed in the <code><strong>Model</strong></code> interface as:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>Model#retrieveTags(List&lt;String&gt;)</code></p>
+<p><code><strong>Model#retrieveTags(List&lt;String&gt;)</strong></code></p>
 </li>
 <li>
-<p><code>Model#incrementCount(Set&lt;Tag&gt;)</code></p>
+<p><code><strong>Model#incrementCount(Set&lt;Tag&gt;)</strong></code></p>
 </li>
 <li>
-<p><code>Model#decreaseCount(Set&lt;Tag&gt;)</code>&#8201;&#8212;&#8201;<code>TagCountManager#removeZeroCount()</code> and <code>UniqueTagList#removeAll(List&lt;Tag&gt;)</code> is called in this method as well to remove tags not tagged to any expense from <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
+<p><code><strong>Model#decreaseCount(Set&lt;Tag&gt;)</strong></code>&#8201;&#8212;&#8201;<code><strong>TagCountManager#removeZeroCount()</strong></code> and <code><strong>UniqueTagList#removeAll(List&lt;Tag&gt;)</strong></code> are called in this method to remove any tag not tagged to any expense from the <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code>.</p>
 </li>
 <li>
-<p><code>Model#getTagNames()</code></p>
+<p><code><strong>Model#getTagNames()</strong></code></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Given below is an example usage scenario and how the adding tag mechanism behaves at each step.</p>
+<p>Given below is an example usage scenario and how adding tag executes at every step.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p><strong>Step 1:</strong>
-The user launches the application. The <code>Model</code> is initialized with saved data. All tags are loaded into <code>UniqueTagList</code> and <code>TagCountManager</code>.</p>
+The user launches the application. The <code><strong>Model</strong></code> is initialized with saved data. All tags are loaded into <code><strong>UniqueTagList</strong></code> and <code><strong>TagCountManager</strong></code>.</p>
 </li>
 <li>
 <p><strong>Step 2:</strong>
-User enters the command <code>tag add 1 t/test t/test2</code> to add tags to the 1st <code>Expense</code> in Billboard. <code>BillboardParser</code> parses the command, creating a <code>TagCommandParser</code>.
-The <code>TagCommandParser</code> then parses <code>add 1 t/test t/test2</code> and creates an <code>AddTagCommandParser</code>. Subsequently, the <code>AddTagCommandParser</code> parses <code>1 t/test1 t/test2</code> into <code>Index</code> 1 and
-a list of <code>String</code> consisting of <code>test1</code> and <code>test2</code>. They are then used to create <code>AddTagCommand</code> which is returned to <code>LogicManager</code>.</p>
+User enters the command <code>tag add 1 t/test t/test2</code> to add tags to the <code><strong>Expense</strong></code> at index 1 in Billboard.<br>
+<strong>2a</strong>. <code><strong>BillboardParser</strong></code> parses this command, creating a <code><strong>TagCommandParser</strong></code> after determining that it is a tag command.<br>
+<strong>2b</strong>. The <code><strong>TagCommandParser</strong></code> then parses <code>add 1 t/test t/test2</code> and creates an <code><strong>AddTagCommandParser</strong></code> after determining that it is a command to add tags.<br>
+<strong>2c</strong>. Subsequently, the <code><strong>AddTagCommandParser</strong></code> parses <code>1 t/test1 t/test2</code> into <code><strong>Index</strong></code> 1 and
+a list of <code><strong>String</strong></code> consisting of <code>test1</code> and <code>test2</code>. <code><strong>AddTagCommandParser</strong></code> creates <code><strong>AddTagCommand</strong></code> with the <code><strong>Index</strong></code> and list of <code><strong>String</strong></code> as parameters.</p>
 </li>
 <li>
 <p><strong>Step 3:</strong>
-<code>LogicManager</code> executes the <code>AddTagCommand</code>. During execution, <code>AddTagCommand</code> calls <code>Model#retrieveTags(Set&lt;String&gt;)</code> on the list consisting of <code>test1</code> and <code>test2</code> which returns a set of <code>Tag</code>.
-<code>Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The 1st <code>Expense</code> is edited and updated in the <code>Model</code> using <code>Model#setExpense(Expense, Expense)</code> and is then shown on the GUI.</p>
+<code><strong>LogicManager</strong></code> executes the <code><strong>AddTagCommand</strong></code>.<br>
+During execution,<br>
+<strong>3a</strong>. <code><strong>AddTagCommand</strong></code> calls <code><strong>Model#retrieveTags(List&lt;String&gt;)</strong></code> on the list of <code><strong>String</strong></code> consisting of <code>test1</code> and <code>test2</code> which returns a set of <code><strong>Tag</strong></code> with tag names <code>test1</code> and <code>test2</code>.<br>
+<strong>3b</strong>. <code><strong>AddTagCommand</strong></code> then calls <code><strong>Model#incrementCount(Set&lt;Tag&gt;)</strong></code> on the set of <code><strong>Tag</strong></code>.<br>
+<strong>3c</strong>. Lastly, <code><strong>AddTagCommand</strong></code> calls <code><strong>Model#setExpense(Expense, Expense)</strong></code> which edits and updates the <code><strong>Expense</strong></code> at index 1 in the <code><strong>Model</strong></code>. The updated <code><strong>Expense</strong></code> is then reflected on the GUI.</p>
 </li>
 </ul>
 </div>
@@ -966,9 +971,9 @@ a list of <code>String</code> consisting of <code>test1</code> and <code>test2</
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Duplicate tags in an <code>Expense</code> is not allowed.
-If the user tries to add an existing <code>Tag</code> to an <code>Expense</code>, it will not be added, and <code>Model#incrementCount</code> will not be called.
-If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <code>Tag</code>, it will only be added once and number of expense under that <code>Tag</code> will only increment by 1.
+Duplicate tags in an <code><strong>Expense</strong></code> is not allowed.<br>
+If the user tries to add an existing <code><strong>Tag</strong></code> to an <code><strong>Expense</strong></code>, <code><strong>AddTagCommand</strong></code> throws an exception, leading to an error message.<br>
+If the user tries to add duplicate <code><strong>Tag</strong></code>, i.e enter 2 of the same <code><strong>Tag</strong></code>, <code><strong>AddTagCommand</strong></code> adds the tag once and increments the number of expenses tagged to it by 1.
 </td>
 </tr>
 </table>
@@ -984,9 +989,6 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 <div class="paragraph">
 <p>Figure 21. Sequence diagram of executing AddTagCommand.</p>
 </div>
-<div class="paragraph">
-<p>The following activity diagram summarizes what happens when a user enters a command to add tags to an expense.</p>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -994,10 +996,13 @@ If the user tries to add duplicate <code>Tag</code>, i.e enter 2 of the same <co
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+The lifeline for <code><strong>TagCommandParser</strong></code> and <code><strong>AddTagCommandParser</strong></code> should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when a user enters a command to add tags to an expense.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1015,7 +1020,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use a <code>UniqueTagList</code> to map tag names to <code>Tag</code> and <code>TagCountManager</code> to map <code>Tag</code> to number of <code>Expense</code> under it.</p>
+<p><strong>Alternative 1 (current choice):</strong> Use a <code><strong>UniqueTagList</strong></code> to map tag names to <code><strong>Tag</strong></code> and <code><strong>TagCountManager</strong></code> to map <code><strong>Tag</strong></code> to number of <code><strong>Expense</strong></code> tagged to it.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1039,7 +1044,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <p>Requires maintenance of both structures as they need to sync with each other.</p>
 </li>
 <li>
-<p>Retrieval of <code>Expense</code> under a <code>Tag</code> requires filtering through the whole list of <code>Expense</code>.</p>
+<p>Retrieval of all <code><strong>Expense</strong></code> under a <code><strong>Tag</strong></code> requires filtering through the whole list of <code><strong>Expense</strong></code>.</p>
 </li>
 </ul>
 </div>
@@ -1048,7 +1053,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 </div>
 </li>
 <li>
-<p><strong>Alternative 2 :</strong> Have each <code>Tag</code> store a list of <code>Expense</code> tagged to it.</p>
+<p><strong>Alternative 2 :</strong> Have each <code><strong>Tag</strong></code> store a list of <code><strong>Expense</strong></code> tagged to it.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1056,7 +1061,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <div class="ulist">
 <ul>
 <li>
-<p>Fast retrieval of <code>Expenses</code> under each <code>Tag</code></p>
+<p>Fast retrieval of all <code><strong>Expenses</strong></code> under each <code><strong>Tag</strong></code></p>
 </li>
 </ul>
 </div>
@@ -1069,7 +1074,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <p>Circular dependency</p>
 </li>
 <li>
-<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code>Expense</code> by replacing it with the updated <code>Expense</code> even after executing non-tag related commands.</p>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code><strong>Expense</strong></code> in the list even after executing non-tag related commands.</p>
 </li>
 </ul>
 </div>
@@ -1078,7 +1083,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 </div>
 </li>
 <li>
-<p><strong>Alternative 3 :</strong> Use one map to map <code>Tag</code> to <code>Expense</code> tagged to it.</p>
+<p><strong>Alternative 3 :</strong> Use one map to map <code><strong>Tag</strong></code> to <code><strong>Expense</strong></code> tagged to it.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1086,7 +1091,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <div class="ulist">
 <ul>
 <li>
-<p>Fast retrieval of <code>Expenses</code> under each <code>Tag</code></p>
+<p>Fast retrieval of all <code><strong>Expenses</strong></code> under each <code><strong>Tag</strong></code></p>
 </li>
 </ul>
 </div>
@@ -1096,7 +1101,7 @@ The lifeline for <code>TagCommandParser</code> and <code>AddTagCommandParser</co
 <div class="ulist">
 <ul>
 <li>
-<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code>Expense</code> by replacing it with the updated <code>Expense</code> even after executing non-tag related commands.</p>
+<p>Since implementation of Billboard objects are immutable, there is a constant need to update the <code><strong>Expense</strong></code> in the list even after executing non-tag related commands.</p>
 </li>
 </ul>
 </div>
@@ -2482,4 +2487,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 09:53:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 10:16:28 UTC</div></div></div></body></html>

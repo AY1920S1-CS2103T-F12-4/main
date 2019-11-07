@@ -153,6 +153,18 @@ Edit the expense at index 2  with new description of: “buy a math book”<br><
 </li>
 </ol>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This command overwrites existing tags if you input tags.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>&#160;<br></p>
 </div>
@@ -207,101 +219,188 @@ Displays below expenses (for example) in the GUI:<br></p>
 </div>
 <div class="sect2">
 <h3 id="tagging-expenses-code-tag-code"><a class="link" href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><em>Adding a tag: tag add</em><br>
-Adds your input tag/s to the expense at the index you have specified.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>tag add [INDEX] [TAG] [TAG…]</pre>
+<div class="paragraph">
+<p>This feature allows you to assign tags to your expenses. Expenses with the same tag will be grouped together, allowing you to search for related expenses easily.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Tag names should be <strong>alphanumeric</strong>. This means that they should not contain spaces or special characters.<br>
+Tag names are <strong>case sensitive.</strong><br>
+You are <strong>not</strong> able to use this feature on <strong>archived expenses</strong>.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Options:<br></p>
+<p>To view a list of supported tag commands, you could type <code>tag</code> in the command box and press <code>enter</code>.<br>
+Similarly, to view parameters for supported tag commands, you could type <code>tag</code> followed by the supported tag command and press <code>enter</code>.<br>
+Example: <code>tag rm</code></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>t/ : Specifies the name of the tag/s you want to add to the expense.(REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
+<div class="sect3">
+<h4 id="adding-a-tag-code-tag-add-code-br"><a class="link" href="#adding-a-tag-code-tag-add-code-br">3.2.1. Adding a tag: <code>tag add</code><br></a></h4>
+<div class="paragraph">
+<p>This command adds your input tag(s) to the expense at the index you have specified.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>tag add [INDEX] t/[TAG] t/[TAG…]</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>tag add 2 t/monthlybills t/electricity</code><br>
-Adds the tags “monthly bills” and "electricity" to the expense at index 2.<br>
+Lets say that you want to add the tags "<em>holiday</em>" and "<em>hangout</em>" to the expense "<em>USS</em>" at index 2.<br>
+&#160;<br>
+To add the tags:<br>
+1. Type <code>tag add 2 t/holiday t/hangout</code> in the command box and press <code>enter</code> to execute it.<br>
+<span class="image"><img src="images/tagging/AddTagOne.png" alt="AddTagOne"></span><br>
+2. The result box will display the message "Added tag(s) to Expense:<br>
+Name: USS Description:  Amount: 70.00 Created: 13 Apr 2019, 11:23 PM Archive Name:  Tags: [[hangout], [holiday]]"<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/AddTagTwo.png" alt="AddTagTwo"></span><br>
+&#160;<br>
+3. You could see the tags "<em>holiday</em>" and "<em>hangout</em>" in the expense at index 2.<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/AddTagThreeCropped.png" alt="AddTagThreeCropped"></span><br>
 &#160;<br></p>
 </div>
-</li>
-<li>
-<p><em>Removing a tag: tag rm</em><br>
-Deletes your input tag/s from the expense at the index you have specified.<br>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You are not able to add <strong>existing</strong> tags.<br>
+If you input <strong>existing</strong> and <strong>non-existing</strong> tags, Billboard adds the <strong>non-existing</strong> tags only.<br>
+If you input <strong>duplicate</strong> tags, Billboard adds them <strong>once</strong>. i.e Billboard does <strong>not</strong> allow duplicate tags in an expense.<br>
+Example: <code>tag add t/holiday t/holiday</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="removing-a-tag-code-tag-rm-code-br"><a class="link" href="#removing-a-tag-code-tag-rm-code-br">3.2.2. Removing a tag: <code>tag rm</code><br></a></h4>
+<div class="paragraph">
+<p>This command removes your input tag(s) from the expense at the index you have specified.<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
-<pre>tag rm [INDEX] [TAG] [TAG…]</pre>
+<pre>tag rm [INDEX] t/[TAG] t/[TAG…]</pre>
 </div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>t/ : Specifies the name of the tag/s you want to remove from the expense.(REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>tag rm 2 t/monthly bills t/electricity</code><br>
-Removes the tags “monthly bills” and "electricity" from the expense at index 2.<br>
+Lets say that you want to remove the tags "<em>holiday</em>" and "<em>hangout</em>" from the expense "<em>USS</em>" at index 2.<br>
+To remove the tags:<br>
+1. Type <code>tag rm 2 t/holiday t/hangout</code> in the command box and press <code>enter</code> to execute it.<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/rmTagOne.png" alt="rmTagOne"></span><br>
+&#160;<br>
+2. The result box will display the message "Removed tag(s) from Expense:<br>
+ Name: USS Description:  Amount: 70.00 Created: 13 Apr 2019, 11:23 PM Archive Name:  Tags: []"<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/rmTagTwo.png" alt="rmTagTwo"></span><br>
+&#160;<br>
+3. You could see that the expense at index 2 no longer has the tags "<em>hangout</em>" and "<em>holiday</em>".<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/rmTagThree.png" alt="rmTagThree"></span><br>
 &#160;<br></p>
 </div>
-</li>
-<li>
-<p><em>Filtering by tag: tag filter</em><br>
-Filters expenses by your input tag/s.<br>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You are not able to remove <strong>non-existing</strong> tags.<br>
+If you input <strong>duplicate</strong> tags, Billboard removes them <strong>once</strong>.<br>
+Example: <code>tag rm t/holiday t/holiday</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="filtering-by-tag-code-tag-filter-code-br"><a class="link" href="#filtering-by-tag-code-tag-filter-code-br">3.2.3. Filtering by tag: <code>tag filter</code><br></a></h4>
+<div class="paragraph">
+<p>This command filters expenses by your input tag(s).<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
-<pre>tag filter [TAG] [TAG…]</pre>
+<pre>tag filter t/[TAG] t/[TAG…]</pre>
 </div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>t/ : Specifies name of the tag/s you want to filter expenses with.(REQUIRED)<br>
-&#160;<br></p>
-</li>
-</ul>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>tag filter t/home t/monthly bills</code><br>
-Lists out all the expenses that contains the tags “home” or “monthly bills”<br>
+Lets say that you want to filter your expenses by the tag "<em>tech</em>".<br>
+To filter your expenses:<br>
+1. Type <code>tag filter t/tech</code> in the command box and press <code>enter</code> to execute it.<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/filterTagOne.png" alt="filterTagOne"></span><br>
+&#160;<br>
+2. The result box will display the message "3 expense(s) listed!"<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/filterTagTwo.png" alt="filterTagTwo"></span><br>
+&#160;<br>
+3. Billboard lists all expenses under the tag "<em>tech</em>".<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/filterTagThree.png" alt="filterTagThree"></span><br>
 &#160;<br></p>
 </div>
-</li>
-<li>
-<p><em>Listing out all the tags: tag list</em><br>
-Lists out all existing tags.<br>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you input <strong>more than one</strong> tags, Billboard lists out all expenses tagged with <strong>one or more</strong> input tags.<br>
+This command allows <strong>duplicate</strong> tags as input.<br>
+This command allows <strong>non-existing</strong> tags as input.<br>
+After executing this command, you could edit (eg. <code>edit</code>, <code>tag add</code> etc) the filtered expenses using the displayed indexes.<br>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="listing-out-all-the-tags-code-tag-list-code-br"><a class="link" href="#listing-out-all-the-tags-code-tag-list-code-br">3.2.4. Listing out all the tags: <code>tag list</code><br></a></h4>
+<div class="paragraph">
+<p>This command lists out all existing tags.<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>tag list</pre>
 </div>
 </div>
-</li>
-</ol>
-</div>
 <div class="paragraph">
-<p>&#160;<br></p>
+<p>Example:<br>
+Lets say that you want to list out all existing tags.<br>
+To list them:<br>
+1. Type <code>tag list</code> in the command box and press <code>enter</code> to execute it.<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/listtagone.png" alt="listtagone"></span><br>
+&#160;<br>
+2. The result box displays a list of all existing tags.<br>
+&#160;<br>
+<span class="image"><img src="images/tagging/listtagtwo.png" alt="listtagtwo"></span><br>
+&#160;<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -903,4 +1002,4 @@ Usage:</p>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 09:53:33 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-07 10:16:28 UTC</div></div></div></body></html>
