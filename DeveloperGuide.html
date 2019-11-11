@@ -54,11 +54,15 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
 <li><a href="#deleting-an-expense">G.2. Deleting an expense</a></li>
-<li><a href="#adding-an-expense-to-an-archive">G.3. Adding an expense to an archive</a></li>
-<li><a href="#displaying-the-expenses-in-an-archive">G.4. Displaying the expenses in an archive</a></li>
-<li><a href="#displaying-a-list-of-archive-names">G.5. Displaying a list of archive names</a></li>
-<li><a href="#deleting-an-expense-from-an-archive">G.6. Deleting an expense from an archive</a></li>
-<li><a href="#reverting-unarchiving-an-expense-from-an-archive">G.7. Reverting/unarchiving an expense from an archive</a></li>
+<li><a href="#adding-tags-to-an-expense">G.3. Adding tags to an expense</a></li>
+<li><a href="#removing-tags-from-an-expense">G.4. Removing tags from an expense</a></li>
+<li><a href="#filtering-expenses-by-tag">G.5. Filtering expenses by tag</a></li>
+<li><a href="#listing-out-all-existing-tags">G.6. Listing out all existing tags</a></li>
+<li><a href="#adding-an-expense-to-an-archive">G.7. Adding an expense to an archive</a></li>
+<li><a href="#displaying-the-expenses-in-an-archive">G.8. Displaying the expenses in an archive</a></li>
+<li><a href="#displaying-a-list-of-archive-names">G.9. Displaying a list of archive names</a></li>
+<li><a href="#deleting-an-expense-from-an-archive">G.10. Deleting an expense from an archive</a></li>
+<li><a href="#reverting-unarchiving-an-expense-from-an-archive">G.11. Reverting/unarchiving an expense from an archive</a></li>
 </ul>
 </li>
 </ul>
@@ -2528,9 +2532,170 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-expense-to-an-archive"><a class="link" href="#adding-an-expense-to-an-archive">G.3. Adding an expense to an archive</a></h3>
+<h3 id="adding-tags-to-an-expense"><a class="link" href="#adding-tags-to-an-expense">G.3. Adding tags to an expense</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adding tags to an expense in a list with multiple expenses.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Multiple expenses in the list. First expense does not have the tag "<em>holiday</em>" but have the tag "<em>tech</em>".</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 t/holiday</code><br>
+Expected: Tag "<em>holiday</em>" is added to the first expense. Details of first expense shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 t/tech</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 t/holiday t/tech</code><br>
+Expected: Tag "<em>holiday</em>" is added to the first expense. Details of first expense shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 0 t/holiday</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 holiday</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 t/holiday time</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag add 1 t/holiday__</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.<br></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Adding tags to an expense in an empty list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>tag add 1 t/holiday</code><br>
+Expected: No tags added to any expense. Error details shown in the status message.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="removing-tags-from-an-expense"><a class="link" href="#removing-tags-from-an-expense">G.4. Removing tags from an expense</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Removing tags from an expense in a list with multiple expenses.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Multiple expenses in the list. First expense has the tag "<em>holiday</em>" but does not contain the tag "<em>tech</em>".</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 t/holiday</code><br>
+Expected: Tag "<em>holiday</em>" is removed from the first expense. Details of first expense shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 t/tech</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 t/tech t/holiday</code><br>
+Expected: Tag "<em>holiday</em>" is removed from the first expense. Details of first expense shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 0 t/holiday</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 holiday</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 t/holiday time</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag rm 1 t/holiday__</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Removing tags from an expense in an empty list</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Test case: <code>tag rm 1 t/holiday</code><br>
+Expected: No tag removed from any expense. Error details shown in the status message.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filtering-expenses-by-tag"><a class="link" href="#filtering-expenses-by-tag">G.5. Filtering expenses by tag</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Filtering expenses by tag while all expenses are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all expenses using the <code>list</code> command. Multiple expenses in the list. One or more expenses contain the tag "<em>holiday</em>". All expenses do not contain the tag "<em>tech</em>"</p>
+</li>
+<li>
+<p>Test case: <code>tag filter t/holiday</code><br>
+Expected: Expenses that contain the tag "<em>holiday</em>" are listed out. Number of expenses shown in status message.</p>
+</li>
+<li>
+<p>Test case: <code>tag filter t/tech</code><br>
+Expected: No expense listed out.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-out-all-existing-tags"><a class="link" href="#listing-out-all-existing-tags">G.6. Listing out all existing tags</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Listing out all existing tags while all expenses are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List all expenses using the <code>list</code> command.</p>
+</li>
+<li>
+<p>Test case: <code>tag list</code><br>
+Expected: All existing tags are listed out in the status message.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-an-expense-to-an-archive"><a class="link" href="#adding-an-expense-to-an-archive">G.7. Adding an expense to an archive</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2571,7 +2736,7 @@ Expected: No expenses removed from the list and no creation of archives. The inv
 </div>
 </div>
 <div class="sect2">
-<h3 id="displaying-the-expenses-in-an-archive"><a class="link" href="#displaying-the-expenses-in-an-archive">G.4. Displaying the expenses in an archive</a></h3>
+<h3 id="displaying-the-expenses-in-an-archive"><a class="link" href="#displaying-the-expenses-in-an-archive">G.8. Displaying the expenses in an archive</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2600,7 +2765,7 @@ Expected: An error message indicating that there is no existing archive name and
 </div>
 </div>
 <div class="sect2">
-<h3 id="displaying-a-list-of-archive-names"><a class="link" href="#displaying-a-list-of-archive-names">G.5. Displaying a list of archive names</a></h3>
+<h3 id="displaying-a-list-of-archive-names"><a class="link" href="#displaying-a-list-of-archive-names">G.9. Displaying a list of archive names</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2621,7 +2786,7 @@ Expected: The displayed list of expenses should not be changed. The result box s
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-an-expense-from-an-archive"><a class="link" href="#deleting-an-expense-from-an-archive">G.6. Deleting an expense from an archive</a></h3>
+<h3 id="deleting-an-expense-from-an-archive"><a class="link" href="#deleting-an-expense-from-an-archive">G.10. Deleting an expense from an archive</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2652,7 +2817,7 @@ A message indicating the deletion of the expense and the archive will be display
 </div>
 </div>
 <div class="sect2">
-<h3 id="reverting-unarchiving-an-expense-from-an-archive"><a class="link" href="#reverting-unarchiving-an-expense-from-an-archive">G.7. Reverting/unarchiving an expense from an archive</a></h3>
+<h3 id="reverting-unarchiving-an-expense-from-an-archive"><a class="link" href="#reverting-unarchiving-an-expense-from-an-archive">G.11. Reverting/unarchiving an expense from an archive</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -2685,4 +2850,4 @@ A message indicating that the expense is removed from the archive and added back
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 09:11:52 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 10:20:34 UTC</div></div></div></body></html>
