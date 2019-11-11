@@ -54,7 +54,11 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">G.1. Launch and Shutdown</a></li>
 <li><a href="#deleting-an-expense">G.2. Deleting an expense</a></li>
-<li><a href="#saving-data">G.3. Saving data</a></li>
+<li><a href="#adding-an-expense-to-an-archive">G.3. Adding an expense to an archive</a></li>
+<li><a href="#displaying-the-expenses-in-an-archive">G.4. Displaying the expenses in an archive</a></li>
+<li><a href="#displaying-a-list-of-archive-names">G.5. Displaying a list of archive names</a></li>
+<li><a href="#deleting-an-expense-from-an-archive">G.6. Deleting an expense from an archive</a></li>
+<li><a href="#reverting-unarchiving-an-expense-from-an-archive">G.7. Reverting/unarchiving an expense from an archive</a></li>
 </ul>
 </li>
 </ul>
@@ -2501,7 +2505,7 @@ Expected: The most recent window size and location is retained.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting an expense while all persons are listed</p>
+<p>Deleting an expense while all expenses are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -2524,29 +2528,161 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">G.3. Saving data</a></h3>
+<h3 id="adding-an-expense-to-an-archive"><a class="link" href="#adding-an-expense-to-an-archive">G.3. Adding an expense to an archive</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Dealing with missing/corrupted data files</p>
+<p>Adding an expense to an archive when current expenses list.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
+<p>Prerequisites: List all expenses using the <code>list</code> command. At least 3 expenses in the list. Test cases should be completed in chronological order.</p>
+</li>
+<li>
+<p>Test case: <code>archive add 1 arc/test</code><br>
+Expected: First expense is removed from the list. Message in result box indicates that a <code>test</code> archive is created, since it was not an existing archive prior, and the first expense was added to it.<br>
+Use the <code>archive list test</code> command to display the archive list to check if the expense was correctly archived.<br>
+After verifying, use the <code>list</code> command to go back to the default list of expenses.</p>
+</li>
+<li>
+<p>Test case: <code>archive add 2 arc/test</code><br>
+Expected: Second expense is removed from the list. However, since the <code>test</code> archive was already created in the first test case, the message in the result box would only indicate that the second expense was added to the <code>test</code> archive.<br>
+Use the <code>archive list test</code> command to display the archive list check if the expense was correctly archived.<br>
+After verifying, use the <code>list</code> command to go back to the default list of expenses.</p>
+</li>
+<li>
+<p>Test case: <code>archive add 0 arc/test</code><br>
+Expected: No expenses removed from the list and no creation of archives. An invalid archive command message should appear in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive add X arc/test</code> (where X is larger than the list size)<br>
+Expected: No expenses removed from the list and no creation of archives. An error message indicating an invalid expense index will be shown in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive add</code> or <code>archive add X</code> (where X is any invalid argument string not in the form of <code>[INDEX] arc/[ARCHIVE NAME]</code>)<br>
+Expected: No expenses removed from the list and no creation of archives. The invalid archive command format message and the <code>archive add</code> usage message should appear in the result box.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="displaying-the-expenses-in-an-archive"><a class="link" href="#displaying-the-expenses-in-an-archive">G.4. Displaying the expenses in an archive</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displaying the expenses in a particular archive when any list of expenses are listed.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Test cases in this section should be done after carrying out the test cases in the <strong><em>Adding an expense to an archive</em></strong> section.</p>
+</li>
+<li>
+<p>Test case: <code>archive list test</code><br>
+Expected: The list of expenses displayed should change to contain the two expenses archived in the prior <strong><em>Adding an expense to an archive</em></strong> section.</p>
+</li>
+<li>
+<p>Test case: <code>archive list</code> or <code>archive list X</code> (where X is any amount of whitespace)<br>
+Expected: An error message indicating that the archive name cannot be empty and the <code>archive list</code> usage message will be displayed in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive list X</code> (where X is any non-existent archive name)<br>
+Expected: An error message indicating that there is no existing archive name and the <code>archive list</code> usage message will be displayed in the result box.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="displaying-a-list-of-archive-names"><a class="link" href="#displaying-a-list-of-archive-names">G.5. Displaying a list of archive names</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Displaying the list of archive name when any list of expenses are listed</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Test cases in this section should be done after carrying out the test cases in the <strong><em>Adding an expense to an archive</em></strong> section.</p>
+</li>
+<li>
+<p>Test case: <code>archive listall</code> or <code>archive listall X</code> (where X is any String)<br>
+Expected: The displayed list of expenses should not be changed. The result box should display a list of existing archive names, including <code>test</code> archive which was added in the prior <strong><em>Adding an expense to an archive</em></strong> section.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-an-expense-from-an-archive"><a class="link" href="#deleting-an-expense-from-an-archive">G.6. Deleting an expense from an archive</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting an expense from an archive. Test cases should be completed in chronological order.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List the expenses in a particular archive using the <code>archive list [ARCHIVE NAME]</code> command. Have 2 expenses in this archive. All test cases in this section will be done using this same [ARCHIVE NAME] archive.</p>
+</li>
+<li>
+<p>Test case: <code>archive delete 1 arc/[ARCHIVE NAME]</code><br>
+Expected: The expense in the first index should be removed from the list. A message indicating that the expense is deleted from the archive will be displayed in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive delete</code> or <code>archive delete X</code> (where X is any string not in the form of [INDEX] arc/[ARCHIVE NAME])<br>
+Expected: No change in the list of expenses displayed. The invalid command format message and <code>archive delete</code> usage message are displayed in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive delete 1 arc/[ARCHIVE NAME]</code><br>
+Expected: Since there is only one expense in the [ARCHIVE NAME] archive left, the empty archive will be deleted together with the expense as well.<br>
+The displayed list of expenses will switch back to the default non-archive expense list.<br>
+A message indicating the deletion of the expense and the archive will be displayed in the result box.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="reverting-unarchiving-an-expense-from-an-archive"><a class="link" href="#reverting-unarchiving-an-expense-from-an-archive">G.7. Reverting/unarchiving an expense from an archive</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Unarchives an expense from an archive. Test cases should be completed in chronological order.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: List the expenses in a particular archive using the <code>archive list [ARCHIVE NAME]</code> command. Have 2 expenses in this archive. All test cases in this section will be done using this same [ARCHIVE NAME] archive.</p>
+</li>
+<li>
+<p>Test case: <code>archive revert 1 arc/[ARCHIVE NAME]</code><br>
+Expected: The expense in the first index should be removed from the list. A message indicating that the expense is removed from the archive and added back to the current expense list will be displayed in the result box.
+Use the <code>list</code> command to display the current non-archive expense list to check if the expense was correctly reverted back. The reverted expense should be at the last index of the current expense list.<br>
+After verifying, use the <code>archive list [ARCHIVE NAME]</code> command to go back to the archive list of expenses.</p>
+</li>
+<li>
+<p>Test case: <code>archive revert</code> or <code>archive revert X</code> (where X is any string not in the form of [INDEX] arc/[ARCHIVE NAME])<br>
+Expected: No change in the list of expenses displayed. The invalid command format message and <code>archive revert</code> usage message are displayed in the result box.</p>
+</li>
+<li>
+<p>Test case: <code>archive revert 1 arc/[ARCHIVE NAME]</code><br>
+Expected: Since there is only one expense in the [ARCHIVE NAME] archive left, the empty archive will be deleted after the expense is removed from it.<br>
+The displayed list of expenses will switch back to the default non-archive expense list. The reverted expenses should be at the last index of the displayed list of default non-archive expenses.<br>
+A message indicating that the expense is removed from the archive and added back to the current expense list, and the deletion of the archive will be displayed in the result box.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 08:44:10 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 09:11:52 UTC</div></div></div></body></html>
