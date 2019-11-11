@@ -15,7 +15,7 @@
 <ul class="sectlevel2">
 <li><a href="#managing-expenses-code-expense-code">3.1. Managing expenses: <code>expense</code></a></li>
 <li><a href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></li>
-<li><a href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></li>
+<li><a href="#Find">3.3. Finding expenses by attributes: <code>find</code></a></li>
 <li><a href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.4. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></li>
 <li><a href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></li>
 <li><a href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></li>
@@ -27,7 +27,6 @@
 <li><a href="#exporting-data-code-coming-in-v2-0-code">3.12. Exporting data: <code>[Coming in v2.0]</code></a></li>
 </ul>
 </li>
-<li><a href="#faq">4. FAQ</a></li>
 </ul>
 </div>
 </div>
@@ -40,6 +39,11 @@
 while still enjoying all the benefits of having a fully fledged Graphical User Interface (GUI).
 If you can type fast, <em>Billboard</em> can help you manage your expenses faster than traditional
 GUI apps!</p>
+</div>
+<div class="paragraph">
+<p><em>Billboard&#8217;s</em> basic functionality involves the adding, editing and delete of expenses, which are saved locally in your computer
+in a simple, human readable format (.JSON). In top of that, <em>Billboard</em> provides a host of additional features designed to
+simplify, enhance, improve, and make convenient your management of expenses. These features will be further detailed below.</p>
 </div>
 </div>
 </div>
@@ -81,22 +85,28 @@ GUI apps!</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Words in <code>[SQUARE BRACKETS]</code> are the mandatory parameters to be supplied by the user e.g. in <code>add n/[NAME] d/[DESCRIPTION] a/[AMOUNT]</code>, <code>NAME</code> <code>DESCRIPTION</code> and <code>AMOUNT</code> are parameters which can be used as <code>expense add n/buy a book d/math book a/10</code>.</p>
+<p>Parameters in the format <code>prefix/[SQUARE BRACKETS]</code> are <em>mandatory parameters</em> to be supplied by the user
+e.g. in <code>add n/[NAME] a/[AMOUNT]</code>, <code>NAME</code> and <code>AMOUNT</code> are mandatory parameters which should be supplied, as in: <code>add n/buy a book a/10.00</code>.</p>
 </li>
 <li>
-<p>The mandatory parameters must be supplied in the order specified.</p>
+<p>The mandatory parameters can be in any order.</p>
 </li>
 <li>
-<p>Default values can be specified in the square brackets, e.g <code>[NUM_ENTRIES, DEFAULT = 10]</code>. If the user does not provide a value for that parameter, it will default to the default value stated.</p>
+<p>Some commands may have <em>optional parameters</em>. These are denoted by using <code>prefix/&lt;ANGULAR BRACKETS&gt;</code>,
+e.g When you see <code>a/&lt;AMOUNT&gt;</code>, the command can be either <code>edit 2 n/lunch a/10</code> or <code>edit 2 n/lunch</code>.</p>
 </li>
 <li>
-<p>Some commands may have optional parameters denoted under options. These can be included by specifying in <code>&lt;ANGULAR BRACKETS&gt;</code> format, e.g <code>a/&lt;AMOUNT&gt;</code> can be used as <code>expense edit 2 a/10</code>.</p>
+<p>Default values can be specified in the angular brackets, e.g <code>prefix/&lt;NUM_ENTRIES = 10&gt;</code>. If the user does not
+provide a value for that parameter, it will default to the default value stated.</p>
 </li>
 <li>
-<p>Flags can be in any order.</p>
+<p>Optional parameters can be in any order.</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>t/&lt;TAG&gt;&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>bills</code>, <code>bills fees</code> etc.</p>
+<p>Parameters with <code>…</code>​ after them can be used zero or more times e.g. <code>t/&lt;TAG&gt;&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>t/bills</code> or even <code>t/bills t/fees</code> etc.</p>
+</li>
+<li>
+<p>Additional information on the parameters can be detailed in a section labelled <code>INFO</code> under the format if necessary.</p>
 </li>
 </ul>
 </div>
@@ -107,14 +117,36 @@ GUI apps!</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>Add a new expense: expense add</em><br>
-You can add an expense to records using this command.<br>
+<p><em>Add a new expense: add</em><br>
+You can add an expense to your saved expense list using this command. All expenses that you add in this manner will be saved in
+<code>data/billboard.json</code> in your current directory, and will be available again on your next application startup.<br>
 Usage:</p>
-</li>
-</ol>
+<div class="literalblock">
+<div class="content">
+<pre>add n/[NAME] a/[AMOUNT]  d/&lt;DESCRIPTION&gt;  date/&lt;DATE&gt; t/&lt;TAG&gt;...</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>add n/[NAME] d/[DESCRIPTION] a/[AMOUNT] t/[TAG] date/[DATE]</p>
+<p>INFO:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NAME</code> must be alphanumeric and may have spaces.</p>
+</li>
+<li>
+<p><code>AMOUNT</code> must be a positive and non-zero monetary amount.</p>
+</li>
+<li>
+<p><code>DESCRIPTION</code> has no constraints.</p>
+</li>
+<li>
+<p><code>DATE</code> should be in the format dd/mm/yyyy &lt;HHMM&gt; where HHMM is optional.</p>
+</li>
+<li>
+<p><code>TAG</code> should be alphanumeric without spaces.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Example: <br>
@@ -122,37 +154,25 @@ Usage:</p>
 Adds an expense to record where the name is “buy a book”, description is "math textbook" and the amount is 10.<br>
 &#160;<br></p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p><em>Edit an existing expense: edit</em><br>
-Edits an existing expense that is being displayed on the GUI. Either description or amount must be supplied.<br>
+You can edit any existing expense that is being displayed, in the event that you have a need to change a past expense.
+Changes made are automatically saved.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>edit [INDEX] [OPTIONS]</pre>
+<pre>edit [INDEX] n/&lt;NAME&gt; d/&lt;DESCRIPTION&gt; a/&lt;AMOUNT&gt; date/&lt;DATE&gt; t/&lt;TAG&gt;...</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Options:<br></p>
+<p>INFO:<br></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>n/</code>: Specify new name to update expense with.<br></p>
-</li>
-<li>
-<p><code>d/</code>: Specify new description to update expense with.<br></p>
-</li>
-<li>
-<p><code>a/</code>: Specify new amount to update expense with.<br></p>
-</li>
-<li>
-<p><code>t/</code>: Specify the tag and attach it to the expense.<br></p>
-</li>
-<li>
-<p><code>date/</code>: Specify new timestamp to update expense with.<br>
+<p>You need to supply at least one of the optional parameters, or the command will fail.
 &#160;<br></p>
 </li>
 </ul>
@@ -183,8 +203,8 @@ This command overwrites existing tags if you input tags.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><em>Delete an existing expense: expense rm</em><br>
-Deletes an existing expense that is being displayed on the GUI.<br>
+<p><em>Delete an existing expense: delete</em><br>
+You can delete any unwanted existing expense that is being displayed.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
@@ -201,7 +221,7 @@ Deletes the expense with index 3.<br>
 </li>
 <li>
 <p><em>List all expenses: list</em><br>
-You can list all the expenses in the record list using this command. <code>list</code> will ignore all parameters.<br>
+You can list all the expenses in your expense list using this command, allowing you to easily get an overview of all your expenses. <code>list</code> will ignore all parameters.<br>
 &#160;<br>
 Usage:</p>
 <div class="literalblock">
@@ -225,6 +245,51 @@ Displays below expenses (for example) in the GUI:
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><em>Clear all expenses: clear</em><br>
+You can clear all the expenses in your expense list using this command.<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>clear</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>clear</code><br>
+Clears all your expenses.
+<br></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+This <em>actually</em> deletes all your commands, use with caution! The undo feature may come in handy if you unintentionally used this command.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Archived expenses are not cleared.<br>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -414,7 +479,7 @@ To list them:<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="finding-expenses-by-attributes-code-find-code"><a class="link" href="#finding-expenses-by-attributes-code-find-code">3.3. Finding expenses by attributes: <code>find</code></a></h3>
+<h3 id="Find"><a class="link" href="#Find">3.3. Finding expenses by attributes: <code>find</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -825,81 +890,216 @@ The result box will display the message that indicates the transfer of "<em>Airp
 </div>
 <div class="sect2">
 <h3 id="displaying-of-statistics-code-display-stats-code"><a class="link" href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><em>Display timeline overview of expenses: display-stats timeline</em><br>
-You can view a timeline overview of your currently displayed expenses. The expenses over a
-specified time period are aggregated and added as data points on the timeline.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
+<div class="imageblock">
 <div class="content">
-<pre>display-stats timeline [OPTIONS]</pre>
+<img src="images/statisticsIntro.png" alt="statisticsIntro">
 </div>
 </div>
 <div class="paragraph">
-<p>Options:</p>
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>Billboard has a powerful statistics display system! While trying out other features, you may have realized that the highlighted chart changes from time to time.
+That is because Billboard has a <em>fully responsive</em> statistics display with charts that dynamically update themselves. You can simply enter any command that changes the displayed
+list of expenses, such as <code>add n/automatic stats displays are cool a/50.00</code>, and watch as the chart updates automatically.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/live-statistics-demo.gif" alt="live statistics demo">
+</div>
+<div class="title">Figure 9. Live statistics display in action upon adding an expense.</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>Should you want to view different types of statistics and customize the information you get, Billboard also supports various different types of
+charts, with a plethora of different customization options. Read the documentation on individual commands below to find out more.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The options available are tailored to each specific chart type and thus, not all charts may support the same options. The individual sections
+for each command goes into further detail about the supported options for that command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With this, it becomes effortless for you to perform advanced queries on specific types of statistics! For example,
+if you want to track the weekly total spending of all your expenses that contain the word "food" over a specific month, simply type <code>display-stats timeline interval/week</code>
+followed by <code>find d/food sd/01/01/2019 ed/01/02/2019</code>. (Unsure about this command? Refer to <a href="#Find">Section 3.3, &#8220;Finding expenses by attributes: <code>find</code>&#8221;</a> for more information).<br>
+&#160;<br></p>
+</div>
+<div class="sect3">
+<h4 id="em-display-timeline-overview-of-expenses-display-stats-timeline-em-br"><a class="link" href="#em-display-timeline-overview-of-expenses-display-stats-timeline-em-br">3.6.1. <em>Display timeline overview of expenses: display-stats timeline</em><br></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/display-timeline-example-normal.png" alt="display timeline example normal">
+</div>
+<div class="title">Figure 10. Timeline of expenses grouped by tag</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>You can view one or more timelines that are based on your currently displayed expenses. Upon entering the command, the statistic chart will automatically update to display a timeline configured with the options you have provided.
+The expenses over a specified time period are aggregated and added as data points on the timeline, allowing you to easily keep track of your relative spending. You can customize the date interval used, as well as the groupings used to split your expenses into each individual timeline.<br>
+&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>display-stats timeline interval/&lt;DATE INTERVAL = MONTH&gt; groupby/&lt;GROUPING = NONE&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>INFO:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>interval/</code>: Specifies the date interval to be used to split the expenses into groups by.
-Supported date intervals include 'day', 'week', 'month' and 'year'.
+<p><code>DATE_INTERVAL</code>: Specifies the date interval to be used to aggregate the expenses by. Supported date intervals include 'day', 'week', 'month' and 'year'.
+The start date of each interval will always be the "logical" start, ie. the start date for "week" will always be a Monday and the start date for "month" will always be the 1st of that month.</p>
+</li>
+<li>
+<p><code>GROUPING</code>: Specifies the grouping to use to group the expenses into each separate timeline. Supported groupings include "none", "tag", "month" and "day-of-week".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>display-stats timeline interval/month groupby/tag</code><br>
+Displays timelines based on the displayed expenses. First, the expenses are divided based on tag, forming one timeline for every tag. Next, for each timeline, the total amount spent each week, starting from Monday and ending on Sunday, is totalled to form each data point. The chart may look something like this:<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/display-timeline-example-tag.png" alt="display timeline example tag">
+</div>
+<div class="title">Figure 11. Chart after executing the above command</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The options for this command, and for all other <code>display-stats</code> commands, are case-sensitive, ie. "Week" is not a valid substitute for "week".
+&#160;<br>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="em-display-breakdown-of-expenses-display-stats-breakdown-em-br"><a class="link" href="#em-display-breakdown-of-expenses-display-stats-breakdown-em-br">3.6.2. <em>Display breakdown of expenses: display-stats breakdown</em><br></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/display-breakdown-example-month.png" alt="display breakdown example month">
+</div>
+<div class="title">Figure 12. Breakdown of expenses grouped by month.</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br></p>
+</div>
+<div class="paragraph">
+<p>You can break the displayed expenses down into smaller groups and view that breakdown as a pie chart, allowing you to compare your spending between groups. Upon entering the command, the statistic chart will automatically update to display a breakdown chart configured with the options you have provided. The total
+expenses per category are totalled and displayed as each slice in the pie chart. You can customize the criteria used to split the expenses into groups.<br></p>
+</div>
+<div class="paragraph">
+<p>&#160;<br>
+Usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>display-stats breakdown groupby/&lt;GROUPING = TAG&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#160;<br>
+INFO:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>GROUPING</code>: Specifies the grouping to use to group the expenses into each separate slice in the pie chart.
+Supported groupings include "none", "tag", "month" and "day-of-week". Note that the default value for <code>GROUPING</code> for this command is not "none", but "tag". (The "none" option has limited use).<br>
 &#160;<br></p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Example:<br>
-<code>display-stats timeline interval/week</code><br>
-Displays a timeline overview of the displayed expenses with the expenses being grouped into weeks.<br>
+<code>display-stats breakdown groupby/MONTH</code><br></p>
+</div>
+<div class="paragraph">
+<p>Shows a pie chart breakdown by month of all currently displayed expenses. Within each grouping, the total expenses in that grouping are summed up, and the
+total amount determines the size of its slice of the pie chart.
 &#160;<br></p>
 </div>
-</li>
-<li>
-<p><em>Display breakdown of expenses: display-stats breakdown</em><br>
-You can view a breakdown of expenses by tag for the currently displayed expenses. The total
-expenses per tag are totalled and displayed in a pie chart.<br>
-&#160;<br>
-Usage:</p>
-<div class="literalblock">
-<div class="content">
-<pre>display-stats breakdown</pre>
 </div>
+<div class="sect3">
+<h4 id="em-display-heatmap-of-expenses-display-stats-heatmap-em-br"><a class="link" href="#em-display-heatmap-of-expenses-display-stats-heatmap-em-br">3.6.3. <em>Display heatmap of expenses: display-stats heatmap</em><br></a></h4>
+<div class="imageblock">
+<div class="content">
+<img src="images/display-heatmap-example-normal.png" alt="display heatmap example normal">
+</div>
+<div class="title">Figure 13. Heatmap of all expenses grouped by tags.</div>
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
 </div>
 <div class="paragraph">
-<p>Example:<br>
-<code>display-stats breakdown</code><br>
-Shows a pie chart breakdown by tag of all currently displayed expenses.<br>
-&#160;<br></p>
+<p>You can view a heatmap of total expenses per day for the currently displayed expenses, limited to the past year. The y-axis represents the day of the week the expense was made, while
+the x-axis represents the week of the year the expense was made, with each bubble representing the expenses made on that particular day. The larger the bubble for the particular day, the higher the total expenses on that day.
+This allows you to get an overall impression of your spending behaviours over the past year.<br></p>
 </div>
-</li>
-<li>
-<p><em>Display heatmap of expenses: display-stats heatmap</em><br>
-You can view a heatmap of expenses per day for the currently displayed expenses, limited to the past year. The larger
-the bubble for the particular day, the higher the expense.<br>
-&#160;<br>
+<div class="paragraph">
+<p>&#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
-<pre>display-stats heatmap</pre>
+<pre>display-stats heatmap groupby/&lt;GROUPING = NONE&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>INFO:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>GROUPING: Specifies the grouping to use to calculate the heatmap. Expenses from different groups that occur on the same day will not be totalled, and will instead form two separate bubbles of different colors.
+Accepted values include: "none", "tag", "month", "day-of-week'.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>&#160;<br>
+Example:<br>
+<code>display-stats heatmap groupby/none</code><br>
+Shows a heatmap of all currently displayed expenses, limited to a year. Since "none" grouping was specified, the expenses are not grouped and are all categorized under "All Expenses".
+The displayed chart may look something like this:<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/display-heatmap-example-normal.png" alt="display heatmap example normal">
 </div>
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
 </div>
-<div class="paragraph">
-<p>Example:<br>
-<code>display-stats heatmap</code><br>
-Shows a bubble chart heatmap of all currently displayed expenses, limited to a year.<br>
-&#160;<br></p>
-</div>
-</li>
-</ol>
 </div>
 </div>
 <div class="sect2">
@@ -989,39 +1189,30 @@ You can clear all the expenses in Billboard by simply executing the <code>clear<
 </div>
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.11. Viewing help: <code>help</code></a></h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><em>Help list of complete set of commands: help</em><br>
-Shows the complete list of commands and instructions/description on how to use them.<br>
+<div class="sect3">
+<h4 id="em-help-list-of-complete-set-of-commands-help-em-br"><a class="link" href="#em-help-list-of-complete-set-of-commands-help-em-br">3.11.1. <em>Help list of complete set of commands: help</em><br></a></h4>
+<div class="paragraph">
+<p>Shows the complete list of commands and instructions/description on how to use them.<br>
 &#160;<br>
 Usage:</p>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>help</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#160;<br></p>
+<p>+
+&#160;<br></p>
 </div>
-</li>
-</ol>
 </div>
 </div>
 <div class="sect2">
 <h3 id="exporting-data-code-coming-in-v2-0-code"><a class="link" href="#exporting-data-code-coming-in-v2-0-code">3.12. Exporting data: <code>[Coming in v2.0]</code></a></h3>
 <div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
+<p>You will be able to export their expense data using the command <code>export f/[FORMAT]</code>, where format refers to the type of export file format
+you wish to use. Formats that are intended to be supported include .csv files, .json files, as well as PDF documents.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="faq"><a class="link" href="#faq">4. FAQ</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>&#160;<br>
-Coming soon!</p>
-</div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 08:10:12 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 08:44:10 UTC</div></div></div></body></html>
