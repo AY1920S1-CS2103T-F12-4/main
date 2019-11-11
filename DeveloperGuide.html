@@ -26,11 +26,12 @@
 <li><a href="#archive">3.2. Archive</a></li>
 <li><a href="#tagging">3.3. Tagging</a></li>
 <li><a href="#enhanced-find">3.4. [Enhanced] Find</a></li>
-<li><a href="#statistics">3.5. Statistics</a></li>
-<li><a href="#history-feature">3.6. History feature</a></li>
-<li><a href="#Up-Down-Feature">3.7. Up/Down key feature</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.9. Configuration</a></li>
+<li><a href="#recurring-expenses">3.5. Recurring Expenses</a></li>
+<li><a href="#statistics">3.6. Statistics</a></li>
+<li><a href="#history-feature">3.7. History feature</a></li>
+<li><a href="#Up-Down-Feature">3.8. Up/Down key feature</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a></li>
@@ -1308,7 +1309,128 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 </div>
 </div>
 <div class="sect2">
-<h3 id="statistics"><a class="link" href="#statistics">3.5. Statistics</a></h3>
+<h3 id="recurring-expenses"><a class="link" href="#recurring-expenses">3.5. Recurring Expenses</a></h3>
+<div class="sect3">
+<h4 id="proposed-implementation-3"><a class="link" href="#proposed-implementation-3">3.5.1. Proposed Implementation</a></h4>
+<div class="paragraph">
+<p>The recurring expenses feature supports the adding of recurring expenses into Billboard. Recurring expenses have a start date and a end date.
+The date of the first expense will be the start date, and subsequent expenses will defer from the previous expenses by a date interval specified by the user.
+The recurring expense feature supports the following operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Listing all the recurrences</p>
+</li>
+<li>
+<p>Adding a new recurrence which will add recurring expenses to the list of expenses</p>
+</li>
+<li>
+<p>Editing an existing recurrence [Coming in V2.0]</p>
+</li>
+<li>
+<p>Deleting an existing recurrence [Coming in V2.0]</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These actions are facilitated by the <code>Recurrence</code> and <code>RecurrenceList</code> classes:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/RecurrenceClassDiagram.png" alt="RecurrenceClassDiagram">
+</div>
+</div>
+<div class="paragraph">
+<p><code><strong>RecurrenceList</strong></code> is used in <code><strong>ModelManager</strong></code> to manage all recurrences. Its respective operations are called to access and manipulate recurrence expenses when an recurrence command is entered.<br>
+Such operations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>RecurrenceList#add(Recurrence)</strong></code> - Adds the given recurrence to the current list of recurrence objects.</p>
+</li>
+<li>
+<p><code><strong>RecurrenceList#contains(Recurrence)</strong></code> - Checks if the specified recurrence by the given recurrence name exists.</p>
+</li>
+<li>
+<p><code><strong>RecurrenceList#remove(Recurrence)</strong></code> - Deletes the given recurrence from the current list of recurrence objects. (Assumes given recurrence already exists)</p>
+</li>
+<li>
+<p><code><strong>RecurrenceList#setRecurrence(Recurrence, Recurrence)</strong></code> - Set existing recurrence to new recurrence</p>
+</li>
+<li>
+<p><code><strong>RecurrenceList#setRecurrences(RecurrenceList)</strong></code> - Set the list of recurrences to the given recurrence list</p>
+</li>
+<li>
+<p><code><strong>RecurrenceList#setRecurrences(List&lt;Recurrence&gt;)</strong></code> - Set the list of recurrences to the given recurrence list</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These operations are exposed in the <code><strong>Model</strong></code> interface respectively as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>Model#addRecurrence(Recurrence)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#hasRecurrence(String)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#removeRecurrence(Recurrence)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#removeRecurrence(int)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#setRecurrences(RecurrenceList)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#setRecurrences(List&lt;Recurrence&gt;)</strong></code></p>
+</li>
+<li>
+<p><code><strong>Model#getRecurrences()</strong></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given below is an example usage scenario and how the recurrence mechanism behaves at each step.</p>
+</div>
+<div class="paragraph">
+<p>Step 1.
+The user launches the application. The <code>Model</code> is initialized with saved data. All expenses are loaded into <code>FilteredList</code>. No recurrence data is saved for now so model starts with an empty <code>RecurrenceList</code></p>
+</div>
+<div class="paragraph">
+<p>Step 2.
+User enters the command <code>recur add n/name d/description a/amount sd/startDate ed/endDate interval/interval</code> to add recurring expenses that matches conditions set by user input. <code>BillboardParser</code> parses the command, creating a <code>RecurringCommandParser</code>.
+The <code>RecurringCommandParser</code> then parses <code>add n/name d/description a/amount sd/startDate ed/endDate interval/interval</code> to create a <code>AddRecurrenceCommandParser</code> to parse all the variables.
+The variables are then used to create the <code>AddRecurrenceCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>The layered parsing process can be visualised below:
+&#160;<br>
+<span class="image"><img src="images/AddRecurrenceCommandSequenceDiagram.png" alt="AddRecurrenceCommandSequenceDiagram"></span></p>
+</div>
+<div class="paragraph">
+<p>Step 3.
+<code>LogicManager</code> executes the <code>AddRecurrenceCommand</code>. During execution, <code>AddRecurrenceCommand</code> calls <code>Model#addRecurrence(Recurrence)</code> and <code>Model#addExpense(Expense)`on the new recurrence and expenses created.
+`Model#incrementCount(Set&lt;Tag&gt;)</code> is then called on the set of <code>Tag</code>. The expense are then updated and shown on the UI.</p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes what happens when a user executes a new <code><strong>AddRecurrenceCommand</strong></code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddRecurrenceCommandActivityDiagram.png" alt="AddRecurrenceCommandActivityDiagram">
+</div>
+<div class="title">Figure 21. <code><strong>AddRecurrenceCommand</strong></code> activity diagram</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="statistics"><a class="link" href="#statistics">3.6. Statistics</a></h3>
 <div class="paragraph">
 <p>Billboard includes a dynamically updating statistics panel containing a chart. It has the following functionality:<br></p>
 </div>
@@ -1327,12 +1449,12 @@ Set of predicates can but do not need to include <code>AllContainsKeywordsPredic
 There are 2 components that help to do this - the chart component and the statistics generator component.</p>
 </div>
 <div class="sect3">
-<h4 id="Design-Ui-Chart"><a class="link" href="#Design-Ui-Chart">3.5.1. Chart component</a></h4>
+<h4 id="Design-Ui-Chart"><a class="link" href="#Design-Ui-Chart">3.6.1. Chart component</a></h4>
 <div id="fig-ChartClassDiagram" class="imageblock">
 <div class="content">
 <img src="images/ChartClassDiagram.png" alt="ChartClassDiagram">
 </div>
-<div class="title">Figure 21. Structure of the Chart Component</div>
+<div class="title">Figure 22. Structure of the Chart Component</div>
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
@@ -1347,12 +1469,12 @@ the displayed list of expenses to the statistic format required, the <code>Stati
 </div>
 </div>
 <div class="sect3">
-<h4 id="statistics-generation-component"><a class="link" href="#statistics-generation-component">3.5.2. Statistics Generation Component</a></h4>
+<h4 id="statistics-generation-component"><a class="link" href="#statistics-generation-component">3.6.2. Statistics Generation Component</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/StatisticsGeneratorClassDiagram.png" alt="StatisticsGeneratorClassDiagram">
 </div>
-<div class="title">Figure 22. Structure of the Statistics Generation Component</div>
+<div class="title">Figure 23. Structure of the Statistics Generation Component</div>
 </div>
 <div class="paragraph">
 <p>&#160;<br></p>
@@ -1365,7 +1487,7 @@ to the statistic, which the concrete <code>ExpenseChart</code> then uses to rend
 </div>
 </div>
 <div class="sect3">
-<h4 id="proposed-implementation-3"><a class="link" href="#proposed-implementation-3">3.5.3. Proposed Implementation</a></h4>
+<h4 id="proposed-implementation-4"><a class="link" href="#proposed-implementation-4">3.6.3. Proposed Implementation</a></h4>
 <div class="paragraph">
 <p>The chart feature can be roughly split two separate parts:</p>
 </div>
@@ -1475,7 +1597,7 @@ Both paths can lead to the chart updating, followed by the end of the command. E
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.4. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.6.4. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-approach-to-generating-of-statistics"><a class="link" href="#aspect-approach-to-generating-of-statistics">Aspect: Approach to generating of statistics</a></h5>
 <div class="ulist">
@@ -1595,9 +1717,9 @@ and saved.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="history-feature"><a class="link" href="#history-feature">3.6. History feature</a></h3>
+<h3 id="history-feature"><a class="link" href="#history-feature">3.7. History feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-4"><a class="link" href="#implementation-4">3.6.1. Implementation</a></h4>
+<h4 id="implementation-4"><a class="link" href="#implementation-4">3.7.1. Implementation</a></h4>
 <div class="paragraph">
 <p>You can use the <code>history</code> command to view previous actions.</p>
 </div>
@@ -1612,7 +1734,7 @@ and saved.</p>
 </div>
 <div class="paragraph">
 <p>Also, a state pointer that initially point to the start of cmdList will be maintain
-for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.7, &#8220;Up/Down key feature&#8221;</a>)</p>
+for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#Up-Down-Feature">Section 3.8, &#8220;Up/Down key feature&#8221;</a>)</p>
 </div>
 <div class="paragraph">
 <p>Additionally, it implements the following operations:</p>
@@ -1637,7 +1759,7 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 <div class="content">
 <img src="images/CommandHistoryClassDiagram.png" alt="CommandHistoryClassDiagram">
 </div>
-<div class="title">Figure 23. Sequence diagram of CommandHistory class</div>
+<div class="title">Figure 24. Sequence diagram of CommandHistory class</div>
 </div>
 <div class="paragraph">
 <p>The following sequence diagram shows how the storing operation works:</p>
@@ -1646,14 +1768,14 @@ for Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key feature(See <a href="#
 <div class="content">
 <img src="images/DeleteSequenceDiagram.png" alt="DeleteSequenceDiagram">
 </div>
-<div class="title">Figure 24. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
+<div class="title">Figure 25. Interactions Inside the Logic Component for the <code>delete</code> Command</div>
 </div>
 <div class="paragraph">
 <p>The LogicManager will store the command to CommandHistory before parsing it to ensure all commands are saved.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.7.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-command-histories-are-stored"><a class="link" href="#aspect-how-command-histories-are-stored">Aspect: How command histories are stored</a></h5>
 <div class="ulist">
@@ -1691,9 +1813,9 @@ This is the standard way to implement the history function.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Up-Down-Feature"><a class="link" href="#Up-Down-Feature">3.7. Up/Down key feature</a></h3>
+<h3 id="Up-Down-Feature"><a class="link" href="#Up-Down-Feature">3.8. Up/Down key feature</a></h3>
 <div class="sect3">
-<h4 id="implementation-5"><a class="link" href="#implementation-5">3.7.1. Implementation</a></h4>
+<h4 id="implementation-5"><a class="link" href="#implementation-5">3.8.1. Implementation</a></h4>
 <div class="paragraph">
 <p>You can navigate through the command history by pressing Up(<code>&uarr;</code>)/Down(<code>&darr;</code>) key in <code>TextFiled</code>.</p>
 </div>
@@ -1717,7 +1839,7 @@ and the statePointer is not pointing to any command state.</p>
 <div class="content">
 <img src="images/UpDownKeyState0.png" alt="UpDownKeyState0">
 </div>
-<div class="title">Figure 25. Initial state of CommandHistory</div>
+<div class="title">Figure 26. Initial state of CommandHistory</div>
 </div>
 <div class="paragraph">
 <p>Step 2. The user then execute the delete 5 command to delete the 5th expense in the billboard.
@@ -1727,7 +1849,7 @@ The LogicManager calls CommandHistory#addCmdHistory() and a new command is appen
 <div class="content">
 <img src="images/UpDownKeyState1.png" alt="UpDownKeyState1">
 </div>
-<div class="title">Figure 26. State of CommandHistory after "delete 5" command</div>
+<div class="title">Figure 27. State of CommandHistory after "delete 5" command</div>
 </div>
 <div class="paragraph">
 <p>Step 3. The user now decides to execute the next command in the command history and press the Up(<code>&uarr;</code>)key.
@@ -1739,7 +1861,7 @@ pointing it to the next command, and return it.</p>
 <div class="content">
 <img src="images/UpDownKeyState2.png" alt="UpDownKeyState2">
 </div>
-<div class="title">Figure 27. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 28. State of CommandHistory after Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1762,7 +1884,7 @@ it will return the last command to the user rather than attempting to get the ne
 <div class="content">
 <img src="images/UpKeySequenceDiagram.png" alt="UpKeySequenceDiagram">
 </div>
-<div class="title">Figure 28. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
+<div class="title">Figure 29. Interactions between components of CommandBox and CommandHistory for the Up(<code>&uarr;</code>)key</div>
 </div>
 <div class="paragraph">
 <p>The Down(<code>&darr;</code>) key does the opposite — it calls CommandHistory#peekPreviousCmd(),
@@ -1771,7 +1893,7 @@ pointing to the previous command state, and return the command.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.7.2. Design Considerations</a></h4>
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">3.8.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-how-command-histories-are-stored-2"><a class="link" href="#aspect-how-command-histories-are-stored-2">Aspect: How command histories are stored</a></h5>
 <div class="ulist">
@@ -1808,14 +1930,14 @@ pointing to the previous command state, and return the command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.9, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1846,7 +1968,7 @@ pointing to the previous command state, and return the command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.9. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g user prefs file location, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2955,4 +3077,4 @@ A message indicating that the expense is removed from the archive and added back
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:35:54 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:52:50 UTC</div></div></div></body></html>

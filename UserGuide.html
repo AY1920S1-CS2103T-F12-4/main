@@ -14,7 +14,7 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#managing-expenses-code-expense-code">3.1. Managing expenses: <code>expense</code></a></li>
-<li><a href="#managing-recurring-expenses">3.2. Managing recurring expenses</a></li>
+<li><a href="#managing-recurring-expenses-code-recur-code">3.2. Managing recurring expenses <code>recur</code></a></li>
 <li><a href="#tagging-expenses-code-tag-code">3.3. Tagging expenses: <code>tag</code></a></li>
 <li><a href="#Find">3.4. Finding expenses by attributes: <code>find</code></a></li>
 <li><a href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.5. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></li>
@@ -294,7 +294,10 @@ Archived expenses are not cleared.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="managing-recurring-expenses"><a class="link" href="#managing-recurring-expenses">3.2. Managing recurring expenses</a></h3>
+<h3 id="managing-recurring-expenses-code-recur-code"><a class="link" href="#managing-recurring-expenses-code-recur-code">3.2. Managing recurring expenses <code>recur</code></a></h3>
+<div class="paragraph">
+<p>This feature allows you to add recurring expenses to Billboard. This feature is especially useful when you have expenses that are almost exactly the same except for the date that the expenses are created.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -303,7 +306,7 @@ Adds an recurrence to records.<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>recur add [NAME] [DESCRIPTION] [AMOUNT] [START DATE] [END DATE] [INTERVAL]</pre>
+<pre>recur add n/[NAME] d/&lt;DESCRIPTION&gt; a/[AMOUNT] sd/[START DATE] ed/[END DATE] interval/[INTERVAL]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -312,6 +315,18 @@ Usage:</p>
 Adds an recurring expense to record where the name is "pay school fees", description is “yearly nus tuition fees”,
  amount of payment is 8000, first payment is on 1 Auguest 2018, last payment is on 1 August 2021, payment interval is
   yearly.<br>
+&#160;<br>
+1. Enter command <code>recur add n/weekly spending a/20 sd/1/1/2019 ed/1/2/2019 interval/week</code>
+&#160;<br>
+<span class="image"><img src="images/recur_1.png" alt="recur 1"></span><br>
+&#160;<br>
+2. Application will show you the details of the recurrence that you have added
+&#160;<br>
+<span class="image"><img src="images/recur_2.png" alt="recur 2"></span><br>
+&#160;<br>
+3. Enter the list command to see the added expenses.
+&#160;<br>
+<span class="image"><img src="images/recur_3.png" alt="recur 3"></span><br>
 &#160;<br></p>
 </div>
 </li>
@@ -597,6 +612,9 @@ To list them:<br>
 </div>
 <div class="sect2">
 <h3 id="Find"><a class="link" href="#Find">3.4. Finding expenses by attributes: <code>find</code></a></h3>
+<div class="paragraph">
+<p>This feature allows you to search for specific expenses through use of various parameters. You can find expense by keyword, upper and lower amount limits, as well as upper and lower date limits.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -606,7 +624,7 @@ Find expenses that satisfies conditions specified in the arguments.<br>
 Usage:</p>
 <div class="literalblock">
 <div class="content">
-<pre>find [d/KEYWORD[ KEYWORD…]] [a/LOWER AMOUNT LIMIT] [al/UPPER AMOUNT LIMIT] [sd/START DATE] [ed/END DATE]</pre>
+<pre>find &lt;d/KEYWORD&lt; KEYWORD…&gt;&gt; &lt;a/LOWER AMOUNT LIMIT&gt; &lt;al/UPPER AMOUNT LIMIT&gt; &lt;sd/START DATE&gt; &lt;ed/END DATE&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -614,6 +632,14 @@ Usage:</p>
 <code>find d/lunch book a/2 al/20 sd/1/1/2019 ed/1/10/2019</code><br>
 Finds all expenses that contain the keyword ‘lunch’ or 'book' and amount between 2 and 20 dollars
 and date between 1 Jan 2019 to 1 Oct 2019 in any of its attributes.<br>
+&#160;<br>
+1. Type in <code>find d/buy a/50</code><br>
+&#160;<br>
+<span class="image"><img src="images/find_1.png" alt="find 1"></span><br>
+&#160;<br>
+2. Application will show you expenses that contain keyword <code>buy</code> and are of amount <code>50</code> or above.<br>
+&#160;<br>
+<span class="image"><img src="images/find_2.png" alt="find 2"></span><br>
 &#160;<br></p>
 </div>
 </li>
@@ -1320,4 +1346,4 @@ you wish to use. Formats that are intended to be supported include .csv files, .
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:35:54 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 15:52:50 UTC</div></div></div></body></html>
