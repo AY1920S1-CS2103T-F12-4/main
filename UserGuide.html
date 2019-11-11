@@ -81,7 +81,7 @@ GUI apps!</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Words in <code>[SQUARE BRACKETS]</code> are the mandatory parameters to be supplied by the user e.g. in <code>add [n/NAME] [d/DESCRIPTION] [a/AMOUNT]</code>, <code>NAME</code> <code>DESCRIPTION</code> and <code>AMOUNT</code> are parameters which can be used as <code>expense add n/buy a book d/math book a/10</code>.</p>
+<p>Words in <code>[SQUARE BRACKETS]</code> are the mandatory parameters to be supplied by the user e.g. in <code>add n/[NAME] d/[DESCRIPTION] a/[AMOUNT]</code>, <code>NAME</code> <code>DESCRIPTION</code> and <code>AMOUNT</code> are parameters which can be used as <code>expense add n/buy a book d/math book a/10</code>.</p>
 </li>
 <li>
 <p>The mandatory parameters must be supplied in the order specified.</p>
@@ -90,13 +90,13 @@ GUI apps!</p>
 <p>Default values can be specified in the square brackets, e.g <code>[NUM_ENTRIES, DEFAULT = 10]</code>. If the user does not provide a value for that parameter, it will default to the default value stated.</p>
 </li>
 <li>
-<p>Some commands may have optional parameters denoted under options. These can be included by specifying in <code>&lt;ANGULAR BRACKETS&gt;</code> format, e.g <code>&lt;a/AMOUNT&gt;</code> can be used as <code>expense edit 2 a/10</code>.</p>
+<p>Some commands may have optional parameters denoted under options. These can be included by specifying in <code>&lt;ANGULAR BRACKETS&gt;</code> format, e.g <code>a/&lt;AMOUNT&gt;</code> can be used as <code>expense edit 2 a/10</code>.</p>
 </li>
 <li>
 <p>Flags can be in any order.</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>&lt;t/TAG&gt;&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>bills</code>, <code>bills fees</code> etc.</p>
+<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. <code>t/&lt;TAG&gt;&#8230;&#8203;</code> can be used as <code>&#160;</code> (i.e. 0 times), <code>bills</code>, <code>bills fees</code> etc.</p>
 </li>
 </ul>
 </div>
@@ -260,7 +260,7 @@ Usage:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>tag add [INDEX] t/[TAG] t/[TAG…]</pre>
+<pre>tag add [INDEX] t/[TAG] t/&lt;TAG&gt;...</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -305,7 +305,7 @@ Usage:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>tag rm [INDEX] t/[TAG] t/[TAG…]</pre>
+<pre>tag rm [INDEX] t/[TAG] t/&lt;TAG&gt;...</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -350,7 +350,7 @@ Usage:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>tag filter t/[TAG] t/[TAG…]</pre>
+<pre>tag filter t/[TAG] t/&lt;TAG&gt;...</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1024,4 +1024,4 @@ Usage:</p>
 Coming soon!</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 03:18:58 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 05:13:03 UTC</div></div></div></body></html>
