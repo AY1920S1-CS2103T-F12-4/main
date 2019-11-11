@@ -14,16 +14,17 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#managing-expenses-code-expense-code">3.1. Managing expenses: <code>expense</code></a></li>
-<li><a href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></li>
-<li><a href="#Find">3.3. Finding expenses by attributes: <code>find</code></a></li>
-<li><a href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.4. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></li>
-<li><a href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></li>
-<li><a href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></li>
-<li><a href="#undo-and-redo-code-undo-redo-code">3.7. Undo and Redo: <code>undo/redo</code></a></li>
-<li><a href="#viewing-history-code-history-code">3.8. Viewing History: <code>history</code></a></li>
-<li><a href="#up-and-down-key-code-code">3.9. Up and down key: <code>&uarr;/&darr;</code></a></li>
-<li><a href="#viewing-help-code-help-code">3.10. Viewing help: <code>help</code></a></li>
-<li><a href="#exporting-data-code-coming-in-v2-0-code">3.11. Exporting data: <code>[Coming in v2.0]</code></a></li>
+<li><a href="#managing-recurring-expenses">3.2. Managing recurring expenses</a></li>
+<li><a href="#tagging-expenses-code-tag-code">3.3. Tagging expenses: <code>tag</code></a></li>
+<li><a href="#Find">3.4. Finding expenses by attributes: <code>find</code></a></li>
+<li><a href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.5. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></li>
+<li><a href="#archiving-past-expenses-code-archive-code">3.6. Archiving past expenses: <code>archive</code></a></li>
+<li><a href="#displaying-of-statistics-code-display-stats-code">3.7. Displaying of statistics: <code>display-stats</code></a></li>
+<li><a href="#undo-and-redo-code-undo-redo-code">3.8. Undo and Redo: <code>undo/redo</code></a></li>
+<li><a href="#viewing-history-code-history-code">3.9. Viewing History: <code>history</code></a></li>
+<li><a href="#up-and-down-key-code-code">3.10. Up and down key: <code>&uarr;/&darr;</code></a></li>
+<li><a href="#viewing-help-code-help-code">3.11. Viewing help: <code>help</code></a></li>
+<li><a href="#exporting-data-code-coming-in-v2-0-code">3.12. Exporting data: <code>[Coming in v2.0]</code></a></li>
 </ul>
 </li>
 </ul>
@@ -293,7 +294,123 @@ Archived expenses are not cleared.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="tagging-expenses-code-tag-code"><a class="link" href="#tagging-expenses-code-tag-code">3.2. Tagging expenses: <code>tag</code></a></h3>
+<h3 id="managing-recurring-expenses"><a class="link" href="#managing-recurring-expenses">3.2. Managing recurring expenses</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><em>Add a new recurrence: recur add</em><br>
+Adds an recurrence to records.<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>recur add [NAME] [DESCRIPTION] [AMOUNT] [START DATE] [END DATE] [INTERVAL]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example: <br>
+<code>recur add n/pay school fees d/yearly nus tuition fees a/8000 sd/1/8/2018 ed/1/8/2021 interval/yearly</code><br>
+Adds an recurring expense to record where the name is "pay school fees", description is “yearly nus tuition fees”,
+ amount of payment is 8000, first payment is on 1 Auguest 2018, last payment is on 1 August 2021, payment interval is
+  yearly.<br>
+&#160;<br></p>
+</div>
+</li>
+<li>
+<p><em>Edit an existing recurrence: recur edit</em><br>
+Edits an existing recurring expense that is being displayed on the GUI. At least one editing option must be supplied.<br>
+[Coming in V2.0]<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>recur edit [INDEX] [OPTIONS]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Options:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>n/</code>: Specify new name to update occurrence with.<br></p>
+</li>
+<li>
+<p><code>d/</code>: Specify new description to update occurrence with.<br></p>
+</li>
+<li>
+<p><code>a/</code>: Specify new amount to update occurrence with.<br></p>
+</li>
+<li>
+<p><code>sd/</code>: Specify new start date to update occurrence with.<br></p>
+</li>
+<li>
+<p><code>ed/</code>: Specify new end date to update occurrence with.<br></p>
+</li>
+<li>
+<p><code>interval/</code>: Specify new interval to update occurrence with.<br>
+&#160;<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>recur edit 2 d/“buy a math book”</code><br>
+Edit the recurrence at index 2 with new description of: “buy a math book”<br>
+&#160;<br></p>
+</div>
+</li>
+<li>
+<p><em>Delete an existing recurrence: recur rm</em><br>
+Deletes an existing recurrence that is being displayed on the GUI.<br>
+[Coming in V2.0]<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>recur rm [INDEX]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>recur rm 3</code><br>
+Deletes the recurrence with index 3.<br>
+&#160;<br></p>
+</div>
+</li>
+<li>
+<p><em>List all recurrence: recur list</em><br>
+Lists all the recurrence in the record list.<br>
+&#160;<br>
+Usage:</p>
+<div class="literalblock">
+<div class="content">
+<pre>recur list</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:<br>
+<code>recur list</code><br>
+Displays below recurences (for example) in the GUI:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>pay school fees / yearly tuition fee / amount: $8000 / start date: 1 Aug 2018 / end date: 1 Aug 2021 /
+Interval: Yearly<br></p>
+</li>
+<li>
+<p>pay for phone subscription / Starhub XL Plan / amount: $150 / start date: 1 Aug 2018 / end date: 1 Jul 2020 /
+Interval: Monthly
+&#160;<br></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tagging-expenses-code-tag-code"><a class="link" href="#tagging-expenses-code-tag-code">3.3. Tagging expenses: <code>tag</code></a></h3>
 <div class="paragraph">
 <p>This feature allows you to assign tags to your expenses. Expenses with the same tag will be grouped together, allowing you to search for related expenses easily.</p>
 </div>
@@ -317,7 +434,7 @@ Similarly, to view parameters for supported tag commands, you could type <code>t
 Example: <code>tag rm</code></p>
 </div>
 <div class="sect3">
-<h4 id="adding-a-tag-code-tag-add-code-br"><a class="link" href="#adding-a-tag-code-tag-add-code-br">3.2.1. Adding a tag: <code>tag add</code><br></a></h4>
+<h4 id="adding-a-tag-code-tag-add-code-br"><a class="link" href="#adding-a-tag-code-tag-add-code-br">3.3.1. Adding a tag: <code>tag add</code><br></a></h4>
 <div class="paragraph">
 <p>This command adds your input tag(s) to the expense at the index you have specified.<br>
 &#160;<br>
@@ -362,7 +479,7 @@ Example: <code>tag add t/holiday t/holiday</code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="removing-a-tag-code-tag-rm-code-br"><a class="link" href="#removing-a-tag-code-tag-rm-code-br">3.2.2. Removing a tag: <code>tag rm</code><br></a></h4>
+<h4 id="removing-a-tag-code-tag-rm-code-br"><a class="link" href="#removing-a-tag-code-tag-rm-code-br">3.3.2. Removing a tag: <code>tag rm</code><br></a></h4>
 <div class="paragraph">
 <p>This command removes your input tag(s) from the expense at the index you have specified.<br>
 &#160;<br>
@@ -407,7 +524,7 @@ Example: <code>tag rm t/holiday t/holiday</code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="filtering-by-tag-code-tag-filter-code-br"><a class="link" href="#filtering-by-tag-code-tag-filter-code-br">3.2.3. Filtering by tag: <code>tag filter</code><br></a></h4>
+<h4 id="filtering-by-tag-code-tag-filter-code-br"><a class="link" href="#filtering-by-tag-code-tag-filter-code-br">3.3.3. Filtering by tag: <code>tag filter</code><br></a></h4>
 <div class="paragraph">
 <p>This command filters expenses by your input tag(s).<br>
 &#160;<br>
@@ -452,7 +569,7 @@ After executing this command, you could edit (eg. <code>edit</code>, <code>tag a
 </div>
 </div>
 <div class="sect3">
-<h4 id="listing-out-all-the-tags-code-tag-list-code-br"><a class="link" href="#listing-out-all-the-tags-code-tag-list-code-br">3.2.4. Listing out all the tags: <code>tag list</code><br></a></h4>
+<h4 id="listing-out-all-the-tags-code-tag-list-code-br"><a class="link" href="#listing-out-all-the-tags-code-tag-list-code-br">3.3.4. Listing out all the tags: <code>tag list</code><br></a></h4>
 <div class="paragraph">
 <p>This command lists out all existing tags.<br>
 &#160;<br>
@@ -479,7 +596,7 @@ To list them:<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Find"><a class="link" href="#Find">3.3. Finding expenses by attributes: <code>find</code></a></h3>
+<h3 id="Find"><a class="link" href="#Find">3.4. Finding expenses by attributes: <code>find</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -504,7 +621,7 @@ and date between 1 Jan 2019 to 1 Oct 2019 in any of its attributes.<br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sorting-expenses-by-attributes-code-coming-in-v2-0-code"><a class="link" href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.4. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></h3>
+<h3 id="sorting-expenses-by-attributes-code-coming-in-v2-0-code"><a class="link" href="#sorting-expenses-by-attributes-code-coming-in-v2-0-code">3.5. Sorting expenses by attributes: <code>[Coming in v2.0]</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -547,7 +664,7 @@ Usage:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">3.5. Archiving past expenses: <code>archive</code></a></h3>
+<h3 id="archiving-past-expenses-code-archive-code"><a class="link" href="#archiving-past-expenses-code-archive-code">3.6. Archiving past expenses: <code>archive</code></a></h3>
 <div class="paragraph">
 <p>This feature allows you to archive expenses. An expense is archived when you want remove it from
 the current list of expenses, but still want to keep a record of it and retrieve it again in the future
@@ -604,7 +721,7 @@ into the command box and pressing <code>Enter</code>:</p>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="em-adding-an-expense-to-an-archive-code-archive-add-code-em-br"><a class="link" href="#em-adding-an-expense-to-an-archive-code-archive-add-code-em-br">3.5.1. <em>Adding an expense to an archive: <code>archive add</code></em><br></a></h4>
+<h4 id="em-adding-an-expense-to-an-archive-code-archive-add-code-em-br"><a class="link" href="#em-adding-an-expense-to-an-archive-code-archive-add-code-em-br">3.6.1. <em>Adding an expense to an archive: <code>archive add</code></em><br></a></h4>
 <div class="paragraph">
 <p>This command allows you to transfer the expense at the specified index to your specified archive.<br>
 If the archive you entered does not exist, then a new archive is created before the expense is added.<br>
@@ -666,7 +783,7 @@ The result box will display the message to indicate the transfer of the expense:
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-listing-out-all-archives-code-archive-listall-code-em-br"><a class="link" href="#em-listing-out-all-archives-code-archive-listall-code-em-br">3.5.2. <em>Listing out all archives: <code>archive listall</code></em><br></a></h4>
+<h4 id="em-listing-out-all-archives-code-archive-listall-code-em-br"><a class="link" href="#em-listing-out-all-archives-code-archive-listall-code-em-br">3.6.2. <em>Listing out all archives: <code>archive listall</code></em><br></a></h4>
 <div class="paragraph">
 <p>This command informs you of all the existing archives by displaying a list of all existing archive names.<br>
 &#160;<br>
@@ -695,7 +812,7 @@ Type <code>archive listall</code> into the command box and press <code>Enter</co
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br"><a class="link" href="#em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br">3.5.3. <em>Listing expenses in a particular archive: <code>archive list</code></em><br></a></h4>
+<h4 id="em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br"><a class="link" href="#em-listing-expenses-in-a-particular-archive-code-archive-list-code-em-br">3.6.3. <em>Listing expenses in a particular archive: <code>archive list</code></em><br></a></h4>
 <div class="paragraph">
 <p>This command allows you to view the list of expenses of your specified archive.<br>
 &#160;<br>
@@ -752,7 +869,7 @@ arguments (like [INDEX]) to be entered for this command.
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-deleting-an-archived-expense-code-archive-delete-code-em-br"><a class="link" href="#em-deleting-an-archived-expense-code-archive-delete-code-em-br">3.5.4. <em>Deleting an archived expense: <code>archive delete</code></em><br></a></h4>
+<h4 id="em-deleting-an-archived-expense-code-archive-delete-code-em-br"><a class="link" href="#em-deleting-an-archived-expense-code-archive-delete-code-em-br">3.6.4. <em>Deleting an archived expense: <code>archive delete</code></em><br></a></h4>
 <div class="paragraph">
 <p>This command allows you to delete the expense at the specified index from your specified archive.<br>
 If the archived expense you delete was the last expense in the archive, the empty archive will be deleted.<br>
@@ -821,7 +938,7 @@ The result box will display the message that indicates the deletion of "<em>Aven
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-reverting-an-archived-expense-archive-revert-em-br"><a class="link" href="#em-reverting-an-archived-expense-archive-revert-em-br">3.5.5. <em>Reverting an archived expense: archive revert</em><br></a></h4>
+<h4 id="em-reverting-an-archived-expense-archive-revert-em-br"><a class="link" href="#em-reverting-an-archived-expense-archive-revert-em-br">3.6.5. <em>Reverting an archived expense: archive revert</em><br></a></h4>
 <div class="paragraph">
 <p>This command allows you to revert/unarchive the expense at the specified index from your specified archive, transferring it back to your current list of expenses.<br>
 If the archive expense you reverted was the last expense in the archive, the empty archive will be deleted.<br>
@@ -889,7 +1006,7 @@ The result box will display the message that indicates the transfer of "<em>Airp
 </div>
 </div>
 <div class="sect2">
-<h3 id="displaying-of-statistics-code-display-stats-code"><a class="link" href="#displaying-of-statistics-code-display-stats-code">3.6. Displaying of statistics: <code>display-stats</code></a></h3>
+<h3 id="displaying-of-statistics-code-display-stats-code"><a class="link" href="#displaying-of-statistics-code-display-stats-code">3.7. Displaying of statistics: <code>display-stats</code></a></h3>
 <div class="imageblock">
 <div class="content">
 <img src="images/statisticsIntro.png" alt="statisticsIntro">
@@ -932,11 +1049,11 @@ for each command goes into further detail about the supported options for that c
 <div class="paragraph">
 <p>With this, it becomes effortless for you to perform advanced queries on specific types of statistics! For example,
 if you want to track the weekly total spending of all your expenses that contain the word "food" over a specific month, simply type <code>display-stats timeline interval/week</code>
-followed by <code>find d/food sd/01/01/2019 ed/01/02/2019</code>. (Unsure about this command? Refer to <a href="#Find">Section 3.3, &#8220;Finding expenses by attributes: <code>find</code>&#8221;</a> for more information).<br>
+followed by <code>find d/food sd/01/01/2019 ed/01/02/2019</code>. (Unsure about this command? Refer to <a href="#Find">Section 3.4, &#8220;Finding expenses by attributes: <code>find</code>&#8221;</a> for more information).<br>
 &#160;<br></p>
 </div>
 <div class="sect3">
-<h4 id="em-display-timeline-overview-of-expenses-display-stats-timeline-em-br"><a class="link" href="#em-display-timeline-overview-of-expenses-display-stats-timeline-em-br">3.6.1. <em>Display timeline overview of expenses: display-stats timeline</em><br></a></h4>
+<h4 id="em-display-timeline-overview-of-expenses-display-stats-timeline-em-br"><a class="link" href="#em-display-timeline-overview-of-expenses-display-stats-timeline-em-br">3.7.1. <em>Display timeline overview of expenses: display-stats timeline</em><br></a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/display-timeline-example-normal.png" alt="display timeline example normal">
@@ -1003,7 +1120,7 @@ The options for this command, and for all other <code>display-stats</code> comma
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-display-breakdown-of-expenses-display-stats-breakdown-em-br"><a class="link" href="#em-display-breakdown-of-expenses-display-stats-breakdown-em-br">3.6.2. <em>Display breakdown of expenses: display-stats breakdown</em><br></a></h4>
+<h4 id="em-display-breakdown-of-expenses-display-stats-breakdown-em-br"><a class="link" href="#em-display-breakdown-of-expenses-display-stats-breakdown-em-br">3.7.2. <em>Display breakdown of expenses: display-stats breakdown</em><br></a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/display-breakdown-example-month.png" alt="display breakdown example month">
@@ -1050,7 +1167,7 @@ total amount determines the size of its slice of the pie chart.
 </div>
 </div>
 <div class="sect3">
-<h4 id="em-display-heatmap-of-expenses-display-stats-heatmap-em-br"><a class="link" href="#em-display-heatmap-of-expenses-display-stats-heatmap-em-br">3.6.3. <em>Display heatmap of expenses: display-stats heatmap</em><br></a></h4>
+<h4 id="em-display-heatmap-of-expenses-display-stats-heatmap-em-br"><a class="link" href="#em-display-heatmap-of-expenses-display-stats-heatmap-em-br">3.7.3. <em>Display heatmap of expenses: display-stats heatmap</em><br></a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/display-heatmap-example-normal.png" alt="display heatmap example normal">
@@ -1103,7 +1220,7 @@ The displayed chart may look something like this:<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-and-redo-code-undo-redo-code"><a class="link" href="#undo-and-redo-code-undo-redo-code">3.7. Undo and Redo: <code>undo/redo</code></a></h3>
+<h3 id="undo-and-redo-code-undo-redo-code"><a class="link" href="#undo-and-redo-code-undo-redo-code">3.8. Undo and Redo: <code>undo/redo</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1138,7 +1255,7 @@ Usage:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-history-code-history-code"><a class="link" href="#viewing-history-code-history-code">3.8. Viewing History: <code>history</code></a></h3>
+<h3 id="viewing-history-code-history-code"><a class="link" href="#viewing-history-code-history-code">3.9. Viewing History: <code>history</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1159,7 +1276,7 @@ Usage:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="up-and-down-key-code-code"><a class="link" href="#up-and-down-key-code-code">3.9. Up and down key: <code>&uarr;/&darr;</code></a></h3>
+<h3 id="up-and-down-key-code-code"><a class="link" href="#up-and-down-key-code-code">3.10. Up and down key: <code>&uarr;/&darr;</code></a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1176,9 +1293,9 @@ By pressing the Down(&darr;) key, you can get the sequential command entered in 
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.10. Viewing help: <code>help</code></a></h3>
+<h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.11. Viewing help: <code>help</code></a></h3>
 <div class="sect3">
-<h4 id="em-help-list-of-complete-set-of-commands-help-em-br"><a class="link" href="#em-help-list-of-complete-set-of-commands-help-em-br">3.10.1. <em>Help list of complete set of commands: help</em><br></a></h4>
+<h4 id="em-help-list-of-complete-set-of-commands-help-em-br"><a class="link" href="#em-help-list-of-complete-set-of-commands-help-em-br">3.11.1. <em>Help list of complete set of commands: help</em><br></a></h4>
 <div class="paragraph">
 <p>Shows the complete list of commands and instructions/description on how to use them.<br>
 &#160;<br>
@@ -1196,11 +1313,11 @@ Usage:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exporting-data-code-coming-in-v2-0-code"><a class="link" href="#exporting-data-code-coming-in-v2-0-code">3.11. Exporting data: <code>[Coming in v2.0]</code></a></h3>
+<h3 id="exporting-data-code-coming-in-v2-0-code"><a class="link" href="#exporting-data-code-coming-in-v2-0-code">3.12. Exporting data: <code>[Coming in v2.0]</code></a></h3>
 <div class="paragraph">
 <p>You will be able to export their expense data using the command <code>export f/[FORMAT]</code>, where format refers to the type of export file format
 you wish to use. Formats that are intended to be supported include .csv files, .json files, as well as PDF documents.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 13:44:02 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2019-11-11 14:55:01 UTC</div></div></div></body></html>
